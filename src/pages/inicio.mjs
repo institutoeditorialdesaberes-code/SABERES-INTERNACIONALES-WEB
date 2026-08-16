@@ -17,12 +17,11 @@ export function paginaInicio(ctx) {
 
   const diapositivas = cfg.hero.map((h, i) => `
       <div class="diapositiva tema-${esc(h.tema)}" data-diapositiva ${i === 0 ? 'data-activa' : ''} role="group" aria-roledescription="diapositiva" aria-label="${i + 1} de ${cfg.hero.length}">
+        <img class="diapositiva-fondo" src="/imagenes/hero/slide-${esc(h.tema)}.jpg" alt="" width="1600" height="900" ${i === 0 ? 'fetchpriority="high"' : 'loading="lazy"'} decoding="async">
         <div class="diapositiva-texto">
           <p class="sobretitulo claro">${esc(cfg.lema)} · ${esc(cfg.contacto.ciudad)}</p>
           ${i === 0
             ? `<h1>${esc(h.titulo)}</h1>`
-            /* Una sola página, un solo h1: las demás diapositivas llevan el
-               mismo aspecto pero sin robarle la jerarquía a la primera. */
             : `<p class="titulo-diapositiva">${esc(h.titulo)}</p>`}
           <p class="bajada">${esc(h.texto)}</p>
           <div class="hero-acciones">
@@ -94,6 +93,7 @@ ${ventajas(cfg, ctx)}
 </section>
 
 <section class="franja-editorial">
+  <img class="franja-editorial-fondo" src="/imagenes/secciones/franja-editorial.jpg" alt="" width="1600" height="900" loading="lazy" decoding="async">
   <div class="contenedor franja-rejilla">
     <div>
       <p class="sobretitulo claro">Quiénes somos</p>

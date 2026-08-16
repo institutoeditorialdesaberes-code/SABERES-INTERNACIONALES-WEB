@@ -167,6 +167,7 @@ export function carrusel(id, contenidoHTML) {
 export function bandaCTA(cfg) {
   return `
 <section class="banda-cta">
+  <img class="banda-cta-fondo" src="/imagenes/secciones/banda-cta.jpg" alt="" width="1600" height="700" loading="lazy" decoding="async">
   <div class="contenedor banda-cta-fila">
     <div>
       <p class="sobretitulo claro">Convocatoria abierta</p>
