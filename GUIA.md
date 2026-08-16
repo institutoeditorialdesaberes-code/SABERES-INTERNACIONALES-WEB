@@ -69,19 +69,20 @@ git remote add origin https://github.com/TU-USUARIO/saberes-internacionales.git 
 1. Tu dominio ya debe estar en Cloudflare (*Websites* → *Add a site*, y los nameservers
    apuntando a Cloudflare desde donde lo compraste).
 2. En tu proyecto de Pages: pestaña **Custom domains** → *Set up a domain*.
-3. Escribe `tudominio.com` y acepta. Cloudflare crea los registros DNS solo.
-4. Repite con `www.tudominio.com` para que ambas direcciones funcionen.
+3. Escribe `saberesinternacionales.org` y acepta. Cloudflare crea los registros DNS solo.
+4. Repite con `www.saberesinternacionales.org` para que ambas direcciones funcionen.
 5. Espera a que el certificado SSL diga *Active* (suele tomar minutos).
 
-### Paso final, obligatorio
+### Paso final
 
-Abre `site.config.json` y cambia la primera línea de datos:
+El dominio **ya está configurado** en `site.config.json`:
 
 ```json
-"url": "https://tudominio.com",
+"url": "https://saberesinternacionales.org",
 ```
 
-También cambia el bloque `github`:
+Lo único que falta ahí es el bloque `github`, que usa el panel `/admin` para saber
+dónde guardar. Cambia `TU-USUARIO` por tu usuario real de GitHub:
 
 ```json
 "github": {
@@ -91,8 +92,8 @@ También cambia el bloque `github`:
 }
 ```
 
-Sin esto, las direcciones canónicas, el mapa del sitio y las imágenes de WhatsApp
-seguirán apuntando al dominio de ejemplo. **Es el error más común y el más caro en SEO.**
+Mientras diga `TU-USUARIO`, el build te lo recuerda con un aviso en cada
+reconstrucción, y el panel te pedirá escribir el repositorio a mano al conectarte.
 
 ---
 
@@ -100,7 +101,7 @@ seguirán apuntando al dominio de ejemplo. **Es el error más común y el más c
 
 ### Opción A — Panel web (recomendado)
 
-Entra a `https://tudominio.com/admin/`.
+Entra a `https://saberesinternacionales.org/admin/`.
 
 **Solo la primera vez**, necesitas un token de GitHub:
 
@@ -165,7 +166,7 @@ Lo que debes hacer tú, una sola vez:
 1. **Google Search Console** → añade la propiedad de tu dominio. Elige verificación por
    etiqueta HTML, copia el código y pégalo en el panel, en *Configuración → Verificación de
    Google Search Console*.
-2. En Search Console, envía el sitemap: `https://tudominio.com/sitemap.xml`.
+2. En Search Console, envía el sitemap: `https://saberesinternacionales.org/sitemap.xml`.
 3. **Google Business Profile**: crea la ficha de la editorial en Quito. Para búsquedas
    locales («editorial en Quito») pesa más que cualquier ajuste técnico del sitio.
 4. Llena las redes sociales en *Configuración*: alimentan el campo `sameAs` de Schema.org,

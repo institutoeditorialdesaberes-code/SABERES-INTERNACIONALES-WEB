@@ -155,8 +155,8 @@ function construir() {
   if (!/^https?:\/\//.test(cfg.url)) {
     errores.push('site.config.json: "url" debe empezar por https:// para que el SEO funcione.');
   }
-  if (cfg.url.includes('saberesinternacionales.com') && process.env.CF_PAGES_URL) {
-    avisos.push(`Recuerda cambiar "url" en site.config.json por tu dominio real (Cloudflare está sirviendo desde ${process.env.CF_PAGES_URL}).`);
+  if (cfg.github && cfg.github.usuario === 'TU-USUARIO') {
+    avisos.push('Falta completar el bloque "github" de site.config.json: el panel /admin no sabrá en qué repositorio guardar.');
   }
 
   const categorias = leerJSON('data/categories.json');
