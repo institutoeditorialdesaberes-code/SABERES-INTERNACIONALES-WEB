@@ -3603,3 +3603,139 @@ html { scroll-behavior: smooth; }
   .pasos-rejilla { grid-template-columns: 1fr; gap: 1rem; }
 }
 
+
+/* ===== SECCIÓN 39 — FORMULARIO RESEÑA INLINE + SELLO FRANJA ===== */
+
+/* ---- Sello transparente en franja editorial -------------------------- */
+.franja-sello-bg {
+  position: absolute;
+  right: -60px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: clamp(280px, 35vw, 500px);
+  height: auto;
+  opacity: .07;
+  filter: grayscale(1) brightness(3);
+  pointer-events: none;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+/* ---- Formulario de reseña inline ------------------------------------ */
+.resena-form-bloque {
+  background: #fff;
+  border-radius: var(--r-l);
+  border: 1px solid var(--linea);
+  padding: 2rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 24px rgba(26,58,107,.08);
+  animation: aparecer .3s ease both;
+}
+.resena-form-titulo {
+  font-size: 1.15rem;
+  color: var(--azul);
+  margin: 0 0 1.25rem;
+}
+.resena-form-estrellas {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+  font-size: .9rem;
+  color: var(--texto-suave);
+}
+.rf-estrellas { display: flex; gap: 4px; }
+.rf-estrella {
+  background: none;
+  border: none;
+  font-size: 1.6rem;
+  color: var(--linea);
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+  transition: color .15s, transform .15s;
+}
+.rf-estrella.hover,
+.rf-estrella.elegida { color: #f59e0b; }
+.rf-estrella:hover { transform: scale(1.2); }
+
+.resena-form-campos {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+.resena-form-full { grid-column: 1 / -1; }
+.resena-form-label {
+  display: flex;
+  flex-direction: column;
+  gap: .35rem;
+  font-size: .87rem;
+  color: var(--tinta);
+  font-weight: 600;
+}
+.resena-form-label em { color: var(--azul); font-style: normal; }
+.resena-form-label span { font-weight: 600; }
+.resena-form-input {
+  border: 1px solid var(--linea);
+  border-radius: var(--r-s);
+  padding: .6rem .85rem;
+  font-size: .9rem;
+  font-family: var(--sans);
+  color: var(--tinta);
+  background: var(--papel);
+  transition: border-color .15s, box-shadow .15s;
+  resize: vertical;
+  width: 100%;
+  box-sizing: border-box;
+}
+.resena-form-input:focus {
+  outline: none;
+  border-color: var(--azul);
+  box-shadow: 0 0 0 3px rgba(26,58,107,.1);
+  background: #fff;
+}
+.resena-form-pie {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.resena-form-nota {
+  font-size: .8rem;
+  color: var(--texto-suave);
+  display: flex;
+  align-items: center;
+  gap: .4rem;
+  margin: 0;
+}
+.resena-form-nota .ico { width: .9em; height: .9em; color: #22c55e; }
+.resena-form-acciones { display: flex; gap: .75rem; flex-wrap: wrap; }
+.resena-form-exito {
+  text-align: center;
+  padding: 2rem 1rem;
+  animation: aparecer .4s ease both;
+}
+.resena-exito-ico {
+  width: 3.5rem;
+  height: 3.5rem;
+  background: #dcfce7;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1rem;
+  color: #16a34a;
+}
+.resena-exito-ico .ico { width: 1.5rem; height: 1.5rem; }
+.resena-form-exito h4 { font-size: 1.1rem; color: var(--azul); margin: 0 0 .5rem; }
+.resena-form-exito p { font-size: .9rem; color: var(--texto-suave); margin: 0; }
+
+@media (max-width: 540px) {
+  .resena-form-campos { grid-template-columns: 1fr; }
+  .resena-form-pie { flex-direction: column; align-items: flex-start; }
+  .resena-form-bloque { padding: 1.25rem; }
+  .franja-sello-bg { opacity: .05; right: -30px; width: 200px; }
+}
+

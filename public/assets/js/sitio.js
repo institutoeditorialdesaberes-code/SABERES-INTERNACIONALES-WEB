@@ -514,6 +514,76 @@
   });
 
   /* ------------------------------------------------------------------ */
+  /* Formulario de reseña inline                                         */
+  /* ------------------------------------------------------------------ */
+  (function formResena() {
+    var btnAbrir = $('[data-abrir-formulario-resena]');
+    var bloque = $('[id="resena-form-bloque"]');
+    if (!btnAbrir || !bloque) return;
+
+    btnAbrir.addEventListener('click', function () {
+      bloque.hidden = false;
+      bloque.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      bloque.querySelector('input[name="nombre"]') && bloque.querySelector('input[name="nombre"]').focus();
+    });
+
+    var btnCerrar = $('[data-cerrar-formulario-resena]');
+    if (btnCerrar) btnCerrar.addEventListener('click', function () { bloque.hidden = true; });
+
+    /* Estrellas del formulario */
+    var rfEstrellas = $$('.rf-estrella', bloque);
+    var rfValor = 0;
+    rfEstrellas.forEach(function (btn, i) {
+      btn.addEventListener('mouseenter', function () {
+        rfEstrellas.forEach(function (b, j) { b.classList.toggle('hover', j <= i); });
+      });
+      btn.addEventListener('mouseleave', function () {
+        rfEstrellas.forEach(function (b, j) { b.classList.remove('hover'); b.classList.toggle('elegida', rfValor > 0 && j < rfValor); });
+      });
+      btn.addEventListener('click', function () {
+        rfValor = i + 1;
+        rfEstrellas.forEach(function (b, j) { b.classList.toggle('elegida', j < rfValor); b.classList.remove('hover'); });
+        btn.setAttribute('aria-pressed', 'true');
+      });
+    });
+
+    /* Envío del formulario */
+    var form = $('[data-resena-form]');
+    if (!form) return;
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var nombre = (form.querySelector('[name="nombre"]') || {}).value || '';
+      var cargo = (form.querySelector('[name="cargo"]') || {}).value || '';
+      var texto = (form.querySelector('[name="texto"]') || {}).value || '';
+      var libro = form.getAttribute('data-libro') || '';
+      var email = form.getAttribute('data-email') || '';
+      if (!nombre.trim() || !texto.trim() || texto.trim().length < 30) {
+        var first = form.querySelector(':invalid');
+        if (first) { first.focus(); first.reportValidity(); }
+        return;
+      }
+      var asunto = encodeURIComponent('Reseña del libro: ' + libro);
+      var cuerpo = encodeURIComponent(
+        'Libro: ' + libro + '\n' +
+        'Nombre: ' + nombre + '\n' +
+        (cargo ? 'Cargo: ' + cargo + '\n' : '') +
+        'Calificación: ' + (rfValor > 0 ? rfValor + '/5 estrellas' : 'sin calificar') + '\n\n' +
+        'Reseña:\n' + texto
+      );
+      window.location.href = 'mailto:' + email + '?subject=' + asunto + '&body=' + cuerpo;
+      /* Mostrar mensaje de éxito */
+      var campos = form.querySelector('.resena-form-campos');
+      var estrellas = form.querySelector('.resena-form-estrellas');
+      var pie = form.querySelector('.resena-form-pie');
+      var exito = form.querySelector('.resena-form-exito');
+      if (campos) campos.hidden = true;
+      if (estrellas) estrellas.hidden = true;
+      if (pie) pie.hidden = true;
+      if (exito) exito.hidden = false;
+    });
+  }());
+
+  /* ------------------------------------------------------------------ */
   /* Filtro del blog por categoría                                       */
   /* ------------------------------------------------------------------ */
   (function filtroBlog() {

@@ -88,9 +88,47 @@ function seccionResenas(libro, cfg) {
         <p class="sobretitulo">Comunidad lectora</p>
         <h2 class="titulo-bloque">Reseñas y valoraciones</h2>
       </div>
-      <a class="boton boton-wa" href="${esc(urlWA)}" target="_blank" rel="noopener">
+      <button class="boton boton-primario" type="button" data-abrir-formulario-resena>
         ${icono('pluma')}<span>Escribir una reseña</span>
-      </a>
+      </button>
+    </div>
+
+    <div class="resena-form-bloque" id="resena-form-bloque" hidden>
+      <form class="resena-form" data-resena-form data-libro="${esc(libro.titulo)}" data-email="${esc(cfg.contacto.email)}" novalidate>
+        <h3 class="resena-form-titulo">Tu opinión sobre este libro</h3>
+        <div class="resena-form-estrellas" role="group" aria-label="Calificación">
+          <span>Tu calificación:</span>
+          <div class="rf-estrellas">
+            ${[1,2,3,4,5].map(n => `<button type="button" class="rf-estrella" data-val="${n}" aria-label="${n} ${n===1?'estrella':'estrellas'}">★</button>`).join('')}
+          </div>
+        </div>
+        <div class="resena-form-campos">
+          <label class="resena-form-label">
+            <span>Tu nombre <em>*</em></span>
+            <input type="text" name="nombre" class="resena-form-input" placeholder="Nombre y apellido" required maxlength="80">
+          </label>
+          <label class="resena-form-label">
+            <span>Tu cargo o institución</span>
+            <input type="text" name="cargo" class="resena-form-input" placeholder="Docente, investigador, lector…" maxlength="100">
+          </label>
+          <label class="resena-form-label resena-form-full">
+            <span>Tu reseña <em>*</em></span>
+            <textarea name="texto" class="resena-form-input" rows="4" placeholder="Cuéntanos tu experiencia leyendo este libro…" required minlength="30" maxlength="600"></textarea>
+          </label>
+        </div>
+        <div class="resena-form-pie">
+          <p class="resena-form-nota">${icono('check')} Tu reseña será enviada por correo y publicada tras revisión editorial.</p>
+          <div class="resena-form-acciones">
+            <button type="button" class="boton boton-fantasma" data-cerrar-formulario-resena>Cancelar</button>
+            <button type="submit" class="boton boton-primario">${icono('envio')}<span>Enviar reseña</span></button>
+          </div>
+        </div>
+        <div class="resena-form-exito" hidden>
+          <div class="resena-exito-ico">${icono('check')}</div>
+          <h4>¡Gracias por tu reseña!</h4>
+          <p>La hemos recibido y la publicaremos tras una breve revisión editorial. Tu opinión ayuda a otros lectores.</p>
+        </div>
+      </form>
     </div>
 
     <div class="resenas-resumen" data-revelar>

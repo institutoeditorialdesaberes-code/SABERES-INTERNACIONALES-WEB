@@ -97,6 +97,7 @@ ${ventajas(cfg, ctx)}
 
 <section class="franja-editorial">
   <img class="franja-editorial-fondo" src="/imagenes/secciones/franja-editorial.jpg" alt="" width="1600" height="900" loading="lazy" decoding="async">
+  <img class="franja-sello-bg" src="/imagenes/marca/logo-saberes.jpg" alt="" width="500" height="500" loading="lazy" decoding="async" aria-hidden="true">
   <div class="contenedor franja-rejilla">
     <div>
       <p class="sobretitulo claro">Quiénes somos</p>
