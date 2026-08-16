@@ -1,0 +1,1279 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Panel editorial — Saberes Internacionales</title>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<style>
+  :root {
+    --azul:#0e2a47; --azul-medio:#1b466f; --azul-claro:#e8eff7; --oro:#c9a227;
+    --tinta:#16202b; --tinta-media:#4b5a6b; --tinta-suave:#7c8a99;
+    --linea:#e2e6eb; --papel:#f8f7f4; --verde:#2f5d3a; --rojo:#b3261e;
+    --serif: Georgia,'Times New Roman',serif;
+    --sans: system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif;
+    --r:8px; --sombra:0 2px 6px rgba(16,32,48,.07),0 12px 28px rgba(16,32,48,.09);
+  }
+  *,*::before,*::after{box-sizing:border-box}
+  body{margin:0;font-family:var(--sans);background:var(--papel);color:var(--tinta);line-height:1.6}
+  h1,h2,h3{font-family:var(--serif);color:var(--azul);margin:0 0 .5em;line-height:1.2}
+  a{color:var(--azul-medio)}
+  button{font:inherit;cursor:pointer}
+  input,select,textarea{font:inherit;color:inherit;width:100%;padding:.6rem .75rem;border:1px solid #cdd4dc;border-radius:var(--r);background:#fff}
+  input:focus,select:focus,textarea:focus{outline:none;border-color:var(--azul-medio);box-shadow:0 0 0 3px rgba(27,70,111,.12)}
+  textarea{resize:vertical;min-height:110px}
+  label{display:block;font-size:.82rem;font-weight:600;color:var(--azul);margin-bottom:.3rem}
+
+  .barra{background:var(--azul);color:#fff;padding:.85rem 1.25rem;display:flex;align-items:center;gap:1rem;flex-wrap:wrap;position:sticky;top:0;z-index:10}
+  .barra h1{color:#fff;font-size:1.15rem;margin:0}
+  .barra .estado{margin-left:auto;font-size:.82rem;color:#a9bbcd;display:flex;align-items:center;gap:.5rem}
+  .punto{width:9px;height:9px;border-radius:50%;background:#7c8a99}
+  .punto.ok{background:#4ade80}
+  .envoltura{max-width:1180px;margin:0 auto;padding:1.5rem 1.25rem 4rem}
+
+  .pestanas{display:flex;gap:.25rem;border-bottom:2px solid var(--linea);margin-bottom:1.75rem;overflow-x:auto}
+  .pestanas button{padding:.7rem 1.1rem;background:none;border:0;border-bottom:3px solid transparent;margin-bottom:-2px;font-weight:600;color:var(--tinta-suave);white-space:nowrap}
+  .pestanas button[aria-selected=true]{color:var(--azul);border-bottom-color:var(--oro)}
+
+  .tarjeta{background:#fff;border:1px solid var(--linea);border-radius:var(--r);padding:1.5rem;margin-bottom:1.25rem;box-shadow:0 1px 2px rgba(16,32,48,.04)}
+  .rejilla{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:1rem}
+  .campo{margin-bottom:1rem}
+  .ayuda{font-size:.78rem;color:var(--tinta-suave);margin:.25rem 0 0}
+
+  .boton{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;padding:.65rem 1.2rem;border:1px solid transparent;border-radius:var(--r);font-weight:600;font-size:.9rem}
+  .boton-primario{background:var(--azul);color:#fff}
+  .boton-primario:hover{background:var(--azul-medio)}
+  .boton-primario:disabled{opacity:.5;cursor:not-allowed}
+  .boton-fantasma{background:#fff;border-color:#cdd4dc;color:var(--azul)}
+  .boton-fantasma:hover{background:var(--azul-claro)}
+  .boton-peligro{background:#fff;border-color:#e9b8b4;color:var(--rojo)}
+  .boton-peligro:hover{background:#fdecea}
+  .acciones{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:1.25rem;padding-top:1.25rem;border-top:1px solid var(--linea)}
+
+  table{width:100%;border-collapse:collapse;font-size:.9rem}
+  th,td{text-align:left;padding:.7rem .6rem;border-bottom:1px solid var(--linea);vertical-align:middle}
+  th{font-size:.76rem;text-transform:uppercase;letter-spacing:.06em;color:var(--tinta-suave)}
+  tbody tr:hover{background:var(--papel)}
+  .miniatura{width:34px;height:51px;object-fit:cover;border-radius:3px;background:var(--azul-claro)}
+  .etiqueta{display:inline-block;padding:.1rem .5rem;border-radius:999px;font-size:.72rem;font-weight:700;background:var(--azul-claro);color:var(--azul)}
+  .etiqueta.demo{background:#fdf0d5;color:#8a6512}
+
+  .mensaje{padding:.85rem 1.1rem;border-radius:var(--r);margin-bottom:1.25rem;font-size:.9rem;display:none}
+  .mensaje.ver{display:block}
+  .mensaje.ok{background:#e7f6ec;color:#1e5631;border:1px solid #b7e0c4}
+  .mensaje.mal{background:#fdecea;color:#8c1d18;border:1px solid #f2c1bd}
+  .mensaje.info{background:var(--azul-claro);color:var(--azul);border:1px solid #c5d8ec}
+
+  .acceso{max-width:520px;margin:4rem auto;background:#fff;border:1px solid var(--linea);border-radius:var(--r);padding:2rem;box-shadow:var(--sombra)}
+  .oculto{display:none!important}
+  .fila-flex{display:flex;gap:.75rem;align-items:center;flex-wrap:wrap}
+  .previa{width:110px;border-radius:4px;box-shadow:var(--sombra);background:var(--azul-claro)}
+  ol.pasos{padding-left:1.2rem;font-size:.88rem;color:var(--tinta-media)}
+  ol.pasos li{margin-bottom:.4rem}
+  code{background:var(--azul-claro);padding:.1rem .35rem;border-radius:3px;font-size:.85em}
+</style>
+</head>
+<body>
+
+<div class="barra">
+  <h1>Panel editorial</h1>
+  <span class="estado"><span class="punto" id="punto"></span><span id="estado-texto">Sin conectar</span></span>
+  <button class="boton boton-fantasma oculto" id="salir" style="padding:.4rem .8rem">Salir</button>
+</div>
+
+<!-- ------------------------------------------------------------------ -->
+<!-- Pantalla de acceso                                                  -->
+<!-- ------------------------------------------------------------------ -->
+<section class="acceso" id="acceso">
+  <h2>Conectar con GitHub</h2>
+  <p style="font-size:.9rem;color:var(--tinta-media)">
+    Este panel guarda los cambios directamente en tu repositorio. Cada vez que guardas,
+    Cloudflare Pages reconstruye el sitio solo, en menos de un minuto.
+  </p>
+
+  <div class="mensaje info ver" style="margin-top:1rem">
+    <strong>Cómo obtener tu token (una sola vez):</strong>
+    <ol class="pasos" style="margin:.6rem 0 0">
+      <li>Entra a <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">github.com → Fine-grained tokens</a>.</li>
+      <li>En <em>Repository access</em> elige <strong>Only select repositories</strong> y marca tu repositorio del sitio.</li>
+      <li>En <em>Permissions → Repository permissions</em>, pon <strong>Contents: Read and write</strong>. Nada más.</li>
+      <li>Genera el token y pégalo aquí abajo.</li>
+    </ol>
+  </div>
+
+  <div class="campo" style="margin-top:1.25rem">
+    <label for="token">Token de acceso</label>
+    <input type="password" id="token" placeholder="github_pat_..." autocomplete="off">
+    <p class="ayuda">Se guarda solo en este navegador y en este equipo. No se envía a ningún otro servidor.
+      Si usas una computadora compartida, pulsa «Salir» al terminar.</p>
+  </div>
+
+  <div class="campo">
+    <label for="repo-manual">Repositorio</label>
+    <input type="text" id="repo-manual" placeholder="usuario/repositorio">
+    <p class="ayuda">Se completa solo desde <code>site.config.json</code>. Cámbialo aquí si aún no lo has actualizado.</p>
+  </div>
+
+  <button class="boton boton-primario" id="conectar" style="width:100%">Conectar</button>
+  <p class="mensaje mal" id="acceso-error" style="margin-top:1rem"></p>
+</section>
+
+<!-- ------------------------------------------------------------------ -->
+<!-- Panel                                                               -->
+<!-- ------------------------------------------------------------------ -->
+<main class="envoltura oculto" id="panel">
+  <p class="mensaje" id="aviso"></p>
+
+  <div class="pestanas" role="tablist">
+    <button role="tab" aria-selected="true" data-vista="libros">Libros</button>
+    <button role="tab" aria-selected="false" data-vista="autores">Autores</button>
+    <button role="tab" aria-selected="false" data-vista="entradas">Blog</button>
+    <button role="tab" aria-selected="false" data-vista="ajustes">Configuración</button>
+    <button role="tab" aria-selected="false" data-vista="versiones">Versiones</button>
+  </div>
+
+  <!-- Libros -->
+  <section data-panel="libros">
+    <div class="fila-flex" style="justify-content:space-between;margin-bottom:1.25rem">
+      <h2 style="margin:0">Catálogo <span id="conteo-libros" class="etiqueta"></span></h2>
+      <button class="boton boton-primario" id="nuevo-libro">+ Añadir libro</button>
+    </div>
+
+    <div class="tarjeta oculto" id="editor-libro">
+      <h3 id="titulo-editor-libro">Nuevo libro</h3>
+      <div class="rejilla">
+        <div class="campo" style="grid-column:1/-1">
+          <label for="l-titulo">Título *</label>
+          <input id="l-titulo" data-campo="titulo">
+        </div>
+        <div class="campo" style="grid-column:1/-1">
+          <label for="l-subtitulo">Subtítulo</label>
+          <input id="l-subtitulo" data-campo="subtitulo">
+        </div>
+        <div class="campo">
+          <label for="l-id">Dirección web (se genera sola)</label>
+          <input id="l-id" data-campo="id">
+          <p class="ayuda">Quedará en <code>/libro/<span id="previa-url">…</span>/</code></p>
+        </div>
+        <div class="campo">
+          <label for="l-autor">Autor *</label>
+          <select id="l-autor" data-campo="autorId"></select>
+        </div>
+        <div class="campo">
+          <label for="l-categoria">Categoría *</label>
+          <select id="l-categoria" data-campo="categoria"></select>
+        </div>
+        <div class="campo" style="grid-column:1/-1">
+          <label>Coautores</label>
+          <div id="l-coautores" style="display:flex;flex-wrap:wrap;gap:.5rem 1.25rem;padding:.6rem .75rem;border:1px solid #cdd4dc;border-radius:var(--r);background:#fff"></div>
+          <p class="ayuda">Marca a los demás autores de la obra. Aparecerán en la ficha en el orden de la lista, después del autor principal.</p>
+        </div>
+        <div class="campo">
+          <label for="l-coleccion">Colección</label>
+          <input id="l-coleccion" data-campo="coleccion" list="lista-colecciones">
+          <datalist id="lista-colecciones"></datalist>
+        </div>
+        <div class="campo">
+          <label for="l-isbn">ISBN *</label>
+          <input id="l-isbn" data-campo="isbn" placeholder="978-9942-0000-0-0">
+          <p class="ayuda" id="isbn-aviso"></p>
+        </div>
+        <div class="campo">
+          <label for="l-precio">Precio impreso (USD) *</label>
+          <input id="l-precio" data-campo="precio" type="number" step="0.01" min="0">
+        </div>
+        <div class="campo">
+          <label for="l-precio-digital">Precio digital (USD)</label>
+          <input id="l-precio-digital" data-campo="precioDigital" type="number" step="0.01" min="0">
+        </div>
+        <div class="campo">
+          <label for="l-paginas">Páginas</label>
+          <input id="l-paginas" data-campo="paginas" type="number" min="1">
+        </div>
+        <div class="campo">
+          <label for="l-anio">Año</label>
+          <input id="l-anio" data-campo="anio" type="number" min="1900" max="2100">
+        </div>
+        <div class="campo">
+          <label for="l-formato">Formato</label>
+          <select id="l-formato" data-campo="formato">
+            <option>Tapa blanda</option><option>Tapa dura</option><option>Digital (PDF/EPUB)</option>
+          </select>
+        </div>
+        <div class="campo">
+          <label for="l-edicion">Edición</label>
+          <input id="l-edicion" data-campo="edicion" value="Primera edición">
+        </div>
+        <div class="campo">
+          <label for="l-dimensiones">Dimensiones</label>
+          <input id="l-dimensiones" data-campo="dimensiones" value="15 x 22 cm">
+        </div>
+        <div class="campo">
+          <label for="l-disponibilidad">Disponibilidad</label>
+          <select id="l-disponibilidad" data-campo="disponibilidad">
+            <option value="disponible">Disponible</option>
+            <option value="preventa">En preventa</option>
+            <option value="agotado">Agotado</option>
+          </select>
+        </div>
+        <div class="campo">
+          <label for="l-insignia">Insignia</label>
+          <select id="l-insignia" data-campo="insignia">
+            <option value="">Sin insignia</option>
+            <option>Novedad</option><option>Más vendido</option><option>Destacado</option><option>Preventa</option>
+          </select>
+        </div>
+        <div class="campo">
+          <label for="l-temas">Temas (separados por coma)</label>
+          <input id="l-temas" data-campo="temas">
+        </div>
+        <div class="campo">
+          <label>Marcas</label>
+          <div class="fila-flex" style="gap:1.25rem;padding-top:.35rem">
+            <label style="display:flex;gap:.4rem;align-items:center;font-weight:500;margin:0">
+              <input type="checkbox" id="l-nuevo" data-campo="esNuevo" style="width:auto"> Novedad</label>
+            <label style="display:flex;gap:.4rem;align-items:center;font-weight:500;margin:0">
+              <input type="checkbox" id="l-destacado" data-campo="esDestacado" style="width:auto"> Destacado</label>
+          </div>
+        </div>
+        <div class="campo" style="grid-column:1/-1">
+          <label for="l-resumen">Resumen corto (se usa en las tarjetas y en Google)</label>
+          <textarea id="l-resumen" data-campo="resumen" maxlength="220" style="min-height:70px"></textarea>
+          <p class="ayuda"><span id="cuenta-resumen">0</span>/220 caracteres. Si lo dejas vacío se genera desde la descripción.</p>
+        </div>
+        <div class="campo" style="grid-column:1/-1">
+          <label for="l-descripcion">Descripción completa</label>
+          <textarea id="l-descripcion" data-campo="descripcion" style="min-height:170px"></textarea>
+          <p class="ayuda">Separa los párrafos con una línea en blanco. Puedes usar <code>## Subtítulo</code> y <code>**negrita**</code>.</p>
+        </div>
+        <div class="campo" style="grid-column:1/-1">
+          <label for="l-indice">Índice (un capítulo por línea)</label>
+          <textarea id="l-indice" data-campo="indice" style="min-height:110px"></textarea>
+        </div>
+        <div class="campo" style="grid-column:1/-1">
+          <label for="l-portada">Portada</label>
+          <div class="fila-flex">
+            <img class="previa" id="previa-portada" alt="">
+            <div style="flex:1;min-width:220px">
+              <input type="file" id="l-portada" accept="image/jpeg,image/png,image/webp">
+              <p class="ayuda">Opcional. Si no subes nada, el sitio genera una portada tipográfica con los colores
+                de la categoría. Recomendado: JPG de 800 × 1200 px, menos de 1 MB.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="acciones">
+        <button class="boton boton-primario" id="guardar-libro">Guardar y publicar</button>
+        <button class="boton boton-fantasma" id="cancelar-libro">Cancelar</button>
+        <button class="boton boton-peligro" id="borrar-libro" style="margin-left:auto">Eliminar libro</button>
+      </div>
+    </div>
+
+    <div class="tarjeta" style="padding:0;overflow-x:auto">
+      <table>
+        <thead><tr><th></th><th>Título</th><th>Autor</th><th>Categoría</th><th>Precio</th><th>Estado</th><th></th></tr></thead>
+        <tbody id="tabla-libros"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Autores -->
+  <section data-panel="autores" class="oculto">
+    <div class="fila-flex" style="justify-content:space-between;margin-bottom:1.25rem">
+      <h2 style="margin:0">Autores <span id="conteo-autores" class="etiqueta"></span></h2>
+      <button class="boton boton-primario" id="nuevo-autor">+ Añadir autor</button>
+    </div>
+
+    <div class="tarjeta oculto" id="editor-autor">
+      <h3 id="titulo-editor-autor">Nuevo autor</h3>
+      <div class="rejilla">
+        <div class="campo"><label for="a-nombre">Nombre completo *</label><input id="a-nombre" data-campo="nombre"></div>
+        <div class="campo"><label for="a-id">Dirección web</label><input id="a-id" data-campo="id"></div>
+        <div class="campo"><label for="a-especialidad">Especialidad *</label><input id="a-especialidad" data-campo="especialidad"></div>
+        <div class="campo"><label for="a-grado">Grado académico</label><input id="a-grado" data-campo="grado" placeholder="PhD en…"></div>
+        <div class="campo"><label for="a-institucion">Institución</label><input id="a-institucion" data-campo="institucion"></div>
+        <div class="campo"><label for="a-pais">País</label><input id="a-pais" data-campo="pais" value="Ecuador"></div>
+        <div class="campo"><label for="a-anios">Años de trayectoria</label><input id="a-anios" data-campo="aniosExperiencia" type="number" min="0"></div>
+        <div class="campo"><label for="a-premios">Reconocimientos</label><input id="a-premios" data-campo="premios" type="number" min="0"></div>
+        <div class="campo"><label for="a-sitio">Sitio web</label><input id="a-sitio" data-campo="sitioWeb" placeholder="https://"></div>
+        <div class="campo" style="grid-column:1/-1">
+          <label for="a-resumen">Resumen breve</label>
+          <textarea id="a-resumen" data-campo="resumen" style="min-height:70px" maxlength="220"></textarea>
+        </div>
+        <div class="campo" style="grid-column:1/-1">
+          <label for="a-bio">Trayectoria completa</label>
+          <textarea id="a-bio" data-campo="bio" style="min-height:170px"></textarea>
+          <p class="ayuda">Separa los párrafos con una línea en blanco.</p>
+        </div>
+        <div class="campo" style="grid-column:1/-1">
+          <label for="a-foto">Fotografía</label>
+          <div class="fila-flex">
+            <img class="previa" id="previa-foto" alt="" style="width:90px;border-radius:50%">
+            <div style="flex:1;min-width:220px">
+              <input type="file" id="a-foto" accept="image/jpeg,image/png,image/webp">
+              <p class="ayuda">Opcional. Cuadrada, mínimo 400 × 400 px. Sin foto se genera un monograma con sus iniciales.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="acciones">
+        <button class="boton boton-primario" id="guardar-autor">Guardar y publicar</button>
+        <button class="boton boton-fantasma" id="cancelar-autor">Cancelar</button>
+        <button class="boton boton-peligro" id="borrar-autor" style="margin-left:auto">Eliminar autor</button>
+      </div>
+    </div>
+
+    <div class="tarjeta" style="padding:0;overflow-x:auto">
+      <table>
+        <thead><tr><th>Nombre</th><th>Especialidad</th><th>Institución</th><th>Libros</th><th></th></tr></thead>
+        <tbody id="tabla-autores"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Blog -->
+  <section data-panel="entradas" class="oculto">
+    <div class="fila-flex" style="justify-content:space-between;margin-bottom:1.25rem">
+      <h2 style="margin:0">Blog <span id="conteo-entradas" class="etiqueta"></span></h2>
+      <button class="boton boton-primario" id="nueva-entrada">+ Escribir entrada</button>
+    </div>
+
+    <div class="tarjeta oculto" id="editor-entrada">
+      <h3 id="titulo-editor-entrada">Nueva entrada</h3>
+      <div class="rejilla">
+        <div class="campo" style="grid-column:1/-1"><label for="e-titulo">Título *</label><input id="e-titulo" data-campo="titulo"></div>
+        <div class="campo"><label for="e-id">Dirección web</label><input id="e-id" data-campo="id"></div>
+        <div class="campo"><label for="e-fecha">Fecha *</label><input id="e-fecha" data-campo="fecha" type="date"></div>
+        <div class="campo"><label for="e-categoria">Categoría</label><input id="e-categoria" data-campo="categoria" list="lista-cat-blog"><datalist id="lista-cat-blog"><option>Guías</option><option>Editorial</option><option>Escritura</option><option>Producción</option><option>Novedades</option></datalist></div>
+        <div class="campo"><label for="e-autor">Firma</label><input id="e-autor" data-campo="autor" value="Equipo editorial"></div>
+        <div class="campo" style="grid-column:1/-1">
+          <label for="e-resumen">Resumen</label>
+          <textarea id="e-resumen" data-campo="resumen" style="min-height:70px" maxlength="220"></textarea>
+        </div>
+        <div class="campo" style="grid-column:1/-1">
+          <label for="e-contenido">Contenido *</label>
+          <textarea id="e-contenido" data-campo="contenido" style="min-height:320px"></textarea>
+          <p class="ayuda">Admite <code>## Subtítulo</code>, <code>**negrita**</code>, listas con <code>-</code> y citas con <code>&gt;</code>.</p>
+        </div>
+      </div>
+      <div class="acciones">
+        <button class="boton boton-primario" id="guardar-entrada">Publicar</button>
+        <button class="boton boton-fantasma" id="cancelar-entrada">Cancelar</button>
+        <button class="boton boton-peligro" id="borrar-entrada" style="margin-left:auto">Eliminar entrada</button>
+      </div>
+    </div>
+
+    <div class="tarjeta" style="padding:0;overflow-x:auto">
+      <table>
+        <thead><tr><th>Título</th><th>Categoría</th><th>Fecha</th><th></th></tr></thead>
+        <tbody id="tabla-entradas"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Configuración -->
+  <section data-panel="ajustes" class="oculto">
+    <h2>Configuración del sitio</h2>
+    <p style="color:var(--tinta-media);font-size:.92rem">
+      Estos datos aparecen en la cabecera, el pie, los botones de WhatsApp y en los datos que lee Google.
+    </p>
+    <div class="tarjeta">
+      <div class="rejilla">
+        <div class="campo"><label for="c-url">Dominio del sitio *</label><input id="c-url" placeholder="https://tudominio.com">
+          <p class="ayuda">Con https:// y sin barra final. Es la base de todas las direcciones y del mapa del sitio.</p></div>
+        <div class="campo"><label for="c-nombre">Nombre comercial</label><input id="c-nombre"></div>
+        <div class="campo"><label for="c-legal">Razón social</label><input id="c-legal"></div>
+        <div class="campo"><label for="c-email">Correo de contacto</label><input id="c-email" type="email"></div>
+        <div class="campo"><label for="c-telefono">Teléfono visible</label><input id="c-telefono" placeholder="+593 99 999 9999"></div>
+        <div class="campo"><label for="c-whatsapp">WhatsApp (solo números)</label><input id="c-whatsapp" placeholder="593999999999">
+          <p class="ayuda">Código de país sin «+», sin espacios ni guiones.</p></div>
+        <div class="campo"><label for="c-direccion">Dirección</label><input id="c-direccion"></div>
+        <div class="campo"><label for="c-horario">Horario</label><input id="c-horario"></div>
+        <div class="campo"><label for="c-facebook">Facebook</label><input id="c-facebook" placeholder="https://facebook.com/…"></div>
+        <div class="campo"><label for="c-instagram">Instagram</label><input id="c-instagram" placeholder="https://instagram.com/…"></div>
+        <div class="campo"><label for="c-linkedin">LinkedIn</label><input id="c-linkedin"></div>
+        <div class="campo"><label for="c-youtube">YouTube</label><input id="c-youtube"></div>
+        <div class="campo"><label for="c-ga">ID de Google Analytics</label><input id="c-ga" placeholder="G-XXXXXXXXXX"></div>
+        <div class="campo"><label for="c-verificacion">Verificación de Google Search Console</label><input id="c-verificacion"></div>
+        <div class="campo" style="grid-column:1/-1"><label for="c-descripcion">Descripción de la editorial (meta description de la portada)</label>
+          <textarea id="c-descripcion" style="min-height:80px" maxlength="300"></textarea></div>
+        <div class="campo" style="grid-column:1/-1">
+          <label style="display:flex;gap:.5rem;align-items:center;font-weight:600">
+            <input type="checkbox" id="c-aviso" style="width:auto"> Mostrar el aviso de «catálogo de demostración»
+          </label>
+          <p class="ayuda">Desactívalo cuando el catálogo real esté cargado.</p>
+        </div>
+      </div>
+      <div class="acciones">
+        <button class="boton boton-primario" id="guardar-ajustes">Guardar configuración</button>
+      </div>
+    </div>
+
+    <div class="tarjeta">
+      <h3>Estado de la publicación</h3>
+      <p style="font-size:.9rem;color:var(--tinta-media)">
+        Cada vez que guardas algo aquí se crea un commit en <code id="info-repo"></code>.
+        Cloudflare Pages detecta el commit y reconstruye el sitio en menos de un minuto.
+      </p>
+      <div class="fila-flex">
+        <a class="boton boton-fantasma" id="ver-commits" target="_blank" rel="noopener">Ver historial de cambios</a>
+        <a class="boton boton-fantasma" href="/" target="_blank" rel="noopener">Abrir el sitio</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Versiones -->
+  <section data-panel="versiones" class="oculto">
+    <div class="fila-flex" style="justify-content:space-between;margin-bottom:1.25rem">
+      <h2 style="margin:0">Versiones guardadas</h2>
+      <button class="boton boton-primario" id="nueva-version">+ Crear versión ahora</button>
+    </div>
+
+    <div class="tarjeta" id="panel-crear-version" style="display:none">
+      <h3>Crear versión</h3>
+      <p style="font-size:.9rem;color:var(--tinta-media)">
+        Se guardará una copia de todos los libros, autores, entradas y configuración en este momento.
+        Podrás restaurarla después con un clic.
+      </p>
+      <div class="campo">
+        <label for="v-etiqueta">Nombre o nota (opcional)</label>
+        <input id="v-etiqueta" placeholder="Ej: antes de actualizar precios, catálogo enero 2026…">
+      </div>
+      <div class="acciones">
+        <button class="boton boton-primario" id="confirmar-version">Guardar versión</button>
+        <button class="boton boton-fantasma" id="cancelar-version">Cancelar</button>
+      </div>
+    </div>
+
+    <div class="tarjeta" style="padding:0;overflow-x:auto">
+      <table>
+        <thead><tr><th>Fecha</th><th>Nota</th><th>Libros</th><th>Autores</th><th>Entradas</th><th></th></tr></thead>
+        <tbody id="tabla-versiones"><tr><td colspan="6" style="text-align:center;color:var(--tinta-suave);padding:2rem">Cargando versiones…</td></tr></tbody>
+      </table>
+    </div>
+
+    <div class="tarjeta" style="margin-top:1.25rem">
+      <h3>¿Cómo funciona?</h3>
+      <ul style="font-size:.88rem;color:var(--tinta-media);padding-left:1.2rem;margin:0;line-height:2">
+        <li>Cada versión guarda una copia completa de libros, autores, blog y configuración.</li>
+        <li>Las versiones se almacenan en tu repositorio GitHub en la carpeta <code>data/versions/</code>.</li>
+        <li>Restaurar reemplaza los archivos actuales con los de esa versión y dispara un nuevo despliegue en Cloudflare.</li>
+        <li>Las versiones antiguas no se borran automáticamente; puedes eliminarlas manualmente desde GitHub.</li>
+      </ul>
+    </div>
+  </section>
+</main>
+
+<script>
+(function () {
+  'use strict';
+  var $ = function (s) { return document.querySelector(s); };
+  var API = 'https://api.github.com';
+
+  var estado = {
+    token: '', duenio: '', repo: '', rama: 'main',
+    archivos: {},          // ruta -> { sha, datos }
+    libros: [], autores: [], entradas: [], categorias: [], colecciones: [],
+    config: null,
+    editando: null
+  };
+
+  /* --------------------------- utilidades --------------------------- */
+  function slug(t) {
+    return String(t || '').normalize('NFD').replace(/[̀-ͯ]/g, '')
+      .toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+  }
+  function aBase64(texto) {
+    var bytes = new TextEncoder().encode(texto);
+    var bin = '';
+    for (var i = 0; i < bytes.length; i += 1) bin += String.fromCharCode(bytes[i]);
+    return btoa(bin);
+  }
+  function deBase64(b64) {
+    var bin = atob(b64.replace(/\s/g, ''));
+    var bytes = new Uint8Array(bin.length);
+    for (var i = 0; i < bin.length; i += 1) bytes[i] = bin.charCodeAt(i);
+    return new TextDecoder('utf-8').decode(bytes);
+  }
+  function mensaje(texto, clase) {
+    var caja = $('#aviso');
+    caja.textContent = texto;
+    caja.className = 'mensaje ver ' + (clase || 'info');
+    if (clase === 'ok') setTimeout(function () { caja.className = 'mensaje'; }, 6000);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+  function esc(t) {
+    return String(t == null ? '' : t).replace(/[&<>"]/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c];
+    });
+  }
+
+  /* --------------------------- API GitHub --------------------------- */
+  function api(ruta, opciones) {
+    opciones = opciones || {};
+    opciones.headers = Object.assign({
+      Authorization: 'Bearer ' + estado.token,
+      Accept: 'application/vnd.github+json',
+      'X-GitHub-Api-Version': '2022-11-28'
+    }, opciones.headers || {});
+    return fetch(API + ruta, opciones).then(function (r) {
+      if (r.status === 401) throw new Error('El token no es válido o caducó. Vuelve a conectar.');
+      if (r.status === 403) throw new Error('El token no tiene permiso de escritura sobre este repositorio.');
+      if (r.status === 404) return null;
+      if (r.status === 409 || r.status === 422) throw new Error('El archivo cambió desde que se cargó. Recarga la página e inténtalo otra vez.');
+      if (!r.ok) throw new Error('GitHub respondió ' + r.status + '.');
+      return r.status === 204 ? null : r.json();
+    });
+  }
+
+  function leerArchivo(ruta) {
+    return api('/repos/' + estado.duenio + '/' + estado.repo + '/contents/' + ruta + '?ref=' + estado.rama)
+      .then(function (r) {
+        if (!r) return null;
+        estado.archivos[ruta] = { sha: r.sha };
+        return deBase64(r.content);
+      });
+  }
+
+  function escribirArchivo(ruta, contenido, mensajeCommit, esBase64) {
+    var cuerpo = {
+      message: mensajeCommit,
+      content: esBase64 ? contenido : aBase64(contenido),
+      branch: estado.rama
+    };
+    var previo = estado.archivos[ruta];
+    if (previo && previo.sha) cuerpo.sha = previo.sha;
+
+    return api('/repos/' + estado.duenio + '/' + estado.repo + '/contents/' + ruta, {
+      method: 'PUT',
+      body: JSON.stringify(cuerpo)
+    }).then(function (r) {
+      if (r && r.content) estado.archivos[ruta] = { sha: r.content.sha };
+      return r;
+    });
+  }
+
+  /** Sube una imagen y devuelve la ruta pública dentro del sitio. */
+  function subirImagen(archivo, carpeta, nombreBase) {
+    return new Promise(function (resolver, rechazar) {
+      if (archivo.size > 3 * 1024 * 1024) {
+        rechazar(new Error('La imagen pesa más de 3 MB. Redúcela antes de subirla.'));
+        return;
+      }
+      var lector = new FileReader();
+      lector.onload = function () {
+        var b64 = String(lector.result).split(',')[1];
+        var ext = (archivo.name.split('.').pop() || 'jpg').toLowerCase();
+        var ruta = 'public/imagenes/' + carpeta + '/' + nombreBase + '.' + ext;
+        // Si ya existe una imagen con ese nombre hay que enviar su sha para reemplazarla.
+        api('/repos/' + estado.duenio + '/' + estado.repo + '/contents/' + ruta + '?ref=' + estado.rama)
+          .catch(function () { return null; })
+          .then(function (previo) {
+            if (previo && previo.sha) estado.archivos[ruta] = { sha: previo.sha };
+            return escribirArchivo(ruta, b64, 'Imagen: ' + nombreBase, true);
+          }).then(function () {
+          resolver('/imagenes/' + carpeta + '/' + nombreBase + '.' + ext);
+        }).catch(rechazar);
+      };
+      lector.onerror = function () { rechazar(new Error('No se pudo leer el archivo.')); };
+      lector.readAsDataURL(archivo);
+    });
+  }
+
+  function guardarJSON(ruta, datos, textoCommit) {
+    return escribirArchivo(ruta, JSON.stringify(datos, null, 2) + '\n', textoCommit);
+  }
+
+  /* --------------------------- Carga inicial ------------------------ */
+  function cargarTodo() {
+    return Promise.all([
+      leerArchivo('data/books.json'),
+      leerArchivo('data/authors.json'),
+      leerArchivo('data/posts.json'),
+      leerArchivo('data/categories.json'),
+      leerArchivo('site.config.json')
+    ]).then(function (r) {
+      estado.libros = JSON.parse(r[0] || '[]');
+      estado.autores = JSON.parse(r[1] || '[]');
+      estado.entradas = JSON.parse(r[2] || '[]');
+      estado.categorias = JSON.parse(r[3] || '[]');
+      estado.config = JSON.parse(r[4] || '{}');
+      estado.colecciones = estado.libros.map(function (l) { return l.coleccion; })
+        .filter(function (c, i, a) { return c && a.indexOf(c) === i; });
+      pintarTodo();
+    });
+  }
+
+  /* --------------------------- Pintado ------------------------------ */
+  function pintarTodo() {
+    pintarLibros(); pintarAutores(); pintarEntradas(); pintarAjustes();
+    $('#conteo-libros').textContent = estado.libros.length;
+    $('#conteo-autores').textContent = estado.autores.length;
+    $('#conteo-entradas').textContent = estado.entradas.length;
+    $('#info-repo').textContent = estado.duenio + '/' + estado.repo;
+    $('#ver-commits').href = 'https://github.com/' + estado.duenio + '/' + estado.repo + '/commits/' + estado.rama;
+  }
+
+  function nombreAutor(id) {
+    var a = estado.autores.filter(function (x) { return x.id === id; })[0];
+    return a ? a.nombre : '—';
+  }
+  function nombreCategoria(id) {
+    var c = estado.categorias.filter(function (x) { return x.id === id; })[0];
+    return c ? c.nombre : id;
+  }
+
+  function pintarLibros() {
+    $('#tabla-libros').innerHTML = estado.libros.map(function (l, i) {
+      var img = l.portada || '/assets/portadas/' + l.id + '.svg';
+      return '<tr>' +
+        '<td><img class="miniatura" src="' + esc(img) + '" alt="" loading="lazy"></td>' +
+        '<td><strong>' + esc(l.titulo) + '</strong>' + (l.demo ? ' <span class="etiqueta demo">demo</span>' : '') +
+        '<br><span style="font-size:.78rem;color:var(--tinta-suave)">' + esc(l.isbn || 'sin ISBN') + '</span></td>' +
+        '<td>' + esc(nombreAutor(l.autorId)) + '</td>' +
+        '<td>' + esc(nombreCategoria(l.categoria)) + '</td>' +
+        '<td>$' + Number(l.precio || 0).toFixed(2) + '</td>' +
+        '<td>' + esc(l.disponibilidad || 'disponible') + '</td>' +
+        '<td><button class="boton boton-fantasma" data-editar-libro="' + i + '" style="padding:.35rem .7rem">Editar</button></td>' +
+        '</tr>';
+    }).join('') || '<tr><td colspan="7" style="text-align:center;color:var(--tinta-suave);padding:2rem">Todavía no hay libros.</td></tr>';
+  }
+
+  function pintarAutores() {
+    $('#tabla-autores').innerHTML = estado.autores.map(function (a, i) {
+      var n = estado.libros.filter(function (l) { return l.autorId === a.id; }).length;
+      return '<tr><td><strong>' + esc(a.nombre) + '</strong></td><td>' + esc(a.especialidad) + '</td>' +
+        '<td>' + esc(a.institucion || '—') + '</td><td>' + n + '</td>' +
+        '<td><button class="boton boton-fantasma" data-editar-autor="' + i + '" style="padding:.35rem .7rem">Editar</button></td></tr>';
+    }).join('') || '<tr><td colspan="5" style="text-align:center;color:var(--tinta-suave);padding:2rem">Todavía no hay autores.</td></tr>';
+  }
+
+  function pintarEntradas() {
+    $('#tabla-entradas').innerHTML = estado.entradas.map(function (e, i) {
+      return '<tr><td><strong>' + esc(e.titulo) + '</strong></td><td>' + esc(e.categoria) + '</td>' +
+        '<td>' + esc(e.fecha) + '</td>' +
+        '<td><button class="boton boton-fantasma" data-editar-entrada="' + i + '" style="padding:.35rem .7rem">Editar</button></td></tr>';
+    }).join('') || '<tr><td colspan="4" style="text-align:center;color:var(--tinta-suave);padding:2rem">Todavía no hay entradas.</td></tr>';
+  }
+
+  function pintarAjustes() {
+    var c = estado.config || {};
+    $('#c-url').value = c.url || '';
+    $('#c-nombre').value = c.nombre || '';
+    $('#c-legal').value = c.nombreLegal || '';
+    $('#c-descripcion').value = c.descripcion || '';
+    var k = c.contacto || {};
+    $('#c-email').value = k.email || '';
+    $('#c-telefono').value = k.telefono || '';
+    $('#c-whatsapp').value = k.whatsapp || '';
+    $('#c-direccion').value = k.direccion || '';
+    $('#c-horario').value = k.horario || '';
+    var r = c.redes || {};
+    $('#c-facebook').value = r.facebook || '';
+    $('#c-instagram').value = r.instagram || '';
+    $('#c-linkedin').value = r.linkedin || '';
+    $('#c-youtube').value = r.youtube || '';
+    var s = c.seo || {};
+    $('#c-ga').value = s.googleAnalyticsId || '';
+    $('#c-verificacion').value = s.googleSiteVerification || '';
+    $('#c-aviso').checked = !!(c.avisoDemo && c.avisoDemo.activo);
+  }
+
+  function opcionesSelect(sel, lista, valor) {
+    sel.innerHTML = lista.map(function (o) {
+      return '<option value="' + esc(o.id) + '"' + (o.id === valor ? ' selected' : '') + '>' + esc(o.nombre) + '</option>';
+    }).join('');
+  }
+
+  /* --------------------------- Editor de libros --------------------- */
+  function abrirLibro(indice) {
+    var nuevo = indice === null;
+    var l = nuevo ? {
+      id: '', titulo: '', subtitulo: '', autorId: (estado.autores[0] || {}).id || '',
+      categoria: (estado.categorias[0] || {}).id || '', coleccion: '', precio: '', precioDigital: '',
+      isbn: '', paginas: '', anio: new Date().getFullYear(), formato: 'Tapa blanda',
+      edicion: 'Primera edición', dimensiones: '15 x 22 cm', disponibilidad: 'disponible',
+      insignia: 'Novedad', temas: [], esNuevo: true, esDestacado: false,
+      resumen: '', descripcion: '', indice: [], portada: ''
+    } : estado.libros[indice];
+
+    estado.editando = { tipo: 'libro', indice: indice };
+    $('#titulo-editor-libro').textContent = nuevo ? 'Nuevo libro' : 'Editar: ' + l.titulo;
+    $('#borrar-libro').classList.toggle('oculto', nuevo);
+
+    $('#l-titulo').value = l.titulo || '';
+    $('#l-subtitulo').value = l.subtitulo || '';
+    $('#l-id').value = l.id || '';
+    var listaAutores = (l.autores && l.autores.length) ? l.autores : (l.autorId ? [l.autorId] : []);
+    opcionesSelect($('#l-autor'), estado.autores.map(function (a) { return { id: a.id, nombre: a.nombre }; }), listaAutores[0]);
+    $('#l-coautores').innerHTML = estado.autores.map(function (a) {
+      var marcado = listaAutores.indexOf(a.id) > 0 ? ' checked' : '';
+      return '<label style="display:flex;gap:.4rem;align-items:center;font-weight:500;margin:0;font-size:.88rem">' +
+        '<input type="checkbox" value="' + esc(a.id) + '" style="width:auto"' + marcado + '> ' + esc(a.nombre) + '</label>';
+    }).join('');
+    opcionesSelect($('#l-categoria'), estado.categorias.map(function (c) { return { id: c.id, nombre: c.nombre }; }), l.categoria);
+    $('#lista-colecciones').innerHTML = estado.colecciones.map(function (c) { return '<option value="' + esc(c) + '">'; }).join('');
+    $('#l-coleccion').value = l.coleccion || '';
+    $('#l-isbn').value = l.isbn || '';
+    $('#l-precio').value = l.precio || '';
+    $('#l-precio-digital').value = l.precioDigital || '';
+    $('#l-paginas').value = l.paginas || '';
+    $('#l-anio').value = l.anio || new Date().getFullYear();
+    $('#l-formato').value = l.formato || 'Tapa blanda';
+    $('#l-edicion').value = l.edicion || 'Primera edición';
+    $('#l-dimensiones').value = l.dimensiones || '15 x 22 cm';
+    $('#l-disponibilidad').value = l.disponibilidad || 'disponible';
+    $('#l-insignia').value = l.insignia || '';
+    $('#l-temas').value = (l.temas || []).join(', ');
+    $('#l-nuevo').checked = !!l.esNuevo;
+    $('#l-destacado').checked = !!l.esDestacado;
+    $('#l-resumen').value = l.resumen || '';
+    $('#l-descripcion').value = l.descripcion || '';
+    $('#l-indice').value = (l.indice || []).join('\n');
+    $('#l-portada').value = '';
+    $('#previa-portada').src = l.portada || (l.id ? '/assets/portadas/' + l.id + '.svg' : '');
+    $('#previa-url').textContent = l.id || '…';
+    $('#cuenta-resumen').textContent = (l.resumen || '').length;
+    validarISBN();
+
+    $('#editor-libro').classList.remove('oculto');
+    $('#editor-libro').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  function validarISBN() {
+    var v = $('#l-isbn').value.replace(/[^0-9Xx]/g, '');
+    var aviso = $('#isbn-aviso');
+    if (!v) { aviso.textContent = 'Necesario para que Google identifique el libro como producto.'; aviso.style.color = ''; return; }
+    if (v.length === 13) { aviso.textContent = 'ISBN-13 correcto.'; aviso.style.color = 'var(--verde)'; }
+    else if (v.length === 10) { aviso.textContent = 'ISBN-10 detectado. Se recomienda usar el ISBN-13.'; aviso.style.color = '#a4700f'; }
+    else { aviso.textContent = 'Un ISBN debe tener 13 dígitos (o 10 en formato antiguo). Van ' + v.length + '.'; aviso.style.color = 'var(--rojo)'; }
+  }
+
+  function recogerLibro() {
+    var titulo = $('#l-titulo').value.trim();
+    if (!titulo) throw new Error('El título es obligatorio.');
+    var id = slug($('#l-id').value.trim() || titulo);
+    var indice = estado.editando.indice;
+    var repetido = estado.libros.some(function (l, i) { return l.id === id && i !== indice; });
+    if (repetido) throw new Error('Ya existe un libro con la dirección web "' + id + '". Cámbiala.');
+
+    var descripcion = $('#l-descripcion').value.trim();
+    var resumen = $('#l-resumen').value.trim() ||
+      descripcion.split(/\n{2,}/)[0].replace(/[#*]/g, '').slice(0, 200);
+
+    // El autor principal encabeza siempre la lista; los coautores lo siguen.
+    var principal = $('#l-autor').value;
+    var autores = [principal];
+    Array.prototype.forEach.call($('#l-coautores').querySelectorAll('input:checked'), function (c) {
+      if (c.value !== principal) autores.push(c.value);
+    });
+
+    return {
+      id: id,
+      titulo: titulo,
+      subtitulo: $('#l-subtitulo').value.trim(),
+      autores: autores,
+      autorId: principal,
+      categoria: $('#l-categoria').value,
+      coleccion: $('#l-coleccion').value.trim(),
+      precio: Number($('#l-precio').value) || 0,
+      precioDigital: Number($('#l-precio-digital').value) || 0,
+      portada: (indice !== null && estado.libros[indice] ? estado.libros[indice].portada : '') || '',
+      insignia: $('#l-insignia').value,
+      isbn: $('#l-isbn').value.trim(),
+      paginas: Number($('#l-paginas').value) || 0,
+      anio: Number($('#l-anio').value) || new Date().getFullYear(),
+      edicion: $('#l-edicion').value.trim(),
+      formato: $('#l-formato').value,
+      dimensiones: $('#l-dimensiones').value.trim(),
+      idioma: 'Español',
+      valoracion: (indice !== null && estado.libros[indice] ? estado.libros[indice].valoracion : 0) || 0,
+      resenas: (indice !== null && estado.libros[indice] ? estado.libros[indice].resenas : 0) || 0,
+      esNuevo: $('#l-nuevo').checked,
+      esDestacado: $('#l-destacado').checked,
+      disponibilidad: $('#l-disponibilidad').value,
+      temas: $('#l-temas').value.split(',').map(function (t) { return t.trim(); }).filter(Boolean),
+      resumen: resumen,
+      descripcion: descripcion,
+      indice: $('#l-indice').value.split('\n').map(function (t) { return t.trim(); }).filter(Boolean)
+    };
+  }
+
+  /* --------------------------- Guardado ----------------------------- */
+  function trabajando(boton, activo, textoOriginal) {
+    boton.disabled = activo;
+    boton.textContent = activo ? 'Guardando…' : textoOriginal;
+  }
+
+  $('#guardar-libro').addEventListener('click', function () {
+    var boton = this;
+    var libro;
+    try { libro = recogerLibro(); } catch (e) { mensaje(e.message, 'mal'); return; }
+
+    trabajando(boton, true, 'Guardar y publicar');
+    var archivo = $('#l-portada').files[0];
+    var previo = Promise.resolve(libro.portada);
+    if (archivo) previo = subirImagen(archivo, 'libros', libro.id);
+
+    previo.then(function (rutaPortada) {
+      libro.portada = rutaPortada || '';
+      var lista = estado.libros.slice();
+      if (estado.editando.indice === null) lista.unshift(libro);
+      else lista[estado.editando.indice] = libro;
+      return guardarJSON('data/books.json', lista, 'Catálogo: ' +
+        (estado.editando.indice === null ? 'nuevo título "' : 'actualiza "') + libro.titulo + '"')
+        .then(function () { estado.libros = lista; });
+    }).then(function () {
+      pintarTodo();
+      $('#editor-libro').classList.add('oculto');
+      mensaje('Guardado. El sitio se está reconstruyendo; en aproximadamente un minuto verás el cambio publicado.', 'ok');
+    }).catch(function (e) {
+      mensaje(e.message, 'mal');
+    }).then(function () { trabajando(boton, false, 'Guardar y publicar'); });
+  });
+
+  $('#borrar-libro').addEventListener('click', function () {
+    var i = estado.editando.indice;
+    if (i === null) return;
+    var l = estado.libros[i];
+    if (!confirm('¿Eliminar «' + l.titulo + '» del catálogo?\n\nSu página dejará de existir en el sitio. Podrás recuperarlo desde el historial de GitHub.')) return;
+    var lista = estado.libros.slice();
+    lista.splice(i, 1);
+    guardarJSON('data/books.json', lista, 'Catálogo: elimina "' + l.titulo + '"').then(function () {
+      estado.libros = lista;
+      pintarTodo();
+      $('#editor-libro').classList.add('oculto');
+      mensaje('Título eliminado del catálogo.', 'ok');
+    }).catch(function (e) { mensaje(e.message, 'mal'); });
+  });
+
+  $('#guardar-autor').addEventListener('click', function () {
+    var boton = this;
+    var nombre = $('#a-nombre').value.trim();
+    if (!nombre) { mensaje('El nombre del autor es obligatorio.', 'mal'); return; }
+    var indice = estado.editando.indice;
+    var id = slug($('#a-id').value.trim() || nombre);
+    if (estado.autores.some(function (a, i) { return a.id === id && i !== indice; })) {
+      mensaje('Ya existe un autor con la dirección web "' + id + '".', 'mal'); return;
+    }
+    var bio = $('#a-bio').value.trim();
+    var autor = {
+      id: id, nombre: nombre,
+      iniciales: nombre.split(/\s+/).slice(0, 2).map(function (p) { return p[0]; }).join('').toUpperCase(),
+      especialidad: $('#a-especialidad').value.trim(),
+      grado: $('#a-grado').value.trim(),
+      institucion: $('#a-institucion').value.trim(),
+      pais: $('#a-pais').value.trim() || 'Ecuador',
+      resumen: $('#a-resumen').value.trim() || bio.split(/\n{2,}/)[0].slice(0, 200),
+      bio: bio,
+      premios: Number($('#a-premios').value) || 0,
+      aniosExperiencia: Number($('#a-anios').value) || 0,
+      sitioWeb: $('#a-sitio').value.trim(),
+      foto: (indice !== null && estado.autores[indice] ? estado.autores[indice].foto : '') || ''
+    };
+
+    trabajando(boton, true, 'Guardar y publicar');
+    var archivo = $('#a-foto').files[0];
+    var previo = archivo ? subirImagen(archivo, 'autores', autor.id) : Promise.resolve(autor.foto);
+
+    previo.then(function (ruta) {
+      autor.foto = ruta || '';
+      var lista = estado.autores.slice();
+      if (indice === null) lista.push(autor); else lista[indice] = autor;
+      return guardarJSON('data/authors.json', lista, 'Autores: ' +
+        (indice === null ? 'añade a ' : 'actualiza a ') + autor.nombre)
+        .then(function () { estado.autores = lista; });
+    }).then(function () {
+      pintarTodo();
+      $('#editor-autor').classList.add('oculto');
+      mensaje('Autor guardado. El sitio se está reconstruyendo.', 'ok');
+    }).catch(function (e) { mensaje(e.message, 'mal'); })
+      .then(function () { trabajando(boton, false, 'Guardar y publicar'); });
+  });
+
+  $('#borrar-autor').addEventListener('click', function () {
+    var i = estado.editando.indice;
+    if (i === null) return;
+    var a = estado.autores[i];
+    var conLibros = estado.libros.filter(function (l) { return l.autorId === a.id; }).length;
+    if (conLibros) {
+      mensaje('No se puede eliminar: ' + a.nombre + ' tiene ' + conLibros + ' libro(s) en el catálogo. Reasígnalos primero.', 'mal');
+      return;
+    }
+    if (!confirm('¿Eliminar a ' + a.nombre + '?')) return;
+    var lista = estado.autores.slice();
+    lista.splice(i, 1);
+    guardarJSON('data/authors.json', lista, 'Autores: elimina a ' + a.nombre).then(function () {
+      estado.autores = lista; pintarTodo();
+      $('#editor-autor').classList.add('oculto');
+      mensaje('Autor eliminado.', 'ok');
+    }).catch(function (e) { mensaje(e.message, 'mal'); });
+  });
+
+  $('#guardar-entrada').addEventListener('click', function () {
+    var boton = this;
+    var titulo = $('#e-titulo').value.trim();
+    var contenido = $('#e-contenido').value.trim();
+    if (!titulo || !contenido) { mensaje('El título y el contenido son obligatorios.', 'mal'); return; }
+    var indice = estado.editando.indice;
+    var id = slug($('#e-id').value.trim() || titulo);
+    if (estado.entradas.some(function (e, i) { return e.id === id && i !== indice; })) {
+      mensaje('Ya existe una entrada con la dirección web "' + id + '".', 'mal'); return;
+    }
+    var entrada = {
+      id: id, titulo: titulo,
+      fecha: $('#e-fecha').value || new Date().toISOString().slice(0, 10),
+      autor: $('#e-autor').value.trim() || 'Equipo editorial',
+      categoria: $('#e-categoria').value.trim() || 'Editorial',
+      resumen: $('#e-resumen').value.trim() ||
+        contenido.split(/\n{2,}/)[0].replace(/[#*>]/g, '').slice(0, 200),
+      destacado: false,
+      contenido: contenido
+    };
+    trabajando(boton, true, 'Publicar');
+    var lista = estado.entradas.slice();
+    if (indice === null) lista.unshift(entrada); else lista[indice] = entrada;
+    guardarJSON('data/posts.json', lista, 'Blog: ' + (indice === null ? 'publica' : 'actualiza') + ' "' + titulo + '"')
+      .then(function () {
+        estado.entradas = lista; pintarTodo();
+        $('#editor-entrada').classList.add('oculto');
+        mensaje('Entrada publicada. El sitio se está reconstruyendo.', 'ok');
+      }).catch(function (e) { mensaje(e.message, 'mal'); })
+      .then(function () { trabajando(boton, false, 'Publicar'); });
+  });
+
+  $('#borrar-entrada').addEventListener('click', function () {
+    var i = estado.editando.indice;
+    if (i === null) return;
+    var e = estado.entradas[i];
+    if (!confirm('¿Eliminar la entrada «' + e.titulo + '»?')) return;
+    var lista = estado.entradas.slice();
+    lista.splice(i, 1);
+    guardarJSON('data/posts.json', lista, 'Blog: elimina "' + e.titulo + '"').then(function () {
+      estado.entradas = lista; pintarTodo();
+      $('#editor-entrada').classList.add('oculto');
+      mensaje('Entrada eliminada.', 'ok');
+    }).catch(function (err) { mensaje(err.message, 'mal'); });
+  });
+
+  $('#guardar-ajustes').addEventListener('click', function () {
+    var boton = this;
+    var c = estado.config;
+    var url = $('#c-url').value.trim().replace(/\/+$/, '');
+    if (!/^https:\/\/.+\..+/.test(url)) {
+      mensaje('El dominio debe empezar por https:// y ser una dirección válida.', 'mal'); return;
+    }
+    c.url = url;
+    c.nombre = $('#c-nombre').value.trim();
+    c.nombreLegal = $('#c-legal').value.trim();
+    c.descripcion = $('#c-descripcion').value.trim();
+    c.contacto = c.contacto || {};
+    c.contacto.email = $('#c-email').value.trim();
+    c.contacto.emailPublicaciones = c.contacto.emailPublicaciones || c.contacto.email;
+    c.contacto.telefono = $('#c-telefono').value.trim();
+    c.contacto.whatsapp = $('#c-whatsapp').value.replace(/\D/g, '');
+    c.contacto.direccion = $('#c-direccion').value.trim();
+    c.contacto.horario = $('#c-horario').value.trim();
+    c.redes = c.redes || {};
+    c.redes.facebook = $('#c-facebook').value.trim();
+    c.redes.instagram = $('#c-instagram').value.trim();
+    c.redes.linkedin = $('#c-linkedin').value.trim();
+    c.redes.youtube = $('#c-youtube').value.trim();
+    c.seo = c.seo || {};
+    c.seo.googleAnalyticsId = $('#c-ga').value.trim();
+    c.seo.googleSiteVerification = $('#c-verificacion').value.trim();
+    c.avisoDemo = c.avisoDemo || {};
+    c.avisoDemo.activo = $('#c-aviso').checked;
+
+    trabajando(boton, true, 'Guardar configuración');
+    guardarJSON('site.config.json', c, 'Configuración del sitio actualizada').then(function () {
+      mensaje('Configuración guardada. El sitio se reconstruye con los datos nuevos.', 'ok');
+    }).catch(function (e) { mensaje(e.message, 'mal'); })
+      .then(function () { trabajando(boton, false, 'Guardar configuración'); });
+  });
+
+  /* --------------------------- Eventos de interfaz ------------------ */
+  document.addEventListener('click', function (e) {
+    var b = e.target.closest('[data-editar-libro]');
+    if (b) { abrirLibro(Number(b.getAttribute('data-editar-libro'))); return; }
+    var a = e.target.closest('[data-editar-autor]');
+    if (a) { abrirAutor(Number(a.getAttribute('data-editar-autor'))); return; }
+    var p = e.target.closest('[data-editar-entrada]');
+    if (p) { abrirEntrada(Number(p.getAttribute('data-editar-entrada'))); }
+  });
+
+  function abrirAutor(indice) {
+    var nuevo = indice === null;
+    var a = nuevo ? { id: '', nombre: '', especialidad: '', grado: '', institucion: '', pais: 'Ecuador', resumen: '', bio: '', premios: 0, aniosExperiencia: 0, sitioWeb: '', foto: '' } : estado.autores[indice];
+    estado.editando = { tipo: 'autor', indice: indice };
+    $('#titulo-editor-autor').textContent = nuevo ? 'Nuevo autor' : 'Editar: ' + a.nombre;
+    $('#borrar-autor').classList.toggle('oculto', nuevo);
+    ['nombre', 'id', 'especialidad', 'grado', 'institucion', 'pais', 'resumen', 'bio', 'sitioWeb'].forEach(function (k) {
+      var el = document.querySelector('#editor-autor [data-campo="' + k + '"]');
+      if (el) el.value = a[k] || '';
+    });
+    $('#a-premios').value = a.premios || 0;
+    $('#a-anios').value = a.aniosExperiencia || 0;
+    $('#a-foto').value = '';
+    $('#previa-foto').src = a.foto || (a.id ? '/assets/autores/' + a.id + '.svg' : '');
+    $('#editor-autor').classList.remove('oculto');
+    $('#editor-autor').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  function abrirEntrada(indice) {
+    var nuevo = indice === null;
+    var e = nuevo ? { id: '', titulo: '', fecha: new Date().toISOString().slice(0, 10), autor: 'Equipo editorial', categoria: 'Editorial', resumen: '', contenido: '' } : estado.entradas[indice];
+    estado.editando = { tipo: 'entrada', indice: indice };
+    $('#titulo-editor-entrada').textContent = nuevo ? 'Nueva entrada' : 'Editar: ' + e.titulo;
+    $('#borrar-entrada').classList.toggle('oculto', nuevo);
+    $('#e-titulo').value = e.titulo || '';
+    $('#e-id').value = e.id || '';
+    $('#e-fecha').value = e.fecha || '';
+    $('#e-categoria').value = e.categoria || '';
+    $('#e-autor').value = e.autor || '';
+    $('#e-resumen').value = e.resumen || '';
+    $('#e-contenido').value = e.contenido || '';
+    $('#editor-entrada').classList.remove('oculto');
+    $('#editor-entrada').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  $('#nuevo-libro').addEventListener('click', function () { abrirLibro(null); });
+  $('#nuevo-autor').addEventListener('click', function () { abrirAutor(null); });
+  $('#nueva-entrada').addEventListener('click', function () { abrirEntrada(null); });
+  $('#cancelar-libro').addEventListener('click', function () { $('#editor-libro').classList.add('oculto'); });
+  $('#cancelar-autor').addEventListener('click', function () { $('#editor-autor').classList.add('oculto'); });
+  $('#cancelar-entrada').addEventListener('click', function () { $('#editor-entrada').classList.add('oculto'); });
+
+  $('#l-titulo').addEventListener('input', function () {
+    if (estado.editando && estado.editando.indice === null) {
+      $('#l-id').value = slug(this.value);
+      $('#previa-url').textContent = $('#l-id').value || '…';
+    }
+  });
+  $('#l-id').addEventListener('input', function () {
+    this.value = slug(this.value);
+    $('#previa-url').textContent = this.value || '…';
+  });
+  $('#l-isbn').addEventListener('input', validarISBN);
+  $('#l-resumen').addEventListener('input', function () { $('#cuenta-resumen').textContent = this.value.length; });
+  $('#a-nombre').addEventListener('input', function () {
+    if (estado.editando && estado.editando.indice === null) $('#a-id').value = slug(this.value);
+  });
+  $('#e-titulo').addEventListener('input', function () {
+    if (estado.editando && estado.editando.indice === null) $('#e-id').value = slug(this.value);
+  });
+
+  function previsualizar(inputId, imgId) {
+    $(inputId).addEventListener('change', function () {
+      var f = this.files[0];
+      if (f) $(imgId).src = URL.createObjectURL(f);
+    });
+  }
+  previsualizar('#l-portada', '#previa-portada');
+  previsualizar('#a-foto', '#previa-foto');
+
+  document.querySelectorAll('.pestanas button').forEach(function (b) {
+    b.addEventListener('click', function () {
+      document.querySelectorAll('.pestanas button').forEach(function (x) { x.setAttribute('aria-selected', String(x === b)); });
+      document.querySelectorAll('[data-panel]').forEach(function (s) {
+        s.classList.toggle('oculto', s.getAttribute('data-panel') !== b.getAttribute('data-vista'));
+      });
+      if (b.getAttribute('data-vista') === 'versiones') listarVersiones();
+    });
+  });
+
+  /* --------------------------- Acceso ------------------------------- */
+  function conectar(token, repoTexto) {
+    var partes = repoTexto.split('/');
+    if (partes.length !== 2 || !partes[0] || !partes[1]) {
+      $('#acceso-error').textContent = 'Escribe el repositorio en formato usuario/repositorio.';
+      $('#acceso-error').className = 'mensaje mal ver';
+      return;
+    }
+    estado.token = token;
+    estado.duenio = partes[0].trim();
+    estado.repo = partes[1].trim();
+
+    api('/repos/' + estado.duenio + '/' + estado.repo).then(function (r) {
+      if (!r) throw new Error('No se encontró el repositorio, o el token no tiene acceso a él.');
+      estado.rama = r.default_branch || 'main';
+      return cargarTodo();
+    }).then(function () {
+      try {
+        localStorage.setItem('si-token', token);
+        localStorage.setItem('si-repo', repoTexto);
+      } catch (e) {}
+      $('#acceso').classList.add('oculto');
+      $('#panel').classList.remove('oculto');
+      $('#salir').classList.remove('oculto');
+      $('#punto').className = 'punto ok';
+      $('#estado-texto').textContent = estado.duenio + '/' + estado.repo + ' · ' + estado.rama;
+    }).catch(function (e) {
+      $('#acceso-error').textContent = e.message;
+      $('#acceso-error').className = 'mensaje mal ver';
+    });
+  }
+
+  $('#conectar').addEventListener('click', function () {
+    conectar($('#token').value.trim(), $('#repo-manual').value.trim());
+  });
+  $('#token').addEventListener('keydown', function (e) { if (e.key === 'Enter') $('#conectar').click(); });
+
+  $('#salir').addEventListener('click', function () {
+    try { localStorage.removeItem('si-token'); } catch (e) {}
+    location.reload();
+  });
+
+  /* ======================== VERSIONES ======================== */
+
+  var CARPETA_VERSIONES = 'data/versions';
+
+  function isoALocal(iso) {
+    var d = new Date(iso);
+    return d.toLocaleDateString('es-EC', { day: '2-digit', month: 'short', year: 'numeric' }) +
+      ' ' + d.toLocaleTimeString('es-EC', { hour: '2-digit', minute: '2-digit' });
+  }
+
+  function listarVersiones() {
+    var tbody = $('#tabla-versiones');
+    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--tinta-suave);padding:2rem">Cargando…</td></tr>';
+
+    api('/repos/' + estado.duenio + '/' + estado.repo + '/contents/' + CARPETA_VERSIONES + '?ref=' + estado.rama)
+      .then(function (archivos) {
+        if (!archivos || !archivos.length) {
+          tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--tinta-suave);padding:2rem">No hay versiones guardadas todavía. Crea la primera con el botón de arriba.</td></tr>';
+          return;
+        }
+        var jsonFiles = archivos.filter(function (f) { return f.name.endsWith('.json'); })
+          .sort(function (a, b) { return b.name.localeCompare(a.name); });
+
+        Promise.all(jsonFiles.slice(0, 20).map(function (f) {
+          return fetch(f.download_url).then(function (r) { return r.json(); })
+            .then(function (v) { return { archivo: f.name, sha: f.sha, datos: v }; });
+        })).then(function (versiones) {
+          tbody.innerHTML = versiones.map(function (v) {
+            var d = v.datos;
+            var libros = (d.datos && d.datos.books ? d.datos.books.length : '?');
+            var autores = (d.datos && d.datos.authors ? d.datos.authors.length : '?');
+            var entradas = (d.datos && d.datos.posts ? d.datos.posts.length : '?');
+            var fecha = d.fecha ? isoALocal(d.fecha) : v.archivo.replace('.json', '');
+            var nota = esc(d.etiqueta || '—');
+            return '<tr>' +
+              '<td style="white-space:nowrap">' + esc(fecha) + '</td>' +
+              '<td>' + nota + '</td>' +
+              '<td>' + libros + '</td>' +
+              '<td>' + autores + '</td>' +
+              '<td>' + entradas + '</td>' +
+              '<td><button class="boton boton-fantasma" data-restaurar="' + esc(v.archivo) + '" style="padding:.35rem .7rem">Restaurar</button></td>' +
+              '</tr>';
+          }).join('');
+        });
+      }).catch(function () {
+        tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--tinta-suave);padding:2rem">No hay versiones guardadas todavía.</td></tr>';
+      });
+  }
+
+  $('#nueva-version').addEventListener('click', function () {
+    $('#v-etiqueta').value = '';
+    $('#panel-crear-version').style.display = '';
+    $('#panel-crear-version').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+
+  $('#cancelar-version').addEventListener('click', function () {
+    $('#panel-crear-version').style.display = 'none';
+  });
+
+  $('#confirmar-version').addEventListener('click', function () {
+    var boton = this;
+    boton.disabled = true;
+    boton.textContent = 'Guardando…';
+
+    var ahora = new Date();
+    var nombre = ahora.toISOString().replace(/[:.]/g, '-').slice(0, 19) + '.json';
+    var version = {
+      fecha: ahora.toISOString(),
+      etiqueta: $('#v-etiqueta').value.trim(),
+      datos: {
+        books: estado.libros,
+        authors: estado.autores,
+        posts: estado.entradas,
+        config: estado.config
+      }
+    };
+
+    var ruta = CARPETA_VERSIONES + '/' + nombre;
+    // Limpiamos sha para que no intente actualizar (es archivo nuevo)
+    delete estado.archivos[ruta];
+
+    escribirArchivo(ruta, JSON.stringify(version, null, 2) + '\n',
+      'Versión: ' + (version.etiqueta || ahora.toLocaleDateString('es-EC')))
+      .then(function () {
+        $('#panel-crear-version').style.display = 'none';
+        mensaje('Versión guardada correctamente.', 'ok');
+        listarVersiones();
+      }).catch(function (e) {
+        mensaje(e.message, 'mal');
+      }).then(function () {
+        boton.disabled = false;
+        boton.textContent = 'Guardar versión';
+      });
+  });
+
+  document.addEventListener('click', function (e) {
+    var b = e.target.closest('[data-restaurar]');
+    if (!b) return;
+    var archivo = b.getAttribute('data-restaurar');
+    if (!confirm('¿Restaurar la versión «' + archivo.replace('.json', '') + '»?\n\nSe reemplazarán los libros, autores, entradas y configuración actuales. Esta acción no se puede deshacer desde aquí (pero puedes crear otra versión antes).')) return;
+
+    b.disabled = true;
+    b.textContent = 'Restaurando…';
+
+    fetch('https://raw.githubusercontent.com/' + estado.duenio + '/' + estado.repo + '/' + estado.rama + '/' + CARPETA_VERSIONES + '/' + archivo)
+      .then(function (r) { return r.json(); })
+      .then(function (v) {
+        var d = v.datos;
+        var etiqueta = v.etiqueta ? ' (desde «' + v.etiqueta + '»)' : '';
+        var msg = 'Restauración' + etiqueta + ' — ' + new Date(v.fecha).toLocaleDateString('es-EC');
+        return Promise.all([
+          guardarJSON('data/books.json',   d.books,   msg),
+          guardarJSON('data/authors.json', d.authors, msg),
+          guardarJSON('data/posts.json',   d.posts,   msg),
+          guardarJSON('site.config.json',  d.config,  msg)
+        ]).then(function () {
+          estado.libros   = d.books;
+          estado.autores  = d.authors;
+          estado.entradas = d.posts;
+          estado.config   = d.config;
+          pintarTodo();
+          mensaje('Restauración completada. El sitio se está reconstruyendo con esa versión.', 'ok');
+        });
+      }).catch(function (e) {
+        mensaje('Error al restaurar: ' + e.message, 'mal');
+      }).then(function () {
+        b.disabled = false;
+        b.textContent = 'Restaurar';
+      });
+  });
+
+  // Arranque: lee la configuración generada en el build y reconecta si hay token.
+  fetch('config.json').then(function (r) { return r.ok ? r.json() : null; }).then(function (c) {
+    var repoGuardado = '';
+    try { repoGuardado = localStorage.getItem('si-repo') || ''; } catch (e) {}
+    if (c && c.github && c.github.usuario && c.github.usuario !== 'TU-USUARIO') {
+      $('#repo-manual').value = c.github.usuario + '/' + c.github.repositorio;
+    } else if (repoGuardado) {
+      $('#repo-manual').value = repoGuardado;
+    }
+    var t = '';
+    try { t = localStorage.getItem('si-token') || ''; } catch (e) {}
+    if (t && $('#repo-manual').value) {
+      $('#token').value = t;
+      conectar(t, $('#repo-manual').value);
+    }
+  }).catch(function () {});
+})();
+</script>
+</body>
+</html>
