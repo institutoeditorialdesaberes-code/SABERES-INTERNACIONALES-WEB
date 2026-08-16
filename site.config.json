@@ -60,8 +60,8 @@
 
   "github": {
     "_comentario": "Usado por el panel /admin para guardar los cambios. Cambia usuario y repositorio por los tuyos.",
-    "usuario": "TU-USUARIO",
-    "repositorio": "saberes-internacionales",
+    "usuario": "institutoeditorialdesaberes-code",
+    "repositorio": "SABERES-INTERNACIONALES-WEB",
     "rama": "main"
   },
 

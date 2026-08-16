@@ -1,0 +1,28 @@
+{
+  // Configuración de despliegue en Cloudflare Workers.
+  //
+  // El build (`npm run build`) genera la carpeta dist/ y este archivo le dice
+  // a `npx wrangler deploy` que publique esa carpeta como sitio estático.
+  //
+  // "name" DEBE coincidir con el nombre del Worker que ya existe en tu panel
+  // de Cloudflare. Si allí se llama distinto, cambia solo esta línea.
+
+  "$schema": "https://json.schemastore.org/wrangler.json",
+  "name": "saberes-internacionales-web",
+  "compatibility_date": "2026-08-01",
+
+  "assets": {
+    // Carpeta que produce el generador.
+    "directory": "./dist",
+
+    // URLs limpias: /libros/ sirve dist/libros/index.html
+    "html_handling": "auto-trailing-slash",
+
+    // Cualquier dirección inexistente muestra nuestra página 404.
+    "not_found_handling": "404-page"
+  },
+
+  "observability": {
+    "enabled": true
+  }
+}
