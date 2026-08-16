@@ -8,6 +8,47 @@ const DISPONIBILIDAD_SCHEMA = {
   agotado: 'https://schema.org/OutOfStock'
 };
 
+/* ── Metaetiquetas citation_* para Google Scholar ── */
+function metasScholar(libro, autores, cfg, absoluta) {
+  const lines = [];
+  const m = (name, content) => {
+    if (content) lines.push(`<meta name="${name}" content="${esc(String(content))}">`);
+  };
+
+  m('citation_title', libro.titulo);
+  m('citation_subtitle', libro.subtitulo);
+
+  /* Un tag por autor, formato "Apellido(s), Nombre(s)" */
+  autores.forEach(a => {
+    const partes = a.nombre.trim().split(/\s+/);
+    /* Heurística: últimas dos palabras = apellidos, primeras = nombres */
+    const nombresFmt = partes.length >= 3
+      ? partes.slice(partes.length - 2).join(' ') + ', ' + partes.slice(0, partes.length - 2).join(' ')
+      : partes.length === 2
+        ? `${partes[1]}, ${partes[0]}`
+        : partes[0];
+    m('citation_author', nombresFmt);
+  });
+
+  m('citation_publication_date', String(libro.anio));
+  m('citation_publisher', cfg.nombreLegal);
+  m('citation_isbn', libro.isbn);
+  m('citation_language', cfg.idioma);
+  m('citation_abstract_html_url', absoluta);
+  m('citation_fulltext_world_readable', '');
+
+  (libro.temas || []).forEach(t => m('citation_keywords', t));
+
+  if (libro.paginas) m('citation_pages', String(libro.paginas));
+
+  /* Institución del autor si está disponible */
+  autores.forEach(a => {
+    if (a.institucion) m('citation_author_institution', a.institucion);
+  });
+
+  return lines.join('\n');
+}
+
 /* ── Genera la cita APA completa del libro ── */
 function citaAPA(libro, autores, cfg) {
   let autoresStr;
@@ -418,6 +459,7 @@ ${relacionados.length ? `
       ...(categoria ? [{ texto: categoria.nombre, url: `/categoria/${categoria.id}/` }] : []),
       { texto: libro.titulo, url: ruta }
     ],
+    extraHead: metasScholar(libro, autores, cfg, absoluta),
     cuerpo,
     jsonld: [libroLD, {
       '@type': 'Product',
