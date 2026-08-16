@@ -7,7 +7,9 @@
   "scripts": {
     "build": "node src/build.mjs",
     "dev": "node src/dev.mjs",
-    "start": "node src/dev.mjs"
+    "start": "node src/dev.mjs",
+    "deploy": "node deploy.mjs",
+    "deploy:solo": "node deploy.mjs --solo"
   },
   "engines": {
     "node": ">=18"
