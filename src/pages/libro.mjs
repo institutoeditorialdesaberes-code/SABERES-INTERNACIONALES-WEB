@@ -325,6 +325,34 @@ export function paginaLibro(ctx, libro) {
   </div>
 </section>
 
+<section class="seccion compartir-seccion">
+  <div class="contenedor">
+    <div class="compartir-barra">
+      <span class="compartir-label">${icono('envio')} Comparte este libro:</span>
+      <div class="compartir-botones">
+        <a class="compartir-btn compartir-fb" href="https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(absoluta)}" target="_blank" rel="noopener" aria-label="Compartir en Facebook">
+          ${icono('facebook')}<span>Facebook</span>
+        </a>
+        <a class="compartir-btn compartir-wa" href="https://wa.me/?text=${encodeURIComponent(libro.titulo + ' — ' + absoluta)}" target="_blank" rel="noopener" aria-label="Compartir por WhatsApp">
+          ${icono('whatsapp')}<span>WhatsApp</span>
+        </a>
+        <a class="compartir-btn compartir-tw" href="https://twitter.com/intent/tweet?url=${encodeURIComponent(absoluta)}&text=${encodeURIComponent(libro.titulo + ' — ' + cfg.nombreLegal)}" target="_blank" rel="noopener" aria-label="Compartir en X / Twitter">
+          ${icono('x')}<span>X</span>
+        </a>
+        <a class="compartir-btn compartir-li" href="https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(absoluta)}" target="_blank" rel="noopener" aria-label="Compartir en LinkedIn">
+          ${icono('linkedin')}<span>LinkedIn</span>
+        </a>
+        <a class="compartir-btn compartir-tg" href="https://t.me/share/url?url=${encodeURIComponent(absoluta)}&text=${encodeURIComponent(libro.titulo)}" target="_blank" rel="noopener" aria-label="Compartir en Telegram">
+          ${icono('telegram')}<span>Telegram</span>
+        </a>
+        <button class="compartir-btn compartir-copiar" type="button" data-copiar-url="${esc(absoluta)}" aria-label="Copiar enlace">
+          ${icono('enlace')}<span>Copiar enlace</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
 ${seccionResenas(libro, cfg)}
 
 ${relacionados.length ? `

@@ -514,6 +514,22 @@
   });
 
   /* ------------------------------------------------------------------ */
+  /* Copiar URL del libro                                                */
+  /* ------------------------------------------------------------------ */
+  $$('[data-copiar-url]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var u = btn.getAttribute('data-copiar-url');
+      var span = btn.querySelector('span');
+      function ok() {
+        if (span) { var prev = span.textContent; span.textContent = '¡Copiado!'; setTimeout(function () { span.textContent = prev; }, 2000); }
+        btn.classList.add('copiado'); setTimeout(function () { btn.classList.remove('copiado'); }, 2000);
+      }
+      if (navigator.clipboard) navigator.clipboard.writeText(u).then(ok, function () {});
+      else { var t = document.createElement('textarea'); t.value = u; document.body.appendChild(t); t.select(); try { document.execCommand('copy'); ok(); } catch (e) {} document.body.removeChild(t); }
+    });
+  });
+
+  /* ------------------------------------------------------------------ */
   /* Formulario de reseña inline                                         */
   /* ------------------------------------------------------------------ */
   (function formResena() {

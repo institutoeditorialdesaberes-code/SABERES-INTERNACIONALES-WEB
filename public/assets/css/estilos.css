@@ -3821,3 +3821,79 @@ html { scroll-behavior: smooth; }
 .disqus-thread { min-height: 0; }
 .disqus-cargando { display: flex; align-items: center; gap: .6rem; color: var(--texto-suave); font-size: .85rem; padding: 1rem 0; }
 .disqus-spinner { width: 1rem; height: 1rem; border: 2px solid var(--linea); border-top-color: var(--azul); border-radius: 50%; animation: girarLento .8s linear infinite; flex-shrink: 0; }
+
+/* ===== SECCIÓN 42 — COMPARTIR EN REDES + OCULTAR PIE DISQUS ===== */
+
+/* Barra de compartir */
+.compartir-seccion { padding-top: .5rem; padding-bottom: .5rem; }
+.compartir-barra {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  padding: .9rem 1.25rem;
+  background: var(--papel);
+  border-radius: var(--r-l);
+  border: 1px solid var(--linea);
+}
+.compartir-label {
+  font-size: .82rem;
+  font-weight: 600;
+  color: var(--texto-suave);
+  display: flex;
+  align-items: center;
+  gap: .35rem;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.compartir-label .ico { width: .9em; height: .9em; }
+.compartir-botones {
+  display: flex;
+  gap: .5rem;
+  flex-wrap: wrap;
+}
+.compartir-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: .35rem;
+  padding: .4rem .85rem;
+  border-radius: 2rem;
+  font-size: .8rem;
+  font-weight: 600;
+  text-decoration: none;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: transform .15s, box-shadow .15s, background .15s;
+  background: #fff;
+  color: var(--tinta);
+  border-color: var(--linea);
+  font-family: var(--sans);
+}
+.compartir-btn .ico { width: 1em; height: 1em; flex-shrink: 0; }
+.compartir-btn:hover { transform: translateY(-2px); box-shadow: 0 3px 10px rgba(0,0,0,.1); }
+.compartir-fb  { color: #1877f2; border-color: #d0e4ff; background: #f0f5ff; }
+.compartir-wa  { color: #25d366; border-color: #c0efd5; background: #f0faf4; }
+.compartir-tw  { color: #000; border-color: #e0e0e0; background: #f7f7f7; }
+.compartir-li  { color: #0a66c2; border-color: #cfe1f5; background: #f0f6fc; }
+.compartir-tg  { color: #229ed9; border-color: #c5e8f7; background: #f0f9ff; }
+.compartir-copiar { color: var(--azul); border-color: var(--azul-claro); background: var(--azul-claro); }
+.compartir-copiar.copiado { color: #16a34a; border-color: #bbf7d0; background: #f0fdf4; }
+@media (max-width: 540px) {
+  .compartir-btn span { display: none; }
+  .compartir-btn { padding: .45rem .6rem; border-radius: 50%; }
+  .compartir-btn .ico { width: 1.1em; height: 1.1em; }
+}
+
+/* Ocultar barra de pie de Disqus (Privacidad / No vendan mis datos) */
+#disqus_thread iframe[id^="dsq-app"] ~ * { display: none !important; }
+.disqus-thread { overflow: hidden; position: relative; }
+.disqus-thread::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 38px;
+  background: #fff;
+  pointer-events: none;
+  z-index: 10;
+}
+
