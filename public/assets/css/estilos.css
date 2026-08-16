@@ -5,6 +5,51 @@
    Sin fuentes externas ni CDN: el sitio carga completo desde su propio dominio.
    ========================================================================= */
 
+/* ---------- 0. Tipografías propias -------------------------------------- */
+/* Fraunces e Inter, licencia SIL Open Font License 1.1, servidas desde
+   nuestro dominio: sin peticiones a terceros y sin rastreo. */
+
+@font-face {
+  font-family: 'Fraunces';
+  font-style: normal;
+  font-weight: 400 900;
+  font-display: swap;
+  src: url('/assets/fuentes/fraunces-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+    U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Fraunces';
+  font-style: normal;
+  font-weight: 400 900;
+  font-display: swap;
+  src: url('/assets/fuentes/fraunces-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF,
+    U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020,
+    U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url('/assets/fuentes/inter-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+    U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url('/assets/fuentes/inter-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF,
+    U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020,
+    U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
 /* ---------- 1. Variables ------------------------------------------------ */
 :root {
   --azul: #0e2a47;
@@ -26,8 +71,9 @@
   --papel-hondo: #f1efe9;
   --blanco: #ffffff;
 
-  --serif: Georgia, 'Iowan Old Style', 'Times New Roman', Times, serif;
-  --sans: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --serif: 'Fraunces', Georgia, 'Iowan Old Style', 'Times New Roman', serif;
+  --display: var(--serif);
+  --sans: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
 
   --r-s: 4px;
   --r-m: 8px;
@@ -865,3 +911,183 @@ article.tarjeta-autor .meta { font-size: .78rem; color: var(--tinta-suave); marg
   .portada-seccion, .perfil { background: none !important; color: #000; }
   .portada-seccion h1, .perfil h1 { color: #000; }
 }
+
+/* =========================================================================
+   28. Carácter tipográfico, marca y movimiento
+   Añadido en el rediseño: tipografías propias, sello real de la editorial
+   y animaciones de entrada. Todo se desactiva solo si el visitante pidió
+   menos movimiento en su sistema.
+   ========================================================================= */
+
+/* ---- Voz tipográfica --------------------------------------------------- */
+h1, h2, h3, h4, .logo-texto strong, .precio-principal, .tarjeta-precio,
+.cifras strong, .perfil-cifras strong, .codigo-error, .linea-pasos .numero {
+  font-variation-settings: 'opsz' 120;
+}
+h1 { font-weight: 700; letter-spacing: -.025em; line-height: 1.08; }
+h2 { font-weight: 650; letter-spacing: -.018em; }
+h3 { font-weight: 600; letter-spacing: -.012em; font-variation-settings: 'opsz' 40; }
+.bajada { font-size: clamp(1.02rem, 1.5vw, 1.16rem); line-height: 1.68; }
+
+.sobretitulo {
+  font-weight: 700; font-size: .74rem; letter-spacing: .2em;
+  position: relative; padding-left: 2.6rem;
+}
+.sobretitulo::before {
+  content: ''; position: absolute; left: 0; top: .62em;
+  width: 2rem; height: 2px; background: currentColor; opacity: .75;
+}
+.encabezado-seccion h2, .titulo-bloque { font-size: clamp(1.7rem, 3.1vw, 2.5rem); }
+
+.logo-texto strong { font-size: 1.42rem; font-weight: 700; letter-spacing: -.02em; }
+.logo-texto em { font-size: .62rem; letter-spacing: .34em; font-weight: 600; }
+
+/* ---- Sello de la editorial --------------------------------------------- */
+.logo { gap: .75rem; }
+.logo .marca {
+  border-radius: 50%; aspect-ratio: 1; object-fit: cover;
+  background: var(--azul); box-shadow: 0 2px 12px rgba(14, 42, 71, .28);
+  outline: 2px solid rgba(201, 162, 39, .55); outline-offset: 1px;
+  transition: transform 500ms cubic-bezier(.2, .7, .3, 1), box-shadow var(--transicion);
+}
+.cabecera-logo:hover .marca { transform: rotate(-8deg) scale(1.06); box-shadow: 0 6px 22px rgba(14, 42, 71, .38); }
+.pie .logo .marca { outline-color: rgba(201, 162, 39, .75); }
+
+/* ---- Aparición al desplazarse ------------------------------------------ */
+[data-revelar] {
+  opacity: 0; transform: translateY(26px);
+  transition: opacity .75s ease, transform .75s cubic-bezier(.2, .7, .3, 1);
+}
+[data-revelar].visible { opacity: 1; transform: none; }
+[data-revelar][data-r="1"] { transition-delay: .07s; }
+[data-revelar][data-r="2"] { transition-delay: .14s; }
+[data-revelar][data-r="3"] { transition-delay: .21s; }
+[data-revelar][data-r="4"] { transition-delay: .28s; }
+[data-revelar][data-r="5"] { transition-delay: .35s; }
+
+@keyframes subir { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: none; } }
+@keyframes girarLento { to { transform: rotate(360deg); } }
+
+/* ---- Portada con más fuerza -------------------------------------------- */
+.hero { background: linear-gradient(180deg, var(--papel) 0%, var(--papel-hondo) 100%); }
+.hero-carrusel { box-shadow: var(--sombra-l); }
+.hero-carrusel::after {
+  content: ''; position: absolute; right: -86px; bottom: -132px;
+  width: 420px; height: 420px; border-radius: 50%; z-index: 1; pointer-events: none;
+  background: url('/imagenes/marca/logo-saberes.jpg') center / cover;
+  opacity: .16; mix-blend-mode: luminosity;
+  animation: girarLento 140s linear infinite;
+}
+.diapositiva[data-activa] .diapositiva-texto > * { animation: subir .8s both; }
+.diapositiva[data-activa] .diapositiva-texto > *:nth-child(1) { animation-delay: .05s; }
+.diapositiva[data-activa] .diapositiva-texto > *:nth-child(2) { animation-delay: .15s; }
+.diapositiva[data-activa] .diapositiva-texto > *:nth-child(3) { animation-delay: .25s; }
+.diapositiva[data-activa] .diapositiva-texto > *:nth-child(4) { animation-delay: .35s; }
+.diapositiva h1 { font-size: clamp(2.1rem, 4.6vw, 3.5rem); }
+
+.hero-destacado { position: relative; overflow: hidden; }
+.hero-destacado::before {
+  content: ''; position: absolute; inset: 0 0 auto; height: 4px;
+  background: linear-gradient(90deg, var(--oro), #e8cd72, var(--oro));
+}
+
+/* ---- Libros con volumen ------------------------------------------------ */
+.tarjeta-libro-imagen { perspective: 1000px; }
+.tarjeta-libro-imagen::before {
+  content: ''; position: absolute; inset: 0 auto 0 0; width: 14px; z-index: 2;
+  background: linear-gradient(90deg, rgba(0, 0, 0, .38), rgba(0, 0, 0, .06) 60%, transparent);
+}
+.tarjeta-libro-imagen img { transform-origin: left center; transition: transform 550ms cubic-bezier(.2, .7, .3, 1); }
+.tarjeta-libro:hover .tarjeta-libro-imagen img { transform: perspective(1000px) rotateY(-9deg) scale(1.05); }
+.tarjeta-libro { position: relative; }
+.tarjeta-libro::after {
+  content: ''; position: absolute; inset: auto 0 0; height: 3px; z-index: 3;
+  background: var(--oro); transform: scaleX(0); transform-origin: left;
+  transition: transform 400ms cubic-bezier(.2, .7, .3, 1);
+}
+.tarjeta-libro:hover::after { transform: scaleX(1); }
+.insignia { box-shadow: 0 2px 8px rgba(0, 0, 0, .25); z-index: 3; }
+
+.ficha-portada img { transition: transform 600ms cubic-bezier(.2, .7, .3, 1); }
+.ficha-portada:hover img { transform: rotateY(-7deg); }
+
+/* ---- Subrayado animado en la navegación -------------------------------- */
+.nav-enlaces a { position: relative; border-bottom-color: transparent; }
+.nav-enlaces a::after {
+  content: ''; position: absolute; left: .85rem; right: .85rem; bottom: 0; height: 2px;
+  background: var(--oro); transform: scaleX(0);
+  transition: transform 300ms cubic-bezier(.2, .7, .3, 1);
+}
+.nav-enlaces a:hover::after, .nav-enlaces a.activo::after { transform: scaleX(1); }
+
+/* ---- Texturas en las franjas oscuras ----------------------------------- */
+.portada-seccion, .franja-editorial, .perfil, .articulo-cabecera {
+  background-image:
+    radial-gradient(900px 420px at 88% -12%, rgba(201, 162, 39, .16), transparent 62%),
+    radial-gradient(700px 380px at -8% 108%, rgba(110, 163, 216, .14), transparent 60%),
+    linear-gradient(135deg, var(--azul) 0%, #0a1f36 100%);
+}
+.articulo-cabecera { color: #cfdcea; padding-bottom: 3.5rem; }
+.articulo-cabecera h1 { color: #fff; }
+.articulo-cabecera .bajada { color: #b9c9d9; }
+.articulo-cabecera .tarjeta-entrada-meta, .articulo-autor { color: #a9bbcd; }
+.articulo-imagen { margin-top: -2.5rem; }
+.articulo-imagen img { border-radius: var(--r-l); box-shadow: var(--sombra-l); }
+
+/* ---- Categorías con más presencia -------------------------------------- */
+.tarjeta-categoria-grande { position: relative; overflow: hidden; }
+.tarjeta-categoria-grande::before {
+  content: ''; position: absolute; right: -40px; top: -40px; width: 130px; height: 130px;
+  border-radius: 50%; background: var(--c); opacity: .07;
+  transition: transform 500ms cubic-bezier(.2, .7, .3, 1);
+}
+.tarjeta-categoria-grande:hover::before { transform: scale(1.7); }
+.tcg-icono { transition: transform 400ms cubic-bezier(.2, .7, .3, 1); }
+.tarjeta-categoria-grande:hover .tcg-icono { transform: rotate(-8deg) scale(1.1); }
+.tcg-icono .ico { width: 1.6rem; height: 1.6rem; }
+
+/* ---- Cifras que cuentan solas ------------------------------------------ */
+.cifras strong, .perfil-cifras strong { font-variant-numeric: tabular-nums; }
+.cifras li { transition: transform var(--transicion), background var(--transicion); }
+.cifras li:hover { transform: translateY(-4px); background: rgba(255, 255, 255, .1); }
+
+/* ---- Ventajas y botones ------------------------------------------------ */
+.ventaja-icono { transition: transform 400ms cubic-bezier(.2, .7, .3, 1), background var(--transicion); }
+.ventaja:hover .ventaja-icono { transform: translateY(-3px) rotate(-6deg); background: var(--oro-suave); color: #7a5f0f; }
+.boton-primario, .boton-wa { position: relative; overflow: hidden; }
+.boton-primario::after, .boton-wa::after {
+  content: ''; position: absolute; inset: 0; transform: translateX(-101%);
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, .28), transparent);
+  transition: transform 650ms ease;
+}
+.boton-primario:hover::after, .boton-wa:hover::after { transform: translateX(101%); }
+
+/* ---- Autores ------------------------------------------------------------ */
+.tarjeta-autor-foto img { transition: transform 500ms cubic-bezier(.2, .7, .3, 1); outline: 3px solid transparent; }
+article.tarjeta-autor:hover .tarjeta-autor-foto img { transform: scale(1.06); outline-color: rgba(201, 162, 39, .5); }
+.perfil-foto img { box-shadow: 0 18px 50px rgba(0, 0, 0, .35); }
+
+/* ---- Varios autores en una ficha --------------------------------------- */
+.ficha-autores { display: flex; flex-wrap: wrap; gap: .5rem; align-items: center; margin-bottom: .5rem; }
+.ficha-autores a {
+  display: inline-flex; align-items: center; gap: .45rem; padding: .3rem .75rem .3rem .3rem;
+  background: #fff; border: 1px solid var(--linea); border-radius: 999px;
+  font-size: .86rem; font-weight: 600; color: var(--azul);
+  transition: border-color var(--transicion), transform var(--transicion);
+}
+.ficha-autores a:hover { border-color: var(--oro); transform: translateY(-2px); }
+.ficha-autores img { width: 28px; height: 28px; border-radius: 50%; object-fit: cover; }
+
+/* ---- Respeto por quien pide menos movimiento --------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  [data-revelar] { opacity: 1; transform: none; }
+  .hero-carrusel::after { animation: none; }
+  .diapositiva[data-activa] .diapositiva-texto > * { animation: none; }
+  .tarjeta-libro:hover .tarjeta-libro-imagen img,
+  .ficha-portada:hover img { transform: none; }
+}
+
+/* ---- Precio aún sin definir -------------------------------------------- */
+.tarjeta-precio.sin-precio { font-size: .92rem; font-family: var(--sans); font-weight: 700; color: var(--azul-medio); }
+.precio-principal { font-size: clamp(1.6rem, 3vw, 2.3rem); }
+.ficha-autores .nota { margin: 0 .25rem 0 0; }

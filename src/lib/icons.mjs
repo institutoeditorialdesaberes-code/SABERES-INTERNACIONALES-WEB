@@ -49,17 +49,12 @@ export function hayIcono(nombre) {
   return Boolean(TRAZOS[nombre]);
 }
 
-/** Marca tipográfica de la editorial: dos páginas abiertas dentro de un arco. */
-export function logotipo({ alto = 40, conTexto = true, clase = '' } = {}) {
-  const marca = `
-    <svg class="marca" viewBox="0 0 48 48" width="${alto}" height="${alto}" aria-hidden="true" focusable="false">
-      <path d="M24 6c-5 3.2-10 4.6-16 4.6v16.6C8 35.5 14.6 41.4 24 44c9.4-2.6 16-8.5 16-16.8V10.6C34 10.6 29 9.2 24 6z"
-            fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/>
-      <path d="M24 17.5c-2.2-1.6-4.8-2.3-7.8-2.3v13.6c3 0 5.6.7 7.8 2.3 2.2-1.6 4.8-2.3 7.8-2.3V15.2c-3 0-5.6.7-7.8 2.3z"
-            fill="currentColor" opacity=".18"/>
-      <path d="M24 17.5c-2.2-1.6-4.8-2.3-7.8-2.3v13.6c3 0 5.6.7 7.8 2.3 2.2-1.6 4.8-2.3 7.8-2.3V15.2c-3 0-5.6.7-7.8 2.3zM24 17.5v13.6"
-            fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
-    </svg>`;
+/** Sello de la editorial: el medallón real, recortado en círculo. */
+export const RUTA_LOGO = '/imagenes/marca/logo-saberes.jpg';
+
+export function logotipo({ alto = 48, conTexto = true, clase = '', prioridad = false } = {}) {
+  const marca = `<img class="marca" src="${RUTA_LOGO}" alt="" width="${alto}" height="${alto}"
+       loading="${prioridad ? 'eager' : 'lazy'}" decoding="async"${prioridad ? ' fetchpriority="high"' : ''}>`;
   if (!conTexto) return marca;
   return `<span class="logo ${clase}">${marca}<span class="logo-texto"><strong>Saberes</strong><em>Internacionales</em></span></span>`;
 }

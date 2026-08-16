@@ -1,5 +1,47 @@
 [
   {
+    "id": "jaime-andrango",
+    "nombre": "Jaime Darío Andrango",
+    "iniciales": "JA",
+    "especialidad": "Pedagogía y acompañamiento docente",
+    "grado": "M.Sc. en Educación",
+    "institucion": "Instituto Tecnológico Superior Juan Montalvo",
+    "pais": "Ecuador",
+    "resumen": "Docente quiteño convencido de que la mayor fortaleza de un maestro no es brillar, sino reconocer y desarrollar el talento de sus estudiantes.",
+    "bio": "Jaime Darío Andrango nació el 20 de septiembre de 1990 en Quito. Se graduó como docente en el Instituto Tecnológico Superior Juan Montalvo, convencido de que la educación es una de las formas más nobles de transformar vidas.\n\nA lo largo de su camino ha comprendido que su mayor fortaleza no ha sido considerarse la persona más brillante, sino poseer la sensibilidad para descubrir el talento que habita en los demás, creer en él y ayudar a desarrollarlo. Esa capacidad de reconocer el potencial humano ha marcado su vocación y ha dado sentido a su labor como maestro.\n\nApasionado por la enseñanza, encuentra en cada estudiante una historia, un sueño y una oportunidad para inspirar. Cree que educar no consiste únicamente en transmitir conocimientos, sino en sembrar confianza, despertar capacidades y recordar a cada persona que es capaz de alcanzar mucho más de lo que imagina.",
+    "premios": 0,
+    "aniosExperiencia": 12,
+    "sitioWeb": ""
+  },
+  {
+    "id": "raquel-guishcaso",
+    "nombre": "Raquel Lorena Guishcaso Suntasig",
+    "iniciales": "RG",
+    "especialidad": "Enseñanza del inglés y psicopedagogía",
+    "grado": "Máster Universitario en Formación y Perfeccionamiento del Profesorado",
+    "institucion": "Universidad de Salamanca",
+    "pais": "Ecuador",
+    "resumen": "Educadora ecuatoriana especializada en dificultades de aprendizaje, con formación en la Universidad Técnica de Cotopaxi y la Universidad de Salamanca.",
+    "bio": "Raquel Lorena Guishcaso Suntasig nació en el cantón Pujilí, provincia de Cotopaxi, el 7 de junio de 1989. Su camino educativo inició en la Unidad Educativa Delia Ibarra de Velasco y continuó en la Unidad Educativa Pujilí.\n\nIngresó a la Universidad Técnica de Cotopaxi, donde se graduó como Licenciada en Ciencias de la Educación, mención Inglés. Más adelante cruzó fronteras académicas al obtener en la Universidad de Salamanca, España, el título de Máster Universitario en Formación y Perfeccionamiento del Profesorado, con mención en Dificultades de Aprendizaje.\n\nLa vida la llevó a migrar a Quito, un desafío que transformó en oportunidad de crecimiento. Comenzó su trayectoria profesional en el ámbito privado y luego pasó a la educación pública del Ecuador, donde ha acompañado a múltiples generaciones. Actualmente ejerce como docente de Inglés en la Unidad Educativa Isabel Robalino.",
+    "premios": 0,
+    "aniosExperiencia": 14,
+    "sitioWeb": ""
+  },
+  {
+    "id": "jacqueline-toaquiza",
+    "nombre": "Ruth Jacqueline Toaquiza Dueñas",
+    "iniciales": "JT",
+    "especialidad": "Historia, ciencias sociales y gestión educativa",
+    "grado": "Magíster en Educación",
+    "institucion": "Unidad Educativa Eduardo Salazar Gómez",
+    "pais": "Ecuador",
+    "resumen": "Docente de Historia y ex vicerrectora, especializada en metodologías activas e inclusivas para el desarrollo del pensamiento crítico.",
+    "bio": "Ruth Jacqueline Toaquiza Dueñas nació en Quito y reside en la parroquia de Pifo. Realizó sus estudios básicos en la Escuela Fiscal Manabí y el bachillerato en el Colegio Leonardo Ponce.\n\nObtuvo el título de Licenciada en Ciencias de la Educación, mención Ciencias Sociales, en la Universidad Central del Ecuador, y complementó su preparación con una Maestría en Educación y un Diplomado en Investigación Socioeducativa en la Universidad UNITA.\n\nHa ejercido roles de liderazgo, destacándose como vicerrectora de la Unidad Educativa Eduardo Salazar Gómez, donde fortaleció la gestión institucional. Actualmente se desempeña como docente de Historia en la misma institución.\n\nEn su labor diaria aplica metodologías innovadoras, activas e inclusivas orientadas a desarrollar el pensamiento crítico de sus estudiantes, con el objetivo de contribuir a una formación integral basada en sólidos valores cívicos y éticos.",
+    "premios": 0,
+    "aniosExperiencia": 18,
+    "sitioWeb": ""
+  },
+  {
     "id": "maria-rodriguez",
     "nombre": "María Elena Rodríguez",
     "iniciales": "MR",

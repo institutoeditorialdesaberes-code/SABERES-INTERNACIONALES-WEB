@@ -163,6 +163,11 @@
           <label for="l-categoria">Categoría *</label>
           <select id="l-categoria" data-campo="categoria"></select>
         </div>
+        <div class="campo" style="grid-column:1/-1">
+          <label>Coautores</label>
+          <div id="l-coautores" style="display:flex;flex-wrap:wrap;gap:.5rem 1.25rem;padding:.6rem .75rem;border:1px solid #cdd4dc;border-radius:var(--r);background:#fff"></div>
+          <p class="ayuda">Marca a los demás autores de la obra. Aparecerán en la ficha en el orden de la lista, después del autor principal.</p>
+        </div>
         <div class="campo">
           <label for="l-coleccion">Colección</label>
           <input id="l-coleccion" data-campo="coleccion" list="lista-colecciones">
@@ -659,7 +664,13 @@
     $('#l-titulo').value = l.titulo || '';
     $('#l-subtitulo').value = l.subtitulo || '';
     $('#l-id').value = l.id || '';
-    opcionesSelect($('#l-autor'), estado.autores.map(function (a) { return { id: a.id, nombre: a.nombre }; }), l.autorId);
+    var listaAutores = (l.autores && l.autores.length) ? l.autores : (l.autorId ? [l.autorId] : []);
+    opcionesSelect($('#l-autor'), estado.autores.map(function (a) { return { id: a.id, nombre: a.nombre }; }), listaAutores[0]);
+    $('#l-coautores').innerHTML = estado.autores.map(function (a) {
+      var marcado = listaAutores.indexOf(a.id) > 0 ? ' checked' : '';
+      return '<label style="display:flex;gap:.4rem;align-items:center;font-weight:500;margin:0;font-size:.88rem">' +
+        '<input type="checkbox" value="' + esc(a.id) + '" style="width:auto"' + marcado + '> ' + esc(a.nombre) + '</label>';
+    }).join('');
     opcionesSelect($('#l-categoria'), estado.categorias.map(function (c) { return { id: c.id, nombre: c.nombre }; }), l.categoria);
     $('#lista-colecciones').innerHTML = estado.colecciones.map(function (c) { return '<option value="' + esc(c) + '">'; }).join('');
     $('#l-coleccion').value = l.coleccion || '';
@@ -710,11 +721,19 @@
     var resumen = $('#l-resumen').value.trim() ||
       descripcion.split(/\n{2,}/)[0].replace(/[#*]/g, '').slice(0, 200);
 
+    // El autor principal encabeza siempre la lista; los coautores lo siguen.
+    var principal = $('#l-autor').value;
+    var autores = [principal];
+    Array.prototype.forEach.call($('#l-coautores').querySelectorAll('input:checked'), function (c) {
+      if (c.value !== principal) autores.push(c.value);
+    });
+
     return {
       id: id,
       titulo: titulo,
       subtitulo: $('#l-subtitulo').value.trim(),
-      autorId: $('#l-autor').value,
+      autores: autores,
+      autorId: principal,
       categoria: $('#l-categoria').value,
       coleccion: $('#l-coleccion').value.trim(),
       precio: Number($('#l-precio').value) || 0,

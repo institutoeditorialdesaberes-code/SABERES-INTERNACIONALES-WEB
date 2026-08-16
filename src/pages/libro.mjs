@@ -1,6 +1,6 @@
 import { esc, money, markdown, estrellas, recorta, url } from '../lib/utils.mjs';
 import { icono } from '../lib/icons.mjs';
-import { tarjetaLibro, rutaPortada, rutaRetrato, enlaceWhatsApp } from '../lib/components.mjs';
+import { tarjetaLibro, rutaPortada, rutaRetrato, enlaceWhatsApp, autoresDe, precioTexto } from '../lib/components.mjs';
 
 const DISPONIBILIDAD_SCHEMA = {
   disponible: 'https://schema.org/InStock',
@@ -9,19 +9,21 @@ const DISPONIBILIDAD_SCHEMA = {
 };
 
 export function paginaLibro(ctx, libro) {
-  const { cfg, autoresPorId, categoriasPorId, libros } = ctx;
-  const autor = autoresPorId.get(libro.autorId);
+  const { cfg, categoriasPorId, libros } = ctx;
+  const autores = autoresDe(libro, ctx);
+  const autor = autores[0];
   const categoria = categoriasPorId.get(libro.categoria);
   const ruta = `/libro/${libro.id}/`;
   const absoluta = url(cfg.url, ruta);
 
   const relacionados = libros
-    .filter((l) => l.id !== libro.id && (l.categoria === libro.categoria || l.autorId === libro.autorId))
+    .filter((l) => l.id !== libro.id
+      && (l.categoria === libro.categoria || l.autores.some((a) => libro.autores.includes(a))))
     .slice(0, 4);
 
   const ficha = [
     ['ISBN', libro.isbn],
-    ['Autor', autor ? autor.nombre : '—'],
+    [autores.length > 1 ? 'Autores' : 'Autor', autores.map((a) => a.nombre).join(' · ') || '—'],
     ['Editorial', cfg.nombreLegal],
     ['Colección', libro.coleccion],
     ['Año de edición', libro.anio],
@@ -56,7 +58,11 @@ export function paginaLibro(ctx, libro) {
       ${categoria ? `<a class="tarjeta-categoria" href="/categoria/${esc(categoria.id)}/" style="--c:${esc(categoria.color)}">${esc(categoria.nombre)}</a>` : ''}
       <h1>${esc(libro.titulo)}</h1>
       ${libro.subtitulo ? `<p class="ficha-subtitulo">${esc(libro.subtitulo)}</p>` : ''}
-      ${autor ? `<p class="ficha-autor">Por <a href="/autor/${esc(autor.id)}/">${esc(autor.nombre)}</a> · ${esc(autor.especialidad)}</p>` : ''}
+      ${autores.length ? `
+      <div class="ficha-autores">
+        <span class="nota">${autores.length > 1 ? 'Autores:' : 'Autor:'}</span>
+        ${autores.map((a) => `<a href="/autor/${esc(a.id)}/"><img src="${esc(rutaRetrato(a))}" alt="" width="28" height="28" loading="lazy">${esc(a.nombre)}</a>`).join('')}
+      </div>` : ''}
 
       <div class="ficha-valoracion">
         ${estrellas(libro.valoracion)}
@@ -67,8 +73,8 @@ export function paginaLibro(ctx, libro) {
 
       <div class="ficha-compra">
         <div class="ficha-precios">
-          <p class="precio-principal">${money(libro.precio, cfg.simboloMoneda)} <span>impreso</span></p>
-          ${libro.precioDigital ? `<p class="precio-secundario">${money(libro.precioDigital, cfg.simboloMoneda)} <span>edición digital</span></p>` : ''}
+          <p class="precio-principal">${precioTexto(libro, cfg)}${libro.precio > 0 ? ` <span>${esc(libro.formato.toLowerCase().includes('digital') ? 'edición digital' : 'impreso')}</span>` : ''}</p>
+          ${libro.precioDigital > 0 ? `<p class="precio-secundario">${money(libro.precioDigital, cfg.simboloMoneda)} <span>edición digital</span></p>` : ''}
           <p class="estado estado-${esc(libro.disponibilidad)}">${icono('check')}${esc(
             libro.disponibilidad === 'preventa' ? 'En preventa — reserva disponible'
               : libro.disponibilidad === 'agotado' ? 'Temporalmente agotado' : 'Disponible para envío inmediato'
@@ -102,7 +108,7 @@ export function paginaLibro(ctx, libro) {
         <button type="button" role="tab" aria-selected="true" aria-controls="tab-desc" id="btn-desc">Sobre el libro</button>
         ${libro.indice?.length ? '<button type="button" role="tab" aria-selected="false" aria-controls="tab-indice" id="btn-indice">Índice</button>' : ''}
         <button type="button" role="tab" aria-selected="false" aria-controls="tab-ficha" id="btn-ficha">Ficha técnica</button>
-        ${autor ? '<button type="button" role="tab" aria-selected="false" aria-controls="tab-autor" id="btn-autor">El autor</button>' : ''}
+        ${autores.length ? `<button type="button" role="tab" aria-selected="false" aria-controls="tab-autor" id="btn-autor">${autores.length > 1 ? 'Los autores' : 'El autor'}</button>` : ''}
       </div>
 
       <div class="pestanas-panel prosa" role="tabpanel" id="tab-desc" aria-labelledby="btn-desc">
@@ -124,17 +130,18 @@ export function paginaLibro(ctx, libro) {
         </table>
       </div>
 
-      ${autor ? `
+      ${autores.length ? `
       <div class="pestanas-panel" role="tabpanel" id="tab-autor" aria-labelledby="btn-autor" hidden>
+        ${autores.map((a) => `
         <div class="bloque-autor">
-          <img src="${esc(rutaRetrato(autor))}" alt="${esc(autor.nombre)}" width="320" height="320" loading="lazy" decoding="async">
+          <img src="${esc(rutaRetrato(a))}" alt="${esc(a.nombre)}" width="320" height="320" loading="lazy" decoding="async">
           <div class="prosa">
-            <h3>${esc(autor.nombre)}</h3>
-            <p class="especialidad">${esc(autor.grado)} · ${esc(autor.institucion)}</p>
-            ${autor.bio.split(/\n{2,}/).map((p) => `<p>${esc(p)}</p>`).join('')}
-            <a class="enlace-flecha" href="/autor/${esc(autor.id)}/">Ver todos sus títulos ${icono('flechaDer')}</a>
+            <h3>${esc(a.nombre)}</h3>
+            <p class="especialidad">${esc([a.grado, a.institucion].filter(Boolean).join(' · '))}</p>
+            ${a.bio.split(/\n{2,}/).map((p) => `<p>${esc(p)}</p>`).join('')}
+            <a class="enlace-flecha" href="/autor/${esc(a.id)}/">Ver su perfil completo ${icono('flechaDer')}</a>
           </div>
-        </div>
+        </div>`).join('')}
       </div>` : ''}
     </div>
   </div>
@@ -168,31 +175,49 @@ ${relacionados.length ? `
     genre: categoria ? categoria.nombre : undefined,
     keywords: (libro.temas || []).join(', '),
     publisher: { '@id': `${cfg.url}/#organizacion` },
-    ...(autor ? { author: { '@type': 'Person', '@id': `${cfg.url}/autor/${autor.id}/#persona`, name: autor.nombre, url: `${cfg.url}/autor/${autor.id}/` } } : {}),
-    aggregateRating: {
-      '@type': 'AggregateRating',
-      ratingValue: libro.valoracion,
-      reviewCount: libro.resenas,
-      bestRating: 5,
-      worstRating: 1
-    },
-    offers: {
-      '@type': 'Offer',
-      price: libro.precio.toFixed(2),
-      priceCurrency: cfg.moneda,
-      availability: DISPONIBILIDAD_SCHEMA[libro.disponibilidad] || DISPONIBILIDAD_SCHEMA.disponible,
-      url: absoluta,
-      itemCondition: 'https://schema.org/NewCondition',
-      seller: { '@id': `${cfg.url}/#organizacion` },
-      areaServed: 'EC'
-    }
+    ...(autores.length ? {
+      author: autores.map((a) => ({
+        '@type': 'Person',
+        '@id': `${cfg.url}/autor/${a.id}/#persona`,
+        name: a.nombre,
+        url: `${cfg.url}/autor/${a.id}/`
+      }))
+    } : {}),
+    // Solo se declara valoración si realmente hay reseñas registradas.
+    ...(libro.resenas > 0 ? {
+      aggregateRating: {
+        '@type': 'AggregateRating',
+        ratingValue: libro.valoracion,
+        reviewCount: libro.resenas,
+        bestRating: 5,
+        worstRating: 1
+      }
+    } : {}),
+    // Sin precio definido no se publica una oferta: Google rechaza precio 0.
+    ...(libro.precio > 0 ? {
+      offers: {
+        '@type': 'Offer',
+        price: libro.precio.toFixed(2),
+        priceCurrency: cfg.moneda,
+        availability: DISPONIBILIDAD_SCHEMA[libro.disponibilidad] || DISPONIBILIDAD_SCHEMA.disponible,
+        url: absoluta,
+        itemCondition: 'https://schema.org/NewCondition',
+        seller: { '@id': `${cfg.url}/#organizacion` },
+        areaServed: 'EC'
+      }
+    } : {})
   };
 
   return {
     ruta,
     titulo: `${libro.titulo}${autor ? ` — ${autor.nombre}` : ''}`,
     tituloSocial: `${libro.titulo} — ${cfg.nombre}`,
-    descripcion: recorta(`${libro.resumen} ${libro.paginas} páginas, ${libro.formato}. ISBN ${libro.isbn}. Envíos desde Quito a todo el Ecuador.`, 300),
+    descripcion: recorta([
+      libro.resumen,
+      `${libro.paginas ? `${libro.paginas} páginas, ` : ''}${libro.formato}.`,
+      libro.isbn ? `ISBN ${libro.isbn}.` : '',
+      `Editado por ${cfg.nombreLegal} en Quito, Ecuador.`
+    ].filter(Boolean).join(' '), 300),
     palabrasClave: [libro.titulo, autor?.nombre, categoria?.nombre, ...(libro.temas || []), 'libro', 'Ecuador'].filter(Boolean),
     // Las redes sociales no renderizan SVG: solo se usa la portada como
     // imagen social cuando el editor subió un archivo de mapa de bits.
@@ -212,11 +237,11 @@ ${relacionados.length ? `
       name: libro.titulo,
       image: imagenAbsoluta,
       description: recorta(libro.resumen, 300),
-      sku: libro.isbn,
+      ...(libro.isbn ? { sku: libro.isbn } : {}),
       ...(libro.isbn.replace(/-/g, '').length === 13 ? { gtin13: libro.isbn.replace(/-/g, '') } : {}),
       brand: { '@id': `${cfg.url}/#organizacion` },
-      offers: libroLD.offers,
-      aggregateRating: libroLD.aggregateRating
+      ...(libroLD.offers ? { offers: libroLD.offers } : {}),
+      ...(libroLD.aggregateRating ? { aggregateRating: libroLD.aggregateRating } : {})
     }]
   };
 }

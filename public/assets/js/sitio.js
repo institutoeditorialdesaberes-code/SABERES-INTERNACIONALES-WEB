@@ -561,3 +561,76 @@
     });
   })();
 })();
+
+/* =========================================================================
+   Movimiento: aparición al desplazarse y cifras que cuentan solas.
+   Se añade por JavaScript a propósito: si el script no carga, el contenido
+   se ve igual, nunca queda invisible.
+   ========================================================================= */
+(function () {
+  'use strict';
+
+  var $$ = function (s, c) { return Array.prototype.slice.call((c || document).querySelectorAll(s)); };
+  var quieto = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (quieto || !('IntersectionObserver' in window)) return;
+
+  /* ---- Aparición progresiva --------------------------------------------- */
+  var GRUPOS = [
+    '.encabezado-seccion', '.titulo-bloque', '.ventaja', '.tarjeta-categoria-grande',
+    '.rejilla-libros > .tarjeta-libro', '.rejilla-autores > .tarjeta-autor',
+    '.rejilla-entradas > *', '.coleccion', '.servicio', '.linea-pasos li',
+    '.cifras', '.franja-rejilla > div', '.banda-cta-fila > *', '.entrada-destacada',
+    '.acordeon-item', '.ficha-visual', '.ficha-datos', '.perfil-datos',
+    '.tarjeta-lateral', '.prosa > h2', '.formulario-envoltura', '.datos-contacto'
+  ];
+
+  var observador = new IntersectionObserver(function (entradas) {
+    entradas.forEach(function (e) {
+      if (!e.isIntersecting) return;
+      e.target.classList.add('visible');
+      observador.unobserve(e.target);
+    });
+  }, { rootMargin: '0px 0px -8% 0px', threshold: 0.06 });
+
+  GRUPOS.forEach(function (selector) {
+    var elementos = $$(selector);
+    elementos.forEach(function (el, i) {
+      if (el.hasAttribute('data-revelar')) return;
+      // Lo que ya está en pantalla al cargar no se anima: evita el parpadeo.
+      if (el.getBoundingClientRect().top < window.innerHeight * 0.9) return;
+      el.setAttribute('data-revelar', '');
+      el.setAttribute('data-r', String(Math.min(5, i % 6)));
+      observador.observe(el);
+    });
+  });
+
+  /* ---- Cifras animadas --------------------------------------------------- */
+  var contadores = $$('.cifras strong, .perfil-cifras strong');
+  if (!contadores.length) return;
+
+  var vigilante = new IntersectionObserver(function (entradas) {
+    entradas.forEach(function (e) {
+      if (!e.isIntersecting) return;
+      contar(e.target);
+      vigilante.unobserve(e.target);
+    });
+  }, { threshold: 0.5 });
+
+  contadores.forEach(function (c) { vigilante.observe(c); });
+
+  function contar(el) {
+    var destino = parseInt(el.textContent.replace(/\D/g, ''), 10);
+    if (!destino || destino > 100000) return;
+    var duracion = 1100;
+    var inicio = performance.now();
+    var sufijo = el.textContent.replace(/[\d\s]/g, '');
+    function paso(ahora) {
+      var t = Math.min(1, (ahora - inicio) / duracion);
+      var suave = 1 - Math.pow(1 - t, 3);
+      el.textContent = Math.round(destino * suave) + sufijo;
+      if (t < 1) requestAnimationFrame(paso);
+    }
+    el.textContent = '0' + sufijo;
+    requestAnimationFrame(paso);
+  }
+})();

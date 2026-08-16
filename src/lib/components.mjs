@@ -14,6 +14,18 @@ export function rutaRetrato(autor) {
   return `/assets/autores/${autor.id}.svg`;
 }
 
+/** Todos los autores de un libro, en el orden en que figuran en la obra. */
+export function autoresDe(libro, ctx) {
+  return (libro.autores || [libro.autorId])
+    .map((id) => ctx.autoresPorId.get(id))
+    .filter(Boolean);
+}
+
+/** Un libro sin precio definido no muestra "$0.00", muestra una invitación. */
+export function precioTexto(libro, cfg) {
+  return libro.precio > 0 ? money(libro.precio, cfg.simboloMoneda) : 'Consultar precio';
+}
+
 export function enlaceWhatsApp(cfg, libro) {
   const texto = `${cfg.contacto.whatsappMensaje} "${libro.titulo}" (ISBN ${libro.isbn}). ¿Está disponible?`;
   return `https://wa.me/${cfg.contacto.whatsapp}?text=${encodeURIComponent(texto)}`;
@@ -26,8 +38,10 @@ const ETIQUETA_DISPONIBILIDAD = {
 };
 
 export function tarjetaLibro(libro, ctx, { prioridad = false } = {}) {
-  const { cfg, autoresPorId, categoriasPorId } = ctx;
-  const autor = autoresPorId.get(libro.autorId);
+  const { cfg, categoriasPorId } = ctx;
+  const autores = autoresDe(libro, ctx);
+  const autor = autores[0];
+  const otros = autores.length - 1;
   const categoria = categoriasPorId.get(libro.categoria);
   const [textoDisp, claseDisp] = ETIQUETA_DISPONIBILIDAD[libro.disponibilidad] || ETIQUETA_DISPONIBILIDAD.disponible;
 
@@ -41,10 +55,10 @@ export function tarjetaLibro(libro, ctx, { prioridad = false } = {}) {
   <div class="tarjeta-libro-cuerpo">
     ${categoria ? `<a class="tarjeta-categoria" href="/categoria/${esc(categoria.id)}/" style="--c:${esc(categoria.color)}">${esc(categoria.nombre)}</a>` : ''}
     <h3 class="tarjeta-titulo"><a href="/libro/${esc(libro.id)}/">${esc(libro.titulo)}</a></h3>
-    ${autor ? `<p class="tarjeta-autor"><a href="/autor/${esc(autor.id)}/">${esc(autor.nombre)}</a></p>` : ''}
+    ${autor ? `<p class="tarjeta-autor"><a href="/autor/${esc(autor.id)}/">${esc(autor.nombre)}</a>${otros > 0 ? ` <span>y ${otros} ${otros === 1 ? 'autor más' : 'autores más'}</span>` : ''}</p>` : ''}
     <div class="tarjeta-valoracion">${estrellas(libro.valoracion)}<span>${libro.valoracion.toFixed(1)} (${libro.resenas})</span></div>
     <div class="tarjeta-pie">
-      <p class="tarjeta-precio">${money(libro.precio, cfg.simboloMoneda)}<span class="disp ${claseDisp}">${textoDisp}</span></p>
+      <p class="tarjeta-precio ${libro.precio > 0 ? '' : 'sin-precio'}">${precioTexto(libro, cfg)}<span class="disp ${claseDisp}">${textoDisp}</span></p>
       <a class="boton boton-compacto boton-wa" href="${esc(enlaceWhatsApp(cfg, libro))}" target="_blank" rel="noopener">${icono('whatsapp')}<span>Pedir</span></a>
     </div>
   </div>

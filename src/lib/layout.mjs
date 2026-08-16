@@ -111,7 +111,7 @@ function cabecera(cfg, rutaActual, categorias) {
 
   <div class="cabecera-principal">
     <div class="contenedor cabecera-fila">
-      <a class="cabecera-logo" href="/" aria-label="${esc(cfg.nombre)} — inicio">${logotipo({ alto: 44 })}</a>
+      <a class="cabecera-logo" href="/" aria-label="${esc(cfg.nombre)} — inicio">${logotipo({ alto: 52, prioridad: true })}</a>
 
       <form class="buscador" action="/buscar/" method="get" role="search">
         <label class="visualmente-oculto" for="q">Buscar en el catálogo</label>
@@ -273,6 +273,8 @@ ${cfg.seo.twitterUser ? `<meta name="twitter:site" content="${esc(cfg.seo.twitte
 <link rel="manifest" href="/manifest.webmanifest">
 <link rel="alternate" type="application/rss+xml" title="Blog de ${esc(cfg.nombre)}" href="/rss.xml">
 <link rel="sitemap" type="application/xml" href="/sitemap.xml">
+<link rel="preload" href="/assets/fuentes/fraunces-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fuentes/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/css/estilos.css" as="style">
 <link rel="stylesheet" href="/assets/css/estilos.css">
 ${o.extraHead || ''}

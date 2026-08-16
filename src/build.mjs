@@ -17,7 +17,6 @@ import { esc, recorta, slug } from './lib/utils.mjs';
 import { pagina } from './lib/layout.mjs';
 import { portadaSVG, retratoSVG, bannerSVG } from './lib/covers.mjs';
 import { tarjetaSocial, icono as iconoPNG } from './lib/branding.mjs';
-import { logotipo } from './lib/icons.mjs';
 
 import { paginaInicio } from './pages/inicio.mjs';
 import { paginaLibros, paginaCategoria, paginaNovedades } from './pages/catalogo.mjs';
@@ -54,6 +53,12 @@ function normalizarLibro(libro, i) {
   const l = { ...libro };
   l.id = l.id || slug(l.titulo || `libro-${i}`);
   l.titulo = l.titulo || 'Sin título';
+  // Un libro puede tener varios autores. Se admite tanto "autores": [...]
+  // como el "autorId" simple de las fichas antiguas.
+  l.autores = Array.isArray(l.autores) && l.autores.length
+    ? l.autores
+    : (l.autorId ? [l.autorId] : []);
+  l.autorId = l.autores[0] || '';
   l.precio = Number(l.precio) || 0;
   l.precioDigital = l.precioDigital ? Number(l.precioDigital) : 0;
   l.paginas = Number(l.paginas) || 0;
@@ -179,15 +184,21 @@ function construir() {
   const categoriasPorId = new Map(categorias.map((c) => [c.id, c]));
 
   for (const l of libros) {
-    if (!autoresPorId.has(l.autorId)) avisos.push(`El libro "${l.titulo}" apunta al autor "${l.autorId}", que no existe en data/authors.json.`);
+    for (const id of l.autores) {
+      if (!autoresPorId.has(id)) avisos.push(`El libro "${l.titulo}" apunta al autor "${id}", que no existe en data/authors.json.`);
+    }
+    if (!l.autores.length) avisos.push(`El libro "${l.titulo}" no tiene ningún autor asignado.`);
     if (!categoriasPorId.has(l.categoria)) avisos.push(`El libro "${l.titulo}" usa la categoría "${l.categoria}", que no existe en data/categories.json.`);
+    if (!l.precio) avisos.push(`El libro "${l.titulo}" no tiene precio: la ficha mostrará "Consultar precio" hasta que lo definas.`);
   }
 
   const librosPorAutor = new Map();
   const librosPorCategoria = new Map();
   for (const l of libros) {
-    if (!librosPorAutor.has(l.autorId)) librosPorAutor.set(l.autorId, []);
-    librosPorAutor.get(l.autorId).push(l);
+    for (const id of l.autores) {
+      if (!librosPorAutor.has(id)) librosPorAutor.set(id, []);
+      librosPorAutor.get(id).push(l);
+    }
     if (!librosPorCategoria.has(l.categoria)) librosPorCategoria.set(l.categoria, []);
     librosPorCategoria.get(l.categoria).push(l);
   }
@@ -251,10 +262,22 @@ function construir() {
   escribir('assets/img/icono-192.png', iconoPNG(192));
   escribir('assets/img/icono-512.png', iconoPNG(512));
   escribir('assets/img/apple-touch-icon.png', iconoPNG(180));
-  escribir('favicon.svg', `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
-  <rect width="48" height="48" rx="8" fill="${cfg.seo.temaColor}"/>
-  <g transform="translate(0 1) scale(0.92) translate(2 1)" color="#f4f1ea">${logotipo({ conTexto: false })
-    .replace(/<svg[^>]*>|<\/svg>/g, '')}</g>
+  // Favicon vectorial: síntesis del medallón (aro dorado + torre del saber).
+  escribir('favicon.svg', `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" role="img" aria-label="${esc(cfg.nombre)}">
+  <circle cx="24" cy="24" r="23" fill="#c9a227"/>
+  <circle cx="24" cy="24" r="20.5" fill="${cfg.seo.temaColor}"/>
+  <circle cx="24" cy="24" r="18.4" fill="none" stroke="#c9a227" stroke-width="0.9" opacity=".8"/>
+  <g fill="#f4f1ea">
+    <rect x="10.5" y="31" width="27" height="4.6"/>
+    <rect x="12.8" y="26.6" width="22.4" height="4.4"/>
+    <rect x="15.2" y="22.2" width="17.6" height="4.4"/>
+    <rect x="17.6" y="17.8" width="12.8" height="4.4"/>
+    <rect x="20" y="13.2" width="8" height="4.6"/>
+  </g>
+  <rect x="21.6" y="30" width="4.8" height="5.6" fill="#c9a227"/>
+  <rect x="23.2" y="7.4" width="1.6" height="5.8" fill="#c9a227"/>
+  <path d="M24.8 7.4 30 8.8l-5.2 1.4z" fill="#c9a227"/>
+  <rect x="9" y="35.6" width="30" height="1.6" fill="#f4f1ea" opacity=".55"/>
 </svg>`);
 
   /* --- Archivos técnicos ------------------------------------------ */

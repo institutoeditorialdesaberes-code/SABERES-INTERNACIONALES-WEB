@@ -1,13 +1,91 @@
 [
   {
+    "id": "narrativas-contra-la-violencia",
+    "titulo": "Narrativas contra la violencia basadas en la Divina Comedia",
+    "subtitulo": "Cien talleres de redacción creativa que examinan el comportamiento humano mientras recorres el Infierno de Dante",
+    "autores": [
+      "jaime-andrango",
+      "raquel-guishcaso",
+      "jacqueline-toaquiza"
+    ],
+    "categoria": "educacion",
+    "coleccion": "Cuadernos Pedagógicos",
+    "precio": 0,
+    "precioDigital": 0,
+    "portada": "",
+    "insignia": "Novedad",
+    "isbn": "",
+    "paginas": 199,
+    "anio": 2026,
+    "edicion": "Primera edición digital",
+    "formato": "Digital (PDF)",
+    "dimensiones": "",
+    "idioma": "Español",
+    "valoracion": 0,
+    "resenas": 0,
+    "esNuevo": true,
+    "esDestacado": true,
+    "disponibilidad": "disponible",
+    "temas": [
+      "Escritura creativa",
+      "Prevención de la violencia",
+      "Divina Comedia",
+      "Dante Alighieri",
+      "Talleres literarios",
+      "Educación secundaria",
+      "Educación universitaria"
+    ],
+    "resumen": "Cien talleres de escritura que recorren el Infierno de Dante canto por canto para nombrar con precisión los comportamientos que hacen daño, y convertir la experiencia propia en relato.",
+    "descripcion": "Este libro nace de una convicción sencilla: para vivir bien hay que saber reconocer, con precisión, todo aquello que nos hace mal. No de manera literal, sino introspectiva: la mentira que se dice para quedar bien, el rencor guardado durante años, la traición a quien confió en nosotros, la indiferencia ante el sufrimiento ajeno, la avaricia insatisfecha, el orgullo de no querer escuchar.\n\nHace unos setecientos años, un poeta exiliado construyó el catálogo más completo y humano de esos comportamientos: la Divina Comedia de Dante Alighieri. No lo hizo para asustar ni para condenar desde la distancia, sino caminando él mismo por ese paisaje y reconociendo en cada alma castigada algo que también llevaba dentro.\n\n## Cómo está organizado\n\nCien talleres siguen el mismo orden en que Dante presenta su viaje: canto por canto, círculo por círculo, vicio por vicio, desde el extravío inicial en la selva oscura hasta el hielo final donde se castiga la traición más profunda.\n\nCada parada del recorrido se convierte en una sesión de escritura. Se lee el episodio, se nombra con claridad el comportamiento humano que está en juego, y cada participante escribe un relato breve que plasma ese actuar en palabras.\n\n## El criterio que sostiene el libro\n\nLos textos que se crean en estos talleres no deben surgir de la ficción ni de la réplica de personajes de películas o series. Deben surgir, en la medida de lo posible, de la experiencia propia: de algo que el participante vivió, presenció o atravesó.\n\nEl último capítulo no es un ejercicio suelto: es una guía completa que acompaña al participante desde el relato terminado hasta su publicación.\n\n## Para quién es\n\nGuía de talleres dirigida a jóvenes y adultos, pensada para educación secundaria y universitaria, y utilizable tanto por docentes de Lengua y Literatura como por facilitadores de procesos de prevención de la violencia.",
+    "indice": [
+      "Prólogo · Quién fue Dante y qué se propuso escribir",
+      "Nota sobre las citas, las traducciones y la autoría de los textos",
+      "Canto I · La selva, las fieras y el guía (talleres 1 a 3)",
+      "Canto II · El miedo a no ser suficiente (talleres 4 a 6)",
+      "Canto III · El umbral, la indiferencia y el río (talleres 7 a 9)",
+      "Canto IV · El Limbo: maestros y refugio de la razón (talleres 10 a 12)",
+      "Canto V · El juicio y la pasión sin freno (talleres 13 a 15)",
+      "Canto VI · La gula y el vacío que nunca se llena (talleres 16 a 18)",
+      "Canto VII · La avaricia, el derroche y la fortuna (talleres 19 a 21)",
+      "Canto VIII · La ira, el rencor y el límite de la razón (talleres 22 a 24)",
+      "Canto IX · El miedo paralizante y la ayuda inesperada (talleres 25 a 27)",
+      "Canto X · La terquedad de las propias certezas (talleres 28 a 30)",
+      "Canto XI · El mapa moral del mal (talleres 31 a 33)",
+      "Canto XII · La violencia ciega (talleres 34 a 36)",
+      "Canto XIII · La autodestrucción (talleres 37 a 39)",
+      "Canto XIV · El desafío sin sentido (talleres 40 a 43)",
+      "Canto XV · El maestro imperfecto y la fama vacía (talleres 44 a 45)",
+      "Canto XVI · El respeto por el origen (talleres 46 a 48)",
+      "Canto XVII · La cara amable del engaño (talleres 49 a 51)",
+      "Canto XVIII · El abuso de la confianza (talleres 52 a 54)",
+      "Canto XIX · El cargo convertido en negocio (talleres 55 a 57)",
+      "Canto XX · Los adivinos (talleres 58 a 60)",
+      "Canto XXI · Los corruptos (talleres 61 a 63)",
+      "Canto XXII · Estafadores (talleres 64 a 67)",
+      "Canto XXIII · Los hipócritas (talleres 68 a 69)",
+      "Canto XXIV · Ladrones (talleres 70 a 72)",
+      "Canto XXV · Los ladrones y las formas que se pierden (talleres 73 a 75)",
+      "Canto XXVI · La ambición sin límites (talleres 76 a 78)",
+      "Canto XXVII · La falsa absolución (talleres 79 a 81)",
+      "Canto XXVIII · Las palabras que dividen (talleres 82 a 84)",
+      "Canto XXIX · La enfermedad de la falsedad (talleres 85 a 87)",
+      "Canto XXX · La locura de las máscaras (talleres 88 a 90)",
+      "Canto XXXI · El orgullo descomunal (talleres 91)",
+      "Canto XXXII · El corazón de hielo I (talleres 92 a 94)",
+      "Canto XXXIII · El corazón de hielo II (talleres 95 a 97)",
+      "Canto XXXIV · El fondo y la salida (talleres 98 a 100)",
+      "Guía final · Del relato terminado a la publicación"
+    ]
+  },
+  {
     "id": "arte-del-conocimiento",
     "titulo": "El Arte del Conocimiento",
     "subtitulo": "Cómo aprender, retener y aplicar lo que estudias",
     "autorId": "maria-rodriguez",
     "categoria": "desarrollo-personal",
     "coleccion": "Saberes Aplicados",
-    "precio": 22.0,
-    "precioDigital": 12.0,
+    "precio": 22,
+    "precioDigital": 12,
     "portada": "",
     "insignia": "Más vendido",
     "isbn": "978-9942-8765-0-1",
@@ -22,7 +100,11 @@
     "esNuevo": false,
     "esDestacado": true,
     "disponibilidad": "disponible",
-    "temas": ["Aprendizaje", "Metacognición", "Hábitos de estudio"],
+    "temas": [
+      "Aprendizaje",
+      "Metacognición",
+      "Hábitos de estudio"
+    ],
     "resumen": "Un método de estudio construido sobre evidencia: cómo pasa la información de la lectura a la memoria y de la memoria a la práctica.",
     "descripcion": "Una obra que ordena, con criterio académico, lo que hoy sabemos sobre el aprendizaje adulto: recuperación espaciada, práctica deliberada, lectura activa y transferencia del conocimiento a problemas reales.\n\nCada capítulo cierra con ejercicios que el lector puede aplicar de inmediato a su propio material de estudio, sin necesidad de herramientas adicionales.\n\nDirigido a estudiantes universitarios, profesionales en formación continua y docentes que quieran fundamentar sus métodos.",
     "indice": [
@@ -58,7 +140,11 @@
     "esNuevo": false,
     "esDestacado": true,
     "disponibilidad": "disponible",
-    "temas": ["Geopolítica", "Análisis estratégico", "Siglo XXI"],
+    "temas": [
+      "Geopolítica",
+      "Análisis estratégico",
+      "Siglo XXI"
+    ],
     "resumen": "Un marco de análisis para entender cómo las decisiones globales llegan hasta las economías locales.",
     "descripcion": "El libro propone un método de lectura de la coyuntura internacional que evita tanto el catastrofismo como la ingenuidad: identificar actores, intereses, restricciones y tiempos.\n\nA través de casos recientes, el autor muestra cómo se construye un análisis defendible y cómo se distingue de la mera opinión informada.\n\nÚtil para estudiantes de relaciones internacionales, periodistas y profesionales que toman decisiones con exposición internacional.",
     "indice": [
@@ -78,7 +164,7 @@
     "autorId": "andres-guerrero",
     "categoria": "negocios",
     "coleccion": "Alta Dirección",
-    "precio": 21.0,
+    "precio": 21,
     "precioDigital": 11.5,
     "portada": "",
     "insignia": "",
@@ -94,7 +180,11 @@
     "esNuevo": false,
     "esDestacado": true,
     "disponibilidad": "disponible",
-    "temas": ["Liderazgo", "Equipos", "Comunicación directiva"],
+    "temas": [
+      "Liderazgo",
+      "Equipos",
+      "Comunicación directiva"
+    ],
     "resumen": "Principios de dirección que resisten el cambio de industria, de país y de generación.",
     "descripcion": "Basado en dos décadas de acompañamiento a equipos directivos, el libro separa lo que es moda gerencial de lo que sostiene resultados en el tiempo.\n\nIncluye protocolos concretos para conversaciones difíciles, delegación efectiva y toma de decisiones con información incompleta.\n\nCada capítulo incluye un caso de la región andina, con nombres y cifras modificados por confidencialidad.",
     "indice": [
@@ -114,7 +204,7 @@
     "autorId": "laura-sanchez",
     "categoria": "educacion",
     "coleccion": "Cuadernos Pedagógicos",
-    "precio": 18.0,
+    "precio": 18,
     "precioDigital": 9.5,
     "portada": "",
     "insignia": "",
@@ -130,7 +220,11 @@
     "esNuevo": false,
     "esDestacado": false,
     "disponibilidad": "disponible",
-    "temas": ["Pedagogía", "Currículo", "Evaluación"],
+    "temas": [
+      "Pedagogía",
+      "Currículo",
+      "Evaluación"
+    ],
     "resumen": "Una propuesta de rediseño curricular que integra tecnología sin renunciar a la formación humana.",
     "descripcion": "El libro discute qué debería enseñarse cuando la información está disponible en todas partes, y responde con una defensa del criterio, la lectura profunda y la evaluación formativa.\n\nOfrece matrices de planificación y rúbricas listas para adaptar en instituciones de educación básica y bachillerato.\n\nEscrito para docentes en ejercicio, coordinadores académicos y responsables de política educativa.",
     "indice": [
@@ -150,8 +244,8 @@
     "autorId": "maria-rodriguez",
     "categoria": "literatura",
     "coleccion": "Biblioteca de Humanidades",
-    "precio": 28.0,
-    "precioDigital": 15.0,
+    "precio": 28,
+    "precioDigital": 15,
     "portada": "",
     "insignia": "Destacado",
     "isbn": "978-9942-8765-4-9",
@@ -166,7 +260,11 @@
     "esNuevo": true,
     "esDestacado": true,
     "disponibilidad": "disponible",
-    "temas": ["Antropología", "Patrimonio", "Estudios culturales"],
+    "temas": [
+      "Antropología",
+      "Patrimonio",
+      "Estudios culturales"
+    ],
     "resumen": "Cinco continentes, un mismo hilo: las respuestas que distintas culturas dieron a las mismas preguntas.",
     "descripcion": "Fruto de quince años de trabajo de campo, este volumen documenta prácticas, rituales y sistemas de conocimiento de comunidades de los cinco continentes.\n\nLejos del exotismo, el libro insiste en las conexiones: las preguntas sobre la muerte, el trabajo, el parentesco y lo sagrado se repiten con respuestas distintas.\n\nEdición ilustrada con material de archivo y notas de campo de la autora.",
     "indice": [
@@ -186,7 +284,7 @@
     "autorId": "lucia-martinez",
     "categoria": "desarrollo-personal",
     "coleccion": "Saberes Aplicados",
-    "precio": 16.0,
+    "precio": 16,
     "precioDigital": 8.5,
     "portada": "",
     "insignia": "Novedad",
@@ -202,7 +300,11 @@
     "esNuevo": true,
     "esDestacado": false,
     "disponibilidad": "disponible",
-    "temas": ["Neurociencia", "Memoria", "Atención"],
+    "temas": [
+      "Neurociencia",
+      "Memoria",
+      "Atención"
+    ],
     "resumen": "Qué dice realmente la investigación sobre el rendimiento mental, y qué es solo marketing.",
     "descripcion": "La autora revisa la literatura sobre memoria de trabajo, atención sostenida y pensamiento divergente, y traduce los hallazgos consolidados en prácticas verificables.\n\nCada afirmación se acompaña de su nivel de evidencia, distinguiendo con claridad lo demostrado de lo prometedor.\n\nIncluye un capítulo dedicado a desmontar mitos populares sobre el cerebro.",
     "indice": [
@@ -222,8 +324,8 @@
     "autorId": "david-salazar",
     "categoria": "ciencia-tecnologia",
     "coleccion": "Ensayo Contemporáneo",
-    "precio": 20.0,
-    "precioDigital": 11.0,
+    "precio": 20,
+    "precioDigital": 11,
     "portada": "",
     "insignia": "Más vendido",
     "isbn": "978-9942-8765-6-3",
@@ -238,7 +340,11 @@
     "esNuevo": true,
     "esDestacado": true,
     "disponibilidad": "disponible",
-    "temas": ["Transformación digital", "Datos", "Inteligencia artificial"],
+    "temas": [
+      "Transformación digital",
+      "Datos",
+      "Inteligencia artificial"
+    ],
     "resumen": "Del diagnóstico al despliegue: cómo modernizar una organización sin romper lo que funciona.",
     "descripcion": "Una guía de implementación pensada para empresas medianas y organizaciones públicas que necesitan modernizarse con presupuestos reales.\n\nEl autor propone una secuencia de trabajo por etapas, con criterios de decisión, indicadores y errores frecuentes documentados.\n\nIncluye un capítulo sobre gobernanza de datos y otro sobre adopción responsable de inteligencia artificial.",
     "indice": [
@@ -258,8 +364,8 @@
     "autorId": "ana-torres",
     "categoria": "literatura",
     "coleccion": "Biblioteca de Humanidades",
-    "precio": 17.0,
-    "precioDigital": 9.0,
+    "precio": 17,
+    "precioDigital": 9,
     "portada": "",
     "insignia": "Novedad",
     "isbn": "978-9942-8765-7-0",
@@ -274,7 +380,11 @@
     "esNuevo": true,
     "esDestacado": false,
     "disponibilidad": "disponible",
-    "temas": ["Filosofía", "Ética", "Historia de las ideas"],
+    "temas": [
+      "Filosofía",
+      "Ética",
+      "Historia de las ideas"
+    ],
     "resumen": "Lecturas de los clásicos con las preguntas que hoy nos ocupan, sin convertirlos en manuales de autoayuda.",
     "descripcion": "El libro recorre estoicismo, aristotelismo y pensamiento oriental atendiendo a los textos y a sus contextos, antes de proponer cualquier aplicación práctica.\n\nCada capítulo incluye fragmentos traducidos y anotados por la autora, con indicación de la edición de referencia.\n\nUna invitación a leer a los antiguos como interlocutores exigentes y no como consejeros complacientes.",
     "indice": [
@@ -295,7 +405,7 @@
     "categoria": "negocios",
     "coleccion": "Alta Dirección",
     "precio": 15.5,
-    "precioDigital": 8.0,
+    "precioDigital": 8,
     "portada": "",
     "insignia": "Novedad",
     "isbn": "978-9942-8765-8-7",
@@ -310,7 +420,11 @@
     "esNuevo": true,
     "esDestacado": false,
     "disponibilidad": "disponible",
-    "temas": ["Innovación", "Emprendimiento", "Creatividad"],
+    "temas": [
+      "Innovación",
+      "Emprendimiento",
+      "Creatividad"
+    ],
     "resumen": "La creatividad como proceso repetible: restricciones, prototipos y aprendizaje rápido.",
     "descripcion": "El autor sostiene que la creatividad organizacional no depende del talento individual sino del diseño del proceso, y lo demuestra con un método de seis fases.\n\nIncluye plantillas de trabajo, criterios para matar proyectos a tiempo y métricas de aprendizaje.\n\nPensado para equipos de producto, áreas de innovación y emprendedores en etapa temprana.",
     "indice": [
@@ -346,7 +460,11 @@
     "esNuevo": true,
     "esDestacado": false,
     "disponibilidad": "preventa",
-    "temas": ["Metas", "Hábitos", "Productividad"],
+    "temas": [
+      "Metas",
+      "Hábitos",
+      "Productividad"
+    ],
     "resumen": "Un sistema para definir objetivos que sobreviven al entusiasmo inicial.",
     "descripcion": "El libro propone un marco de planificación personal por horizontes, con revisiones periódicas y criterios explícitos para abandonar o sostener un objetivo.\n\nSe apoya en investigación sobre formación de hábitos y en la experiencia del autor con directivos en procesos de cambio.\n\nIncluye formatos de revisión trimestral y anual.",
     "indice": [
@@ -366,7 +484,7 @@
     "autorId": "ana-torres",
     "categoria": "derecho",
     "coleccion": "Cuadernos Pedagógicos",
-    "precio": 14.0,
+    "precio": 14,
     "precioDigital": 7.5,
     "portada": "",
     "insignia": "",
@@ -382,7 +500,11 @@
     "esNuevo": true,
     "esDestacado": false,
     "disponibilidad": "disponible",
-    "temas": ["Formación ciudadana", "Derechos", "Educación cívica"],
+    "temas": [
+      "Formación ciudadana",
+      "Derechos",
+      "Educación cívica"
+    ],
     "resumen": "Los derechos fundamentales explicados con casos, actividades y lenguaje accesible para el aula.",
     "descripcion": "Manual escolar que traduce el marco normativo de derechos a situaciones cotidianas del entorno estudiantil.\n\nCada unidad presenta un caso, la norma aplicable, preguntas de discusión y una actividad de cierre.\n\nDiseñado para acompañar la asignatura de educación para la ciudadanía en bachillerato.",
     "indice": [
@@ -402,8 +524,8 @@
     "autorId": "laura-sanchez",
     "categoria": "educacion",
     "coleccion": "Cuadernos Pedagógicos",
-    "precio": 24.0,
-    "precioDigital": 13.0,
+    "precio": 24,
+    "precioDigital": 13,
     "portada": "",
     "insignia": "Destacado",
     "isbn": "978-9942-9012-1-0",
@@ -418,7 +540,11 @@
     "esNuevo": true,
     "esDestacado": true,
     "disponibilidad": "disponible",
-    "temas": ["Investigación", "Metodología", "Escritura académica"],
+    "temas": [
+      "Investigación",
+      "Metodología",
+      "Escritura académica"
+    ],
     "resumen": "Guía completa para diseñar, ejecutar y comunicar una investigación en ciencias sociales y educación.",
     "descripcion": "Acompaña al investigador desde la formulación del problema hasta el envío del manuscrito a una revista indexada.\n\nIncluye capítulos sobre diseño muestral, instrumentos, análisis cualitativo y cuantitativo, y ética de la investigación.\n\nCon listas de verificación para cada etapa y ejemplos de redacción antes y después de la corrección.",
     "indice": [
