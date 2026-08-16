@@ -488,20 +488,94 @@ a.ventaja:hover { background: var(--papel); box-shadow: var(--sombra-s); }
 .ventaja-flecha { color: var(--tinta-suave); align-self: center; transition: transform var(--transicion); }
 a.ventaja:hover .ventaja-flecha { transform: translateX(4px); color: var(--azul); }
 
-/* Ventaja con fotografía */
-.ventajas.ventajas-con-imagenes .ventajas-rejilla { padding-block: 0; gap: 0; }
-.ventaja.con-imagen {
-  flex-direction: column; gap: 0; padding: 0; overflow: hidden;
-  border: 1px solid var(--linea); border-radius: var(--r-m); background: #fff;
+/* ── Ventajas visuales (con fotografías) ──────────────────────────────── */
+.ventajas-visual { padding: 0; background: var(--azul-oscuro, #061726); overflow: hidden; }
+.ventajas-rejilla-visual {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  min-height: 340px;
 }
-.ventaja-imagen { width: 100%; aspect-ratio: 5 / 3; object-fit: cover; object-position: center; }
-.ventaja.con-imagen .ventaja-icono,
-.ventaja.con-imagen .ventaja-texto,
-.ventaja.con-imagen .ventaja-flecha { margin: 0 1.2rem; }
-.ventaja.con-imagen .ventaja-icono { margin-top: 1.2rem; }
-.ventaja.con-imagen .ventaja-texto { margin-top: .6rem; margin-bottom: .2rem; }
-.ventaja.con-imagen .ventaja-flecha { margin-bottom: 1.1rem; }
-a.ventaja.con-imagen:hover { background: #fff; box-shadow: var(--sombra-m); transform: translateY(-3px); }
+.ventaja-card {
+  position: relative; overflow: hidden; display: flex; flex-direction: column;
+  justify-content: flex-end; text-decoration: none; color: #fff;
+  cursor: pointer;
+}
+.ventaja-card-img {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover; object-position: center;
+  transition: transform .65s cubic-bezier(.2, .7, .3, 1), filter .65s ease;
+  filter: brightness(.75) saturate(.9);
+}
+.ventaja-card:hover .ventaja-card-img {
+  transform: scale(1.08);
+  filter: brightness(.55) saturate(1.1);
+}
+.ventaja-card-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(6,23,38,.92) 0%, rgba(6,23,38,.3) 55%, transparent 100%);
+  transition: background .5s ease;
+}
+.ventaja-card:hover .ventaja-card-overlay {
+  background: linear-gradient(to top, rgba(6,23,38,.97) 0%, rgba(6,23,38,.55) 60%, rgba(6,23,38,.1) 100%);
+}
+/* Separador vertical entre tarjetas */
+.ventaja-card + .ventaja-card::before {
+  content: ''; position: absolute; left: 0; top: 10%; bottom: 10%; width: 1px;
+  background: rgba(255,255,255,.12); z-index: 2;
+}
+.ventaja-card-body {
+  position: relative; z-index: 3;
+  display: flex; flex-direction: column; gap: .45rem;
+  padding: 2rem 1.6rem 2.2rem;
+  transform: translateY(8px);
+  transition: transform .45s cubic-bezier(.2, .7, .3, 1);
+}
+.ventaja-card:hover .ventaja-card-body { transform: translateY(0); }
+.ventaja-card-icono {
+  display: flex; align-items: center; justify-content: center;
+  width: 44px; height: 44px; border-radius: 10px;
+  background: rgba(255,255,255,.15); backdrop-filter: blur(6px);
+  color: var(--oro); flex: none;
+  transition: background .4s ease, transform .4s ease;
+}
+.ventaja-card-icono svg { width: 22px; height: 22px; }
+.ventaja-card:hover .ventaja-card-icono {
+  background: var(--oro); color: #061726; transform: scale(1.08);
+}
+.ventaja-card-titulo {
+  font-family: var(--sans); font-size: 1rem; font-weight: 700;
+  line-height: 1.25; color: #fff; letter-spacing: -.01em;
+}
+.ventaja-card-texto {
+  font-size: .825rem; line-height: 1.55; color: rgba(255,255,255,.78);
+  max-width: 22ch;
+}
+.ventaja-card-cta {
+  display: inline-flex; align-items: center; gap: .35rem;
+  font-size: .78rem; font-weight: 600; color: var(--oro);
+  letter-spacing: .04em; text-transform: uppercase;
+  margin-top: .5rem; opacity: 0;
+  transform: translateY(6px);
+  transition: opacity .35s ease .05s, transform .35s ease .05s;
+}
+.ventaja-card-cta svg { width: 14px; height: 14px; }
+.ventaja-card:hover .ventaja-card-cta { opacity: 1; transform: translateY(0); }
+
+@media (max-width: 900px) {
+  .ventajas-rejilla-visual { grid-template-columns: repeat(2, 1fr); min-height: 480px; }
+  .ventaja-card + .ventaja-card::before { display: none; }
+  .ventaja-card:nth-child(odd)::after {
+    content: ''; position: absolute; bottom: 0; left: 5%; right: 5%; height: 1px;
+    background: rgba(255,255,255,.12); z-index: 2;
+  }
+}
+@media (max-width: 500px) {
+  .ventajas-rejilla-visual { grid-template-columns: 1fr; min-height: auto; }
+  .ventaja-card { min-height: 220px; }
+  .ventaja-card:nth-child(odd)::after { display: none; }
+  .ventaja-card-body { padding: 1.5rem 1.25rem 1.75rem; }
+}
 
 /* ---------- 12. Categorías ---------------------------------------------- */
 .rejilla-categorias { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem; }

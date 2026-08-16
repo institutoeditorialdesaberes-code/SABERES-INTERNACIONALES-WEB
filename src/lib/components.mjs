@@ -181,7 +181,33 @@ export function bandaCTA(cfg) {
 </section>`;
 }
 
-export function ventajas(cfg) {
+export function ventajas(cfg, ctx) {
+  const hayImagenes = cfg.ventajas.some((v) => v.id && ctx?.imagenesVentajas?.get(v.id));
+  if (hayImagenes) {
+    // Diseño visual con fotos, overlay y motion
+    return `
+<section class="ventajas ventajas-visual">
+  <div class="contenedor ventajas-rejilla-visual">
+    ${cfg.ventajas.map((v) => {
+      const imagen = v.id && ctx?.imagenesVentajas?.get(v.id);
+      const tag = v.url ? 'a' : 'div';
+      const href = v.url ? ` href="${esc(v.url)}"` : '';
+      return `
+    <${tag} class="ventaja-card"${href}>
+      ${imagen ? `<img class="ventaja-card-img" src="${esc(imagen)}" alt="" width="400" height="300" loading="lazy" decoding="async">` : ''}
+      <div class="ventaja-card-overlay"></div>
+      <div class="ventaja-card-body">
+        <span class="ventaja-card-icono">${icono(v.icono)}</span>
+        <strong class="ventaja-card-titulo">${esc(v.titulo)}</strong>
+        <span class="ventaja-card-texto">${esc(v.texto)}</span>
+        ${v.url ? `<span class="ventaja-card-cta">Saber más ${icono('flechaDer')}</span>` : ''}
+      </div>
+    </${tag}>`;
+    }).join('')}
+  </div>
+</section>`;
+  }
+  // Fallback sin imágenes: diseño de iconos
   return `
 <section class="ventajas">
   <div class="contenedor ventajas-rejilla">
