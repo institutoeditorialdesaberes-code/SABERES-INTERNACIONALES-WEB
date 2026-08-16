@@ -229,10 +229,13 @@ export function pagina(o) {
   // Cortina de bienvenida: solo en la portada, solo la primera visita de la
   // sesión y solo si el visitante no pidió reducir movimiento. El guion va en
   // línea y antes del cuerpo para que no haya destello de contenido.
+  // El sello lleva su tamaño en los propios atributos width/height: si la hoja
+  // de estilos no llega a tiempo (caché servida a destiempo, red caída), el SVG
+  // se dibuja a 190px en vez de estirarse a todo el ancho de la ventana.
   const cortina = (cfg.animacionEntrada && o.ruta === '/') ? `
 <script>try{if(!sessionStorage.getItem('si-bienvenida')&&!matchMedia('(prefers-reduced-motion: reduce)').matches){document.documentElement.classList.add('con-cortina');sessionStorage.setItem('si-bienvenida','1')}}catch(e){}</script>
 <div class="cortina" data-cortina aria-hidden="true">
-  <svg class="cortina-sello" viewBox="0 0 48 48" role="img" aria-label="${esc(cfg.nombre)}">
+  <svg class="cortina-sello" width="190" height="190" viewBox="0 0 48 48" role="img" aria-label="${esc(cfg.nombre)}">
     <circle class="relleno" cx="24" cy="24" r="21" fill="currentColor"/>
     <circle class="trazo" cx="24" cy="24" r="22.2" pathLength="260"/>
     <circle class="trazo" cx="24" cy="24" r="19.4" pathLength="260"/>
@@ -293,8 +296,8 @@ ${cfg.seo.twitterUser ? `<meta name="twitter:site" content="${esc(cfg.seo.twitte
 <link rel="sitemap" type="application/xml" href="/sitemap.xml">
 <link rel="preload" href="/assets/fuentes/fraunces-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/fuentes/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="/assets/css/estilos.css" as="style">
-<link rel="stylesheet" href="/assets/css/estilos.css">
+<link rel="preload" href="/assets/css/estilos.css?v=${esc(o.version || '')}" as="style">
+<link rel="stylesheet" href="/assets/css/estilos.css?v=${esc(o.version || '')}">
 ${o.extraHead || ''}
 <script type="application/ld+json">
 ${escJson({ '@context': 'https://schema.org', '@graph': grafo })}
@@ -311,7 +314,7 @@ ${o.cuerpo}
 </main>
 ${pie(cfg)}
 <button class="subir" type="button" data-subir aria-label="Volver arriba">${icono('chevronAbajo', 'ico-subir')}</button>
-<script src="/assets/js/sitio.js" defer></script>
+<script src="/assets/js/sitio.js?v=${esc(o.version || '')}" defer></script>
 ${o.extraScript || ''}
 </body>
 </html>`;

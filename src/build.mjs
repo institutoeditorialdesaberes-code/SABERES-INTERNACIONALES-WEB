@@ -11,6 +11,7 @@
 
 import fs from 'node:fs';
 import path from 'node:path';
+import crypto from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 
 import { esc, recorta, slug } from './lib/utils.mjs';
@@ -31,6 +32,7 @@ import {
 
 const RAIZ = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const DIST = path.join(RAIZ, 'dist');
+const PUBLIC = path.join(RAIZ, 'public');
 
 const avisos = [];
 const errores = [];
@@ -146,7 +148,7 @@ function escribir(rutaRelativa, contenido) {
 }
 
 function escribirPagina(def, ctx) {
-  const html = pagina({ ...def, cfg: ctx.cfg, categorias: ctx.categorias });
+  const html = pagina({ ...def, cfg: ctx.cfg, categorias: ctx.categorias, version: ctx.version });
   const archivo = def.ruta === '/404.html'
     ? '404.html'
     : def.ruta === '/'
@@ -170,6 +172,21 @@ function copiarDirectorio(origen, destino) {
       escritos += 1;
     }
   }
+}
+
+/**
+ * Huella del contenido de la hoja de estilos y del guion del sitio. Se cuelga
+ * de sus URL como `?v=` para que un cambio en el CSS invalide la copia que
+ * Cloudflare tenga en caché. Sin esto el HTML nuevo puede quedar emparejado
+ * con un CSS viejo, y la página se dibuja sin la mitad de sus reglas.
+ */
+function versionDeAssets() {
+  const hash = crypto.createHash('sha256');
+  for (const rel of ['assets/css/estilos.css', 'assets/js/sitio.js']) {
+    const ruta = path.join(PUBLIC, rel);
+    if (fs.existsSync(ruta)) hash.update(fs.readFileSync(ruta));
+  }
+  return hash.digest('hex').slice(0, 10);
 }
 
 /* ---------------------------------------------------------------- */
@@ -237,6 +254,7 @@ function construir() {
     cfg, libros, autores, categorias, posts,
     autoresPorId, categoriasPorId, librosPorAutor, librosPorCategoria,
     bannersReales, imagenesCategorias, imagenesSecciones,
+    version: versionDeAssets(),
     rutas: []
   };
 
