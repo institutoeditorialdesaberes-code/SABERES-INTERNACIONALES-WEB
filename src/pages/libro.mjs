@@ -1,4 +1,4 @@
-import { esc, money, markdown, estrellas, recorta, url } from '../lib/utils.mjs';
+import { esc, money, markdown, estrellas, recorta, url, fechaLarga } from '../lib/utils.mjs';
 import { icono } from '../lib/icons.mjs';
 import { tarjetaLibro, rutaPortada, rutaRetrato, enlaceWhatsApp, autoresDe, precioTexto } from '../lib/components.mjs';
 
@@ -7,6 +7,133 @@ const DISPONIBILIDAD_SCHEMA = {
   preventa: 'https://schema.org/PreOrder',
   agotado: 'https://schema.org/OutOfStock'
 };
+
+/* ── Genera la cita APA completa del libro ── */
+function citaAPA(libro, autores, cfg) {
+  let autoresStr;
+  if (autores.length === 0) {
+    autoresStr = cfg.nombreLegal;
+  } else {
+    const formateados = autores.map(a => {
+      const partes = a.nombre.trim().split(/\s+/);
+      const apellido = partes.length > 1 ? partes.slice(1).join(' ') : partes[0];
+      const inicial = partes[0][0] + '.';
+      return `${apellido}, ${inicial}`;
+    });
+    if (formateados.length === 1) autoresStr = formateados[0];
+    else if (formateados.length === 2) autoresStr = formateados.join(', & ');
+    else autoresStr = formateados.slice(0, -1).join(', ') + ', & ' + formateados.at(-1);
+  }
+
+  const titulo = libro.subtitulo
+    ? `<em class="apa-titulo">${esc(libro.titulo)}: ${esc(libro.subtitulo)}</em>`
+    : `<em class="apa-titulo">${esc(libro.titulo)}</em>`;
+
+  const isbn = libro.isbn ? ` ISBN: ${esc(libro.isbn)}.` : '';
+  const ciudad = 'Quito, Ecuador';
+
+  return `<span class="apa-autores">${esc(autoresStr)}</span> <span class="apa-anio">(${libro.anio}).</span> ${titulo}. <span class="apa-editorial">${esc(cfg.nombreLegal)}.</span>${isbn}`;
+}
+
+/* ── Sección completa de reseñas de lectores ── */
+function seccionResenas(libro, cfg) {
+  const resenas = libro.resenas_detalle || [];
+  const total = libro.resenas || 0;
+  const promedio = libro.valoracion || 0;
+
+  /* Distribución aproximada de estrellas */
+  const dist = [5, 4, 3, 2, 1].map(n => {
+    let pct = 0;
+    if (resenas.length > 0) {
+      pct = Math.round((resenas.filter(r => r.calificacion === n).length / resenas.length) * 100);
+    } else if (n === 5 && promedio >= 4.5) { pct = 80; }
+    else if (n === 4 && promedio >= 4) { pct = 15; }
+    else if (n === 3) { pct = 5; }
+    return { stars: n, pct };
+  });
+
+  const mensajeWA = encodeURIComponent(`Hola, quiero dejar una reseña del libro "${libro.titulo}". Mi opinión es:`);
+  const urlWA = `https://wa.me/${cfg.contacto.whatsapp}?text=${mensajeWA}`;
+
+  const cardsResenas = resenas.map(r => {
+    const iniciales = r.nombre.split(' ').map(p => p[0]).slice(0, 2).join('').toUpperCase();
+    const estrellasR = Array.from({ length: 5 }, (_, i) =>
+      `<span class="estrella${i < r.calificacion ? ' llena' : ''}"></span>`).join('');
+    return `
+<article class="resena-card" data-revelar>
+  <div class="resena-header">
+    <div class="resena-avatar" aria-hidden="true">${esc(iniciales)}</div>
+    <div class="resena-quien">
+      <strong>${esc(r.nombre)}</strong>
+      <span>${esc(r.cargo)}</span>
+    </div>
+    <div class="resena-meta">
+      <div class="estrellas" aria-label="${r.calificacion} de 5 estrellas">${estrellasR}</div>
+      <time datetime="${esc(r.fecha)}">${fechaLarga(r.fecha)}</time>
+    </div>
+  </div>
+  <blockquote class="resena-texto">
+    <p>${esc(r.texto)}</p>
+  </blockquote>
+  ${r.verificado ? `<p class="resena-badge">${icono('check')} Lector verificado</p>` : ''}
+</article>`;
+  }).join('');
+
+  return `
+<section class="seccion resenas-seccion" id="resenas">
+  <div class="contenedor">
+
+    <div class="resenas-encabezado">
+      <div>
+        <p class="sobretitulo">Comunidad lectora</p>
+        <h2 class="titulo-bloque">Reseñas y valoraciones</h2>
+      </div>
+      <a class="boton boton-wa" href="${esc(urlWA)}" target="_blank" rel="noopener">
+        ${icono('pluma')}<span>Escribir una reseña</span>
+      </a>
+    </div>
+
+    <div class="resenas-resumen" data-revelar>
+      <div class="resenas-promedio">
+        <span class="resenas-numero">${promedio.toFixed(1)}</span>
+        <div class="estrellas grande" aria-label="${promedio} de 5">${Array.from({ length: 5 }, (_, i) =>
+          `<span class="estrella${i < Math.floor(promedio) ? ' llena' : i < promedio ? ' media' : ''}"></span>`).join('')}</div>
+        <span class="resenas-total">${total > 0 ? `${total} valoraciones` : 'Sin valoraciones aún'}</span>
+      </div>
+      <div class="resenas-barras">
+        ${dist.map(d => `
+        <div class="resena-barra">
+          <span class="barra-label">${d.stars} ${icono('estrella-llena')}</span>
+          <div class="barra-track" role="progressbar" aria-valuenow="${d.pct}" aria-valuemin="0" aria-valuemax="100">
+            <div class="barra-fill" style="--w:${d.pct}%"></div>
+          </div>
+          <span class="barra-pct">${d.pct}%</span>
+        </div>`).join('')}
+      </div>
+    </div>
+
+    ${resenas.length ? `
+    <div class="resenas-lista">
+      ${cardsResenas}
+    </div>` : `
+    <div class="resenas-vacia">
+      <p>Todavía no hay reseñas publicadas. ¡Sé el primero en compartir tu experiencia con este libro!</p>
+    </div>`}
+
+    <div class="resenas-cta">
+      <div class="resenas-cta-texto">
+        <h3>¿Ya lo leíste?</h3>
+        <p>Comparte tu experiencia. Las reseñas ayudan a otros lectores y dan visibilidad a los autores.</p>
+      </div>
+      <div class="resenas-cta-acciones">
+        <a class="boton boton-wa" href="${esc(urlWA)}" target="_blank" rel="noopener">${icono('whatsapp')}<span>Reseña por WhatsApp</span></a>
+        <a class="boton boton-fantasma" href="mailto:${esc(cfg.contacto.email)}?subject=${encodeURIComponent('Reseña: ' + libro.titulo)}">${icono('correo')}<span>Reseña por correo</span></a>
+      </div>
+    </div>
+
+  </div>
+</section>`;
+}
 
 export function paginaLibro(ctx, libro) {
   const { cfg, categoriasPorId, libros } = ctx;
@@ -37,6 +164,7 @@ export function paginaLibro(ctx, libro) {
 
   const compartirTexto = encodeURIComponent(`${libro.titulo} — ${cfg.nombre}`);
   const compartirUrl = encodeURIComponent(absoluta);
+  const apa = citaAPA(libro, autores, cfg);
 
   const cuerpo = `
 <section class="ficha">
@@ -66,7 +194,7 @@ export function paginaLibro(ctx, libro) {
 
       <div class="ficha-valoracion">
         ${estrellas(libro.valoracion)}
-        <span><strong>${libro.valoracion.toFixed(1)}</strong> sobre 5 · ${libro.resenas} valoraciones de lectores</span>
+        <span><strong>${libro.valoracion.toFixed(1)}</strong> sobre 5 · <a href="#resenas" class="resenas-link">${libro.resenas} valoraciones</a></span>
       </div>
 
       <p class="ficha-resumen">${esc(libro.resumen)}</p>
@@ -110,6 +238,7 @@ export function paginaLibro(ctx, libro) {
         ${libro.indice?.length ? '<button type="button" role="tab" aria-selected="false" aria-controls="tab-indice" id="btn-indice">Índice</button>' : ''}
         <button type="button" role="tab" aria-selected="false" aria-controls="tab-ficha" id="btn-ficha">Ficha técnica</button>
         ${autores.length ? `<button type="button" role="tab" aria-selected="false" aria-controls="tab-autor" id="btn-autor">${autores.length > 1 ? 'Los autores' : 'El autor'}</button>` : ''}
+        <button type="button" role="tab" aria-selected="false" aria-controls="tab-apa" id="btn-apa">Citar</button>
       </div>
 
       <div class="pestanas-panel prosa" role="tabpanel" id="tab-desc" aria-labelledby="btn-desc">
@@ -144,9 +273,22 @@ export function paginaLibro(ctx, libro) {
           </div>
         </div>`).join('')}
       </div>` : ''}
+
+      <div class="pestanas-panel" role="tabpanel" id="tab-apa" aria-labelledby="btn-apa" hidden>
+        <div class="apa-bloque">
+          <p class="apa-etiqueta">Cita bibliográfica · Formato APA 7.ª edición</p>
+          <blockquote class="apa-cita" id="apa-texto">${apa}</blockquote>
+          <button type="button" class="boton boton-fantasma boton-copiar-apa" data-copiar-apa>
+            ${icono('descarga')}<span>Copiar cita</span>
+          </button>
+          <p class="apa-nota">La cita sigue las normas APA 7.ª edición (American Psychological Association, 2020). Verifica los datos de edición antes de incluirla en un trabajo académico.</p>
+        </div>
+      </div>
     </div>
   </div>
 </section>
+
+${seccionResenas(libro, cfg)}
 
 ${relacionados.length ? `
 <section class="seccion seccion-alterna">
@@ -184,7 +326,6 @@ ${relacionados.length ? `
         url: `${cfg.url}/autor/${a.id}/`
       }))
     } : {}),
-    // Solo se declara valoración si realmente hay reseñas registradas.
     ...(libro.resenas > 0 ? {
       aggregateRating: {
         '@type': 'AggregateRating',
@@ -194,7 +335,6 @@ ${relacionados.length ? `
         worstRating: 1
       }
     } : {}),
-    // Sin precio definido no se publica una oferta: Google rechaza precio 0.
     ...(libro.precio > 0 ? {
       offers: {
         '@type': 'Offer',
@@ -220,8 +360,6 @@ ${relacionados.length ? `
       `Editado por ${cfg.nombreLegal} en Quito, Ecuador.`
     ].filter(Boolean).join(' '), 300),
     palabrasClave: [libro.titulo, autor?.nombre, categoria?.nombre, ...(libro.temas || []), 'libro', 'Ecuador'].filter(Boolean),
-    // Las redes sociales no renderizan SVG: solo se usa la portada como
-    // imagen social cuando el editor subió un archivo de mapa de bits.
     imagen: /\.(png|jpe?g|webp)$/i.test(rutaPortada(libro)) ? rutaPortada(libro) : undefined,
     tipo: 'book',
     clase: 'p-libro',

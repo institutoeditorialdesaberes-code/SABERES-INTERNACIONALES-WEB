@@ -452,6 +452,30 @@
   });
 
   /* ------------------------------------------------------------------ */
+  /* Copiar cita APA                                                     */
+  /* ------------------------------------------------------------------ */
+  $$('[data-copiar-apa]').forEach(function (boton) {
+    boton.addEventListener('click', function () {
+      var bloque = document.getElementById('apa-texto');
+      if (!bloque) return;
+      var texto = bloque.innerText || bloque.textContent;
+      function ok() {
+        var span = boton.querySelector('span');
+        if (span) { var prev = span.textContent; span.textContent = '¡Cita copiada!'; setTimeout(function () { span.textContent = prev; }, 2200); }
+        boton.classList.add('copiado');
+        setTimeout(function () { boton.classList.remove('copiado'); }, 2200);
+      }
+      if (navigator.clipboard) navigator.clipboard.writeText(texto).then(ok, function () {});
+      else {
+        var tmp = document.createElement('textarea');
+        tmp.value = texto; document.body.appendChild(tmp); tmp.select();
+        try { document.execCommand('copy'); ok(); } catch (e) {}
+        document.body.removeChild(tmp);
+      }
+    });
+  });
+
+  /* ------------------------------------------------------------------ */
   /* Filtro del blog por categoría                                       */
   /* ------------------------------------------------------------------ */
   (function filtroBlog() {

@@ -90,13 +90,18 @@ export function tarjetaAutor(autor, ctx) {
   const total = (librosPorAutor.get(autor.id) || []).length;
   return `
 <article class="tarjeta-autor">
-  <a href="/autor/${esc(autor.id)}/" class="tarjeta-autor-foto">
+  <a href="/autor/${esc(autor.id)}/" class="tarjeta-autor-foto" tabindex="-1" aria-hidden="true">
     <img src="${esc(rutaRetrato(autor))}" alt="${esc(autor.nombre)}" width="320" height="320" loading="lazy" decoding="async">
   </a>
-  <h3><a href="/autor/${esc(autor.id)}/">${esc(autor.nombre)}</a></h3>
-  <p class="especialidad">${esc(autor.especialidad)}</p>
-  <p class="resumen">${esc(recorta(autor.resumen, 120))}</p>
-  <p class="meta">${total} ${total === 1 ? 'título' : 'títulos'} · ${autor.aniosExperiencia} años de trayectoria</p>
+  <div class="tarjeta-autor-cuerpo">
+    <h3><a href="/autor/${esc(autor.id)}/">${esc(autor.nombre)}</a></h3>
+    <p class="especialidad">${esc(autor.especialidad)}</p>
+    <p class="resumen tarjeta-autor-bio">${esc(recorta(autor.resumen, 110))}</p>
+    <div class="tarjeta-autor-pie">
+      <span class="tarjeta-autor-meta">${total} ${total === 1 ? 'título' : 'títulos'} · ${autor.aniosExperiencia} años</span>
+      <a class="enlace-flecha tarjeta-autor-cta" href="/autor/${esc(autor.id)}/">Ver perfil</a>
+    </div>
+  </div>
 </article>`;
 }
 
