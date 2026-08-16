@@ -105,11 +105,15 @@ async function listarModelos() {
   console.log('');
 }
 
-/** Modelos que se intentan, en orden, si no se indica uno concreto. */
+/**
+ * Modelos que se intentan, en orden, si no se indica uno concreto.
+ * Verificados contra la cuenta de la editorial en agosto de 2026.
+ * De mayor a menor calidad; si uno falla o agota cuota, se prueba el siguiente.
+ */
 const CANDIDATOS = [
-  'gemini-2.5-flash-image',
-  'gemini-2.5-flash-image-preview',
-  'gemini-2.0-flash-preview-image-generation'
+  'gemini-3-pro-image',
+  'gemini-3.1-flash-image',
+  'gemini-2.5-flash-image'
 ];
 
 async function generar(descripcion, modeloForzado) {
