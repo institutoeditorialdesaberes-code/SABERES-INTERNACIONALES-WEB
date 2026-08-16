@@ -288,9 +288,8 @@ ${cfg.seo.twitterUser ? `<meta name="twitter:site" content="${esc(cfg.seo.twitte
 <meta name="twitter:description" content="${esc(o.descripcion)}">
 <meta name="twitter:image" content="${esc(imagen)}">
 
-<link rel="icon" href="/favicon.svg" type="image/svg+xml">
-<link rel="icon" href="/assets/img/icono-192.png" sizes="192x192" type="image/png">
-<link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+<link rel="icon" href="/imagenes/marca/logo-saberes.jpg" type="image/jpeg">
+<link rel="apple-touch-icon" href="/imagenes/marca/logo-saberes.jpg">
 <link rel="manifest" href="/manifest.webmanifest">
 <link rel="alternate" type="application/rss+xml" title="Blog de ${esc(cfg.nombre)}" href="/rss.xml">
 <link rel="sitemap" type="application/xml" href="/sitemap.xml">

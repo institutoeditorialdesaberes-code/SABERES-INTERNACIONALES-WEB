@@ -996,6 +996,9 @@ article.tarjeta-autor .meta { font-size: .78rem; color: var(--tinta-suave); marg
   .cifras { grid-template-columns: 1fr 1fr; }
   .rejilla-libros { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 1rem; }
   .carrusel-pista { grid-auto-columns: minmax(180px, 1fr); gap: 1rem; }
+  .tarjeta-libro { display: flex; flex-direction: row; gap: .75rem; align-items: flex-start; }
+  .tarjeta-libro-imagen { width: 90px; flex: none; aspect-ratio: 2 / 3; border-radius: 4px; }
+  .tarjeta-libro-cuerpo { flex: 1; min-width: 0; padding-top: .25rem; }
   .campo-fila { grid-template-columns: 1fr; }
   .barra-enlaces { font-size: .75rem; gap: .75rem; }
   .barra-enlaces a span { display: none; }
@@ -1236,7 +1239,7 @@ article.tarjeta-autor:hover .tarjeta-autor-foto img { transform: scale(1.06); ou
   display: flex; gap: 1.25rem; width: max-content;
   animation: desplazarCinta 64s linear infinite;
 }
-.cinta:hover .cinta-pista { animation-play-state: paused; }
+@media (hover: hover) { .cinta:hover .cinta-pista { animation-play-state: paused; } }
 .cinta-pista img {
   width: 132px; height: 198px; object-fit: cover; border-radius: 3px; flex: none;
   box-shadow: 0 10px 26px rgba(0, 0, 0, .45);
