@@ -239,46 +239,6 @@
     "demo": true
   },
   {
-    "id": "culturas-del-mundo",
-    "titulo": "Culturas del Mundo",
-    "subtitulo": "Un recorrido por los saberes que nos formaron",
-    "autorId": "maria-rodriguez",
-    "categoria": "literatura",
-    "coleccion": "Biblioteca de Humanidades",
-    "precio": 28,
-    "precioDigital": 15,
-    "portada": "/imagenes/libros/culturas-del-mundo.jpg",
-    "insignia": "Destacado",
-    "isbn": "978-9942-8765-4-9",
-    "paginas": 420,
-    "anio": 2025,
-    "edicion": "Primera edición",
-    "formato": "Tapa dura",
-    "dimensiones": "17 x 24 cm",
-    "idioma": "Español",
-    "valoracion": 4.9,
-    "resenas": 203,
-    "esNuevo": true,
-    "esDestacado": true,
-    "disponibilidad": "disponible",
-    "temas": [
-      "Antropología",
-      "Patrimonio",
-      "Estudios culturales"
-    ],
-    "resumen": "Cinco continentes, un mismo hilo: las respuestas que distintas culturas dieron a las mismas preguntas.",
-    "descripcion": "Fruto de quince años de trabajo de campo, este volumen documenta prácticas, rituales y sistemas de conocimiento de comunidades de los cinco continentes.\n\nLejos del exotismo, el libro insiste en las conexiones: las preguntas sobre la muerte, el trabajo, el parentesco y lo sagrado se repiten con respuestas distintas.\n\nEdición ilustrada con material de archivo y notas de campo de la autora.",
-    "indice": [
-      "El oficio de mirar",
-      "Parentesco: las formas de la familia",
-      "Trabajo, tiempo y calendario",
-      "Lo sagrado y sus lenguajes",
-      "Memoria oral y archivo",
-      "Patrimonio en riesgo"
-    ],
-    "demo": true
-  },
-  {
     "id": "mente-brillante",
     "titulo": "Mente Brillante",
     "subtitulo": "Memoria, atención y creatividad según la evidencia",
@@ -515,47 +475,6 @@
       "Debido proceso explicado con casos",
       "Derechos digitales",
       "Participación y organización estudiantil"
-    ],
-    "demo": true
-  },
-  {
-    "id": "metodologia-de-la-investigacion",
-    "titulo": "Metodología de la Investigación",
-    "subtitulo": "Del problema al artículo publicable",
-    "autorId": "laura-sanchez",
-    "categoria": "educacion",
-    "coleccion": "Cuadernos Pedagógicos",
-    "precio": 24,
-    "precioDigital": 13,
-    "portada": "/imagenes/libros/metodologia-de-la-investigacion.jpg",
-    "insignia": "Destacado",
-    "isbn": "978-9942-9012-1-0",
-    "paginas": 352,
-    "anio": 2025,
-    "edicion": "Primera edición",
-    "formato": "Tapa dura",
-    "dimensiones": "17 x 24 cm",
-    "idioma": "Español",
-    "valoracion": 4.8,
-    "resenas": 63,
-    "esNuevo": true,
-    "esDestacado": true,
-    "disponibilidad": "disponible",
-    "temas": [
-      "Investigación",
-      "Metodología",
-      "Escritura académica"
-    ],
-    "resumen": "Guía completa para diseñar, ejecutar y comunicar una investigación en ciencias sociales y educación.",
-    "descripcion": "Acompaña al investigador desde la formulación del problema hasta el envío del manuscrito a una revista indexada.\n\nIncluye capítulos sobre diseño muestral, instrumentos, análisis cualitativo y cuantitativo, y ética de la investigación.\n\nCon listas de verificación para cada etapa y ejemplos de redacción antes y después de la corrección.",
-    "indice": [
-      "Del tema al problema investigable",
-      "Estado del arte sin acumular citas",
-      "Diseño y muestra",
-      "Instrumentos y validez",
-      "Análisis: qué hace cada prueba",
-      "Escribir para ser publicado",
-      "Ética e integridad académica"
     ],
     "demo": true
   }

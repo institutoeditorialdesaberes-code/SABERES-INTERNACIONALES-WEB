@@ -2163,3 +2163,187 @@ a.ventaja:hover { box-shadow: var(--sombra-s) !important; }
 ::-webkit-scrollbar-thumb:hover { background: #B0B3B8; }
 
 
+
+
+/* ==========================================================================
+   32. Mobile mejorado + animaciones motionsite
+   ========================================================================== */
+
+/* MOBILE: ajustes finos para <480px */
+@media (max-width: 480px) {
+  .cabecera-fila { padding-block: .55rem; gap: .65rem; }
+  .logo-texto strong { font-size: 1.1rem; }
+  .logo-texto em { display: none; }
+  .logo .marca { width: 36px; height: 36px; }
+  .buscador { order: 3; flex-basis: 100%; }
+  .buscador input { font-size: .9rem; }
+  .barra-superior { padding-block: .3rem; font-size: .75rem; }
+  .hero-carrusel { min-height: 300px; border-radius: var(--r-m) !important; }
+  .diapositiva { padding: 1.25rem 1rem 1.5rem; }
+  .diapositiva h1, .diapositiva .titulo-diapositiva { font-size: clamp(1.4rem, 6.5vw, 2rem); }
+  .diapositiva .bajada { font-size: .9rem; }
+  .hero-acciones { flex-direction: column; gap: .5rem; }
+  .hero-acciones .boton { width: 100%; justify-content: center; }
+  .hero-destacado { padding: 1rem .85rem 1.25rem; gap: .75rem; }
+  .hero-portada { width: 120px !important; }
+  .contenedor { padding-inline: .9rem; }
+  .seccion { padding: 1.75rem 0; }
+  .encabezado-seccion { margin-bottom: 1rem; }
+  .rejilla-libros .tarjeta-libro-imagen { width: 76px; }
+  .rejilla-libros .tarjeta-titulo { font-size: .88rem; }
+  .rejilla-categorias { grid-template-columns: 1fr; }
+  .rejilla-autores { grid-template-columns: 1fr; }
+  article.tarjeta-autor { display: flex; align-items: center; text-align: left; gap: 1rem; padding: 1rem; }
+  .tarjeta-autor-foto { width: 60px; height: 60px; flex: none; margin: 0; }
+  .tarjeta-autor-foto img { width: 60px; height: 60px; }
+  .tarjeta-autor h3 { font-size: .95rem; margin-bottom: .1rem; }
+  .tarjeta-autor .tarjeta-autor-bio { display: none; }
+  .ventajas-rejilla { grid-template-columns: 1fr; }
+  .ventaja { flex-direction: row; align-items: flex-start; gap: .75rem; padding: .9rem; }
+  .ventaja-icono { width: 42px; height: 42px; flex: none; margin: 0; }
+  .franja-rejilla { grid-template-columns: 1fr; gap: 1.5rem; }
+  .cifras { grid-template-columns: repeat(2, 1fr); gap: .65rem; }
+  .cifras strong { font-size: 1.6rem; }
+  .cifras li { padding: .9rem .6rem; }
+  .formulario-boletin { flex-direction: column; }
+  .formulario-boletin input { border-radius: var(--r-m) !important; }
+  .formulario-boletin .boton-primario { border-radius: var(--r-m) !important; width: 100%; }
+  .pie-redes { justify-content: center; }
+  .banda-cta-acciones { flex-direction: column; }
+  .banda-cta-acciones .boton { width: 100%; justify-content: center; }
+  .subir { width: 42px; height: 42px; bottom: 1rem; right: 1rem; }
+  .rejilla-colecciones { grid-template-columns: 1fr; }
+  .linea-pasos { grid-template-columns: 1fr !important; }
+  .filtros-alternar { width: 100%; }
+  .pestanas-botones { overflow-x: auto; -webkit-overflow-scrolling: touch; flex-wrap: nowrap; gap: 0; padding-bottom: 2px; }
+  .pestanas-botones button { white-space: nowrap; padding: .7rem .9rem; font-size: .85rem; }
+}
+
+@media (hover: none) {
+  .tarjeta-libro:hover,
+  article.tarjeta-autor:hover,
+  .tarjeta-entrada:hover,
+  .coleccion:hover { box-shadow: var(--sombra-s) !important; transform: none !important; }
+  .boton:hover { transform: none !important; }
+}
+
+/* ANIMACIONES MOTIONSITE */
+
+@keyframes aparecer   { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+@keyframes aparecerX  { from { opacity: 0; transform: translateX(-20px); } to { opacity: 1; transform: none; } }
+@keyframes aparecerXR { from { opacity: 0; transform: translateX(20px);  } to { opacity: 1; transform: none; } }
+@keyframes escalar    { from { opacity: 0; transform: scale(.92); }        to { opacity: 1; transform: none; } }
+@keyframes flotar     { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-7px); } }
+@keyframes pulsar     { 0%, 100% { box-shadow: 0 0 0 0 rgba(26,58,107,.25); } 50% { box-shadow: 0 0 0 8px rgba(26,58,107,0); } }
+@keyframes aparecer-insignia { from { opacity: 0; transform: scale(.7) translateY(-6px); } to { opacity: 1; transform: none; } }
+@keyframes deslizarNav { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: none; } }
+@keyframes ripple     { 0% { transform: scale(0); opacity: .5; } 100% { transform: scale(2.5); opacity: 0; } }
+@keyframes lineaCrece { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+@keyframes fadeBlur   { from { opacity: 0; filter: blur(6px); } to { opacity: 1; filter: blur(0); } }
+@keyframes countUp    { from { opacity: 0; transform: translateY(12px) scale(.9); } to { opacity: 1; transform: none; } }
+
+@media (prefers-reduced-motion: no-preference) {
+
+  .barra-superior { animation: deslizarNav .4s ease both; }
+
+  .logo .marca { animation: fadeBlur .6s ease .1s both; }
+  .logo-texto strong { animation: aparecer .5s ease .2s both; }
+  .logo-texto em { animation: aparecer .5s ease .3s both; }
+
+  .nav-enlaces a:nth-child(1) { animation: aparecer .4s ease .05s both; }
+  .nav-enlaces a:nth-child(2) { animation: aparecer .4s ease .10s both; }
+  .nav-enlaces a:nth-child(3) { animation: aparecer .4s ease .15s both; }
+  .nav-enlaces a:nth-child(4) { animation: aparecer .4s ease .20s both; }
+  .nav-enlaces a:nth-child(5) { animation: aparecer .4s ease .25s both; }
+  .nav-enlaces a:nth-child(6) { animation: aparecer .4s ease .30s both; }
+
+  .hero-carrusel { animation: escalar .6s cubic-bezier(.22,1,.36,1) .1s both; }
+  .hero-destacado { animation: aparecerXR .6s cubic-bezier(.22,1,.36,1) .25s both; }
+
+  [data-revelar] {
+    opacity: 0;
+    transform: translateY(14px);
+    transition: opacity .5s ease, transform .5s cubic-bezier(.22,1,.36,1);
+  }
+  [data-revelar].visible { opacity: 1; transform: none; }
+  [data-revelar] > *:nth-child(1)  { transition-delay: .04s; }
+  [data-revelar] > *:nth-child(2)  { transition-delay: .09s; }
+  [data-revelar] > *:nth-child(3)  { transition-delay: .14s; }
+  [data-revelar] > *:nth-child(4)  { transition-delay: .19s; }
+  [data-revelar] > *:nth-child(5)  { transition-delay: .24s; }
+  [data-revelar] > *:nth-child(6)  { transition-delay: .29s; }
+  [data-revelar] > *:nth-child(n+7) { transition-delay: .32s; }
+
+  .insignia { animation: aparecer-insignia .4s cubic-bezier(.34,1.56,.64,1) .5s both; }
+
+  @media (min-width: 900px) {
+    .logo .marca { animation: fadeBlur .6s ease .1s both, flotar 4s ease-in-out 1s infinite; }
+  }
+
+  .sobretitulo::before { animation: lineaCrece .5s cubic-bezier(.22,1,.36,1) .3s both; transform-origin: left; }
+
+  .cifras li:nth-child(1) { animation: countUp .5s cubic-bezier(.22,1,.36,1) .2s both; }
+  .cifras li:nth-child(2) { animation: countUp .5s cubic-bezier(.22,1,.36,1) .3s both; }
+  .cifras li:nth-child(3) { animation: countUp .5s cubic-bezier(.22,1,.36,1) .4s both; }
+  .cifras li:nth-child(4) { animation: countUp .5s cubic-bezier(.22,1,.36,1) .5s both; }
+
+  .hero-acciones .boton-primario { animation: pulsar 2.8s ease-in-out 1.5s infinite; }
+  .boton-wa { animation: pulsar 3.2s ease-in-out 2s infinite; }
+
+  .tarjeta-libro,
+  article.tarjeta-autor,
+  .tarjeta-entrada,
+  .coleccion {
+    transition: box-shadow .22s ease, transform .22s cubic-bezier(.22,1,.36,1) !important;
+  }
+  .tarjeta-libro:hover,
+  article.tarjeta-autor:hover,
+  .tarjeta-entrada:hover { transform: translateY(-3px) !important; }
+
+  .boton { position: relative; overflow: hidden; }
+  .boton::before {
+    content: '';
+    position: absolute;
+    width: 200%; height: 200%;
+    left: -50%; top: -50%;
+    background: rgba(255,255,255,.28);
+    border-radius: 50%;
+    transform: scale(0);
+    opacity: 0;
+    pointer-events: none;
+  }
+  .boton:active::before { animation: ripple .5s ease both; }
+
+  .tarjeta-libro-imagen { overflow: hidden; }
+  .tarjeta-libro-imagen img { transition: transform .5s cubic-bezier(.22,1,.36,1) !important; }
+  .tarjeta-libro:hover .tarjeta-libro-imagen img { transform: scale(1.05) !important; }
+
+  .tarjeta-autor-foto img { transition: transform .4s cubic-bezier(.22,1,.36,1), box-shadow .3s ease !important; }
+  article.tarjeta-autor:hover .tarjeta-autor-foto img { transform: scale(1.06) !important; }
+
+  .carrusel-boton.izq { animation: aparecerX .4s ease both; }
+  .carrusel-boton.der { animation: aparecerXR .4s ease both; }
+
+  .nav-principal.abierto { animation: aparecer .3s ease both; }
+  .sugerencias { animation: aparecer .2s ease both; }
+
+  .ventaja:hover .ventaja-icono {
+    transform: scale(1.1) rotate(-4deg);
+    transition: transform .25s cubic-bezier(.34,1.56,.64,1) !important;
+  }
+
+  .encabezado-seccion { animation: aparecerX .5s ease .1s both; }
+
+  .hero-flechas button { animation: escalar .4s ease both; }
+  .hero-puntos button  { animation: escalar .4s ease .3s both; }
+
+  .subir:hover { transform: scale(1.12) !important; transition: transform .2s cubic-bezier(.34,1.56,.64,1) !important; }
+
+  .tarjeta-categoria-grande:hover .tcg-icono .ico {
+    transform: rotate(-8deg) scale(1.15);
+    transition: transform .25s cubic-bezier(.34,1.56,.64,1) !important;
+  }
+
+  .progreso-lectura { animation: aparecer .3s ease both; }
+}
+
