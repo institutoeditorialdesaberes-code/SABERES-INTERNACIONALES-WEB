@@ -707,8 +707,9 @@
 
       if (barra) {
         var alto = document.documentElement.scrollHeight - window.innerHeight;
-        var pct = alto > 0 ? Math.min(100, (y / alto) * 100) : 0;
-        barra.style.setProperty('--avance', pct.toFixed(2) + '%');
+        // Fracción de 0 a 1: la barra se escala con transform, no con ancho.
+        var fraccion = alto > 0 ? Math.min(1, y / alto) : 0;
+        barra.style.setProperty('--avance', fraccion.toFixed(4));
       }
     });
   }

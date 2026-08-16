@@ -19,7 +19,11 @@ export function paginaInicio(ctx) {
       <div class="diapositiva tema-${esc(h.tema)}" data-diapositiva ${i === 0 ? 'data-activa' : ''} role="group" aria-roledescription="diapositiva" aria-label="${i + 1} de ${cfg.hero.length}">
         <div class="diapositiva-texto">
           <p class="sobretitulo claro">${esc(cfg.lema)} · ${esc(cfg.contacto.ciudad)}</p>
-          <h1>${esc(h.titulo)}</h1>
+          ${i === 0
+            ? `<h1>${esc(h.titulo)}</h1>`
+            /* Una sola página, un solo h1: las demás diapositivas llevan el
+               mismo aspecto pero sin robarle la jerarquía a la primera. */
+            : `<p class="titulo-diapositiva">${esc(h.titulo)}</p>`}
           <p class="bajada">${esc(h.texto)}</p>
           <div class="hero-acciones">
             <a class="boton boton-primario" href="${esc(h.url)}">${esc(h.boton)}</a>

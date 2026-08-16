@@ -382,7 +382,10 @@ input, select, textarea { font: inherit; color: inherit; }
 .diapositiva.tema-vino { background: linear-gradient(120deg, #5a1c2c 0%, #8a3446 100%); }
 .diapositiva.tema-verde { background: linear-gradient(120deg, #24512f 0%, #3d7a4c 100%); }
 .diapositiva-texto { position: relative; z-index: 2; max-width: 42rem; }
-.diapositiva h1 { color: #fff; margin-bottom: .8rem; }
+.diapositiva h1, .diapositiva .titulo-diapositiva {
+  color: #fff; margin: 0 0 .8rem;
+  font-family: var(--serif); font-weight: 700; line-height: 1.08; letter-spacing: -.025em;
+}
 .diapositiva .bajada { color: rgba(255, 255, 255, .88); margin-bottom: 1.6rem; }
 .hero-acciones { display: flex; gap: .75rem; flex-wrap: wrap; }
 .hero-acciones .boton-primario { background: var(--oro); color: #2c2306; }
@@ -396,10 +399,15 @@ input, select, textarea { font: inherit; color: inherit; }
 }
 .hero-puntos { display: flex; gap: .45rem; }
 .hero-puntos button {
-  width: 28px; height: 4px; border: 0; border-radius: 2px; padding: 0;
-  background: rgba(255, 255, 255, .4); transition: background var(--transicion), width var(--transicion);
+  width: 44px; height: 24px; border: 0; padding: 0; background: none;
+  display: grid; align-items: center;
 }
-.hero-puntos button.activo { background: var(--oro); width: 44px; }
+.hero-puntos button::before {
+  content: ''; display: block; height: 4px; border-radius: 2px;
+  background: rgba(255, 255, 255, .4); transform: scaleX(.64); transform-origin: left center;
+  transition: background-color var(--transicion), transform var(--transicion);
+}
+.hero-puntos button.activo::before { background: var(--oro); transform: scaleX(1); }
 .hero-flechas { display: flex; gap: .4rem; }
 .hero-flechas button {
   width: 40px; height: 40px; border-radius: 50%; border: 1px solid rgba(255, 255, 255, .35);
@@ -590,7 +598,7 @@ article.tarjeta-autor .meta { font-size: .78rem; color: var(--tinta-suave); marg
 .filtro-etiquetas button {
   padding: .45rem 1rem; border: 1px solid var(--linea-fuerte); background: #fff;
   border-radius: 999px; font-size: .85rem; font-weight: 600; color: var(--tinta-media);
-  transition: all var(--transicion);
+  transition: background-color var(--transicion), border-color var(--transicion), color var(--transicion), transform var(--transicion);
 }
 .filtro-etiquetas button:hover { border-color: var(--azul-medio); color: var(--azul); }
 .filtro-etiquetas button.activo { background: var(--azul); border-color: var(--azul); color: #fff; }
@@ -685,7 +693,7 @@ article.tarjeta-autor .meta { font-size: .78rem; color: var(--tinta-suave); marg
 .ficha-compartir a, .ficha-compartir button {
   width: 38px; height: 38px; display: grid; place-items: center; border-radius: 50%;
   border: 1px solid var(--linea-fuerte); background: #fff; color: var(--tinta-media);
-  transition: all var(--transicion);
+  transition: background-color var(--transicion), border-color var(--transicion), color var(--transicion), transform var(--transicion);
 }
 .ficha-compartir a:hover, .ficha-compartir button:hover { background: var(--azul); border-color: var(--azul); color: #fff; }
 
@@ -824,7 +832,7 @@ article.tarjeta-autor .meta { font-size: .78rem; color: var(--tinta-suave); marg
 .resultados-busqueda { display: grid; gap: .75rem; }
 .resultado {
   display: flex; gap: 1rem; align-items: center; padding: 1rem; background: #fff;
-  border: 1px solid var(--linea); border-radius: var(--r-m); transition: all var(--transicion);
+  border: 1px solid var(--linea); border-radius: var(--r-m); transition: background-color var(--transicion), border-color var(--transicion), color var(--transicion), transform var(--transicion);
 }
 .resultado:hover { border-color: var(--azul-medio); box-shadow: var(--sombra-s); }
 .resultado img { width: 54px; height: 81px; object-fit: cover; border-radius: 3px; flex: none; }
@@ -983,7 +991,7 @@ h3 { font-weight: 600; letter-spacing: -.012em; font-variation-settings: 'opsz' 
 .diapositiva[data-activa] .diapositiva-texto > *:nth-child(2) { animation-delay: .15s; }
 .diapositiva[data-activa] .diapositiva-texto > *:nth-child(3) { animation-delay: .25s; }
 .diapositiva[data-activa] .diapositiva-texto > *:nth-child(4) { animation-delay: .35s; }
-.diapositiva h1 { font-size: clamp(2.1rem, 4.6vw, 3.5rem); }
+.diapositiva h1, .diapositiva .titulo-diapositiva { font-size: clamp(2.1rem, 4.6vw, 3.5rem); }
 
 .hero-destacado { position: relative; overflow: hidden; }
 .hero-destacado::before {
@@ -1189,8 +1197,9 @@ article.tarjeta-autor:hover .tarjeta-autor-foto img { transform: scale(1.06); ou
 /* Barra de progreso de lectura en los artículos. */
 .progreso-lectura {
   position: fixed; top: 0; left: 0; height: 3px; z-index: 120;
-  width: var(--avance, 0%); background: linear-gradient(90deg, var(--oro), #e8cd72);
-  transition: width 90ms linear; box-shadow: 0 0 10px rgba(201, 162, 39, .5);
+  width: 100%; transform: scaleX(var(--avance, 0)); transform-origin: left center;
+  background: linear-gradient(90deg, var(--oro), #e8cd72);
+  transition: transform 90ms linear; box-shadow: 0 0 10px rgba(201, 162, 39, .5);
 }
 
 @media (prefers-reduced-motion: reduce) {
