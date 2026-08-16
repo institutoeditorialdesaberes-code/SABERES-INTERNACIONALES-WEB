@@ -61,6 +61,14 @@
     "temaColor": "#0e2a47"
   },
 
+  "_estadisticas": "Actualiza estos números cada mes desde /admin. Se muestran en la portada como prueba social.",
+  "estadisticasPublicas": {
+    "visitasMes": 1200,
+    "paises": 12,
+    "lectores": 3500,
+    "descargas": 850
+  },
+
   "_disqus": "Crea cuenta gratis en disqus.com → 'New Site' → copia el shortname aquí. Con eso se activan los comentarios con login de Facebook y Google en cada página de libro.",
   "disqus": {
     "shortname": "https-saberesinternacionales-org"

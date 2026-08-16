@@ -67,6 +67,37 @@ export function paginaInicio(ctx) {
 
 ${ventajas(cfg, ctx)}
 
+<section class="impacto-seccion" aria-label="Estadísticas del sitio">
+  <div class="contenedor">
+    <div class="impacto-rejilla">
+      <div class="impacto-item" data-contador="${cfg.estadisticasPublicas ? cfg.estadisticasPublicas.visitasMes : 1200}" data-sufijo="+">
+        <strong class="impacto-num">0</strong>
+        <span class="impacto-label">${icono('grafico')} Visitas al mes</span>
+      </div>
+      <div class="impacto-item" data-contador="${cfg.estadisticasPublicas ? cfg.estadisticasPublicas.paises : 12}" data-sufijo="">
+        <strong class="impacto-num">0</strong>
+        <span class="impacto-label">${icono('ubicacion')} Países lectores</span>
+      </div>
+      <div class="impacto-item" data-contador="${libros.length}" data-sufijo="">
+        <strong class="impacto-num">0</strong>
+        <span class="impacto-label">${icono('libro')} Títulos publicados</span>
+      </div>
+      <div class="impacto-item" data-contador="${autores.length}" data-sufijo="">
+        <strong class="impacto-num">0</strong>
+        <span class="impacto-label">${icono('pluma')} Autores del sello</span>
+      </div>
+      <div class="impacto-item" data-contador="${cfg.estadisticasPublicas ? cfg.estadisticasPublicas.lectores : 3500}" data-sufijo="+">
+        <strong class="impacto-num">0</strong>
+        <span class="impacto-label">${icono('pares')} Lectores alcanzados</span>
+      </div>
+      <div class="impacto-item" data-contador="${new Date().getFullYear() - Number(cfg.fundacion)}" data-sufijo=" años">
+        <strong class="impacto-num">0</strong>
+        <span class="impacto-label">${icono('sello')} De trayectoria</span>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section class="seccion">
   <div class="contenedor">
     ${encabezadoSeccion({

@@ -3897,3 +3897,69 @@ html { scroll-behavior: smooth; }
   z-index: 10;
 }
 
+
+
+/* ===== SECCIÓN 43 — BLOQUE ESTADÍSTICAS PÚBLICAS ===== */
+.impacto-seccion {
+  background: linear-gradient(135deg, var(--azul) 0%, #0f2540 100%);
+  padding: 2rem 0;
+  position: relative;
+  overflow: hidden;
+}
+.impacto-seccion::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 80% 50%, rgba(255,255,255,.04) 0%, transparent 70%);
+  pointer-events: none;
+}
+.impacto-rejilla {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 0;
+  position: relative;
+}
+.impacto-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 1.25rem 1rem;
+  border-right: 1px solid rgba(255,255,255,.1);
+  transition: background .2s;
+}
+.impacto-item:last-child { border-right: none; }
+.impacto-item:hover { background: rgba(255,255,255,.05); }
+.impacto-num {
+  font-size: clamp(1.6rem, 3vw, 2.4rem);
+  font-weight: 900;
+  color: #fff;
+  line-height: 1;
+  letter-spacing: -1px;
+  font-variant-numeric: tabular-nums;
+  margin-bottom: .4rem;
+}
+.impacto-label {
+  font-size: .75rem;
+  color: rgba(255,255,255,.65);
+  display: flex;
+  align-items: center;
+  gap: .3rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+}
+.impacto-label .ico { width: .9em; height: .9em; opacity: .8; }
+@media (max-width: 600px) {
+  .impacto-rejilla { grid-template-columns: repeat(3, 1fr); }
+  .impacto-item { border-bottom: 1px solid rgba(255,255,255,.08); }
+  .impacto-item:nth-child(3n) { border-right: none; }
+  .impacto-item:nth-last-child(-n+3) { border-bottom: none; }
+  .impacto-num { font-size: 1.5rem; }
+}
+@media (max-width: 360px) {
+  .impacto-rejilla { grid-template-columns: repeat(2, 1fr); }
+  .impacto-item:nth-child(3n) { border-right: 1px solid rgba(255,255,255,.1); }
+  .impacto-item:nth-child(2n) { border-right: none; }
+}
+

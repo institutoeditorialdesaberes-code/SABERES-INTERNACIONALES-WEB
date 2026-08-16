@@ -753,6 +753,35 @@
     });
   });
 
+  /* ---- Contadores de impacto público ------------------------------------ */
+  (function contadoresImpacto() {
+    var items = $$('.impacto-item[data-contador]');
+    if (!items.length) return;
+    var obs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        obs.unobserve(e.target);
+        var el = e.target;
+        var meta = parseInt(el.getAttribute('data-contador'), 10) || 0;
+        var sufijo = el.getAttribute('data-sufijo') || '';
+        var num = el.querySelector('.impacto-num');
+        if (!num) return;
+        var inicio = 0;
+        var duracion = 1800;
+        var t0 = null;
+        function paso(ts) {
+          if (!t0) t0 = ts;
+          var progreso = Math.min((ts - t0) / duracion, 1);
+          var ease = 1 - Math.pow(1 - progreso, 3);
+          num.textContent = Math.round(ease * meta).toLocaleString('es-EC') + sufijo;
+          if (progreso < 1) requestAnimationFrame(paso);
+        }
+        requestAnimationFrame(paso);
+      });
+    }, { threshold: 0.3 });
+    items.forEach(function (it) { obs.observe(it); });
+  }());
+
   /* ---- Cifras animadas --------------------------------------------------- */
   var contadores = $$('.cifras strong, .perfil-cifras strong');
   if (!contadores.length) return;
