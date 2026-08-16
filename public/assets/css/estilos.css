@@ -1006,7 +1006,10 @@ article.tarjeta-autor .meta { font-size: .78rem; color: var(--tinta-suave); marg
   .banda-cta-fila, .pie-legal-fila { flex-direction: column; align-items: flex-start; }
   .hero-carrusel { min-height: 380px; }
   .diapositiva { align-items: flex-start; padding-top: 2rem; }
-  .hero-destacado { flex-direction: column; text-align: center; }
+  .hero-destacado { flex-direction: column; text-align: center; align-items: center; padding: 1.25rem 1rem 2rem; }
+  .hero-destacado > *:not(.hero-portada) { flex: none; }
+  .hero-portada { width: 160px; }
+  .hero-destacado .boton { width: 100%; justify-content: center; }
 }
 
 /* ---------- 27. Impresión ----------------------------------------------- */
