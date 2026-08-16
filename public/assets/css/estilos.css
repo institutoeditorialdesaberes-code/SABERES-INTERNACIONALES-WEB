@@ -1,4 +1,4 @@
-/* =========================================================================
+﻿/* =========================================================================
    Editorial Saberes Internacionales — hoja de estilos única
    Orden: variables · base · utilidades · cabecera · pie · componentes ·
           páginas · responsive · impresión
@@ -50,18 +50,17 @@
     U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 
-/* ---------- 1. Variables — Paleta Facebook ----------------------------- */
+/* ---------- 1. Variables — Paleta azul marino ----------------------------- */
 :root {
-  /* Azul primario Facebook */
-  --azul:        #1877F2;
-  --azul-medio:  #166FE5;
-  --azul-claro:  #E7F3FF;
+  /* Azul marino editorial */
+  --azul:        #1a3a6b;
+  --azul-medio:  #152e57;
+  --azul-claro:  #e8eef7;
 
-  /* Acento y estados — Facebook usa azul para todo, pero mantenemos
-     nombres originales para no romper el resto del CSS */
-  --oro:         #1877F2;   /* antes dorado editorial, ahora FB blue */
-  --oro-suave:   #E7F3FF;   /* antes crema dorada, ahora azul muy claro */
-  --vino:        #1877F2;   /* antes granate para precios */
+  /* Acento y estados */
+  --oro:         #1a3a6b;
+  --oro-suave:   #e8eef7;
+  --vino:        #1a3a6b;
   --verde:       #2e7d32;
   --verde-wa:    #128c7e;
   --verde-wa-hover: #0d6d61;
@@ -1490,7 +1489,7 @@ h1, h2, h3, h4 { font-family: var(--sans); font-weight: 700; color: var(--tinta)
 
 /* Barra superior */
 .barra-superior { background: var(--azul); }
-.barra-mensaje .ico { color: #E7F3FF; }
+.barra-mensaje .ico { color: #e8eef7; }
 .barra-nombre-editorial { color: #fff; }
 .barra-enlaces a { color: rgba(255,255,255,.85); }
 .barra-enlaces a:hover { color: #fff; }
@@ -1499,12 +1498,12 @@ h1, h2, h3, h4 { font-family: var(--sans); font-weight: 700; color: var(--tinta)
 .cabecera { background: #fff; box-shadow: 0 1px 0 var(--linea), 0 2px 8px rgba(0,0,0,.06); }
 .logo-texto strong { font-family: var(--sans); color: var(--azul); }
 .logo-texto em { color: var(--tinta-media); letter-spacing: .15em; }
-.logo .marca { outline-color: var(--azul-claro); box-shadow: 0 2px 8px rgba(24,119,242,.2); }
-.cabecera-logo:hover .marca { transform: none; box-shadow: 0 4px 16px rgba(24,119,242,.3); }
+.logo .marca { outline-color: var(--azul-claro); box-shadow: 0 2px 8px rgba(26,58,107,.2); }
+.cabecera-logo:hover .marca { transform: none; box-shadow: 0 4px 16px rgba(26,58,107,.3); }
 
 /* Buscador */
 .buscador input { background: var(--papel); border-color: var(--linea); }
-.buscador input:focus { border-color: var(--azul); box-shadow: 0 0 0 2px rgba(24,119,242,.2); }
+.buscador input:focus { border-color: var(--azul); box-shadow: 0 0 0 2px rgba(26,58,107,.2); }
 .buscador button { background: var(--azul); }
 .buscador button:hover { background: var(--azul-medio); }
 
@@ -1525,11 +1524,11 @@ h1, h2, h3, h4 { font-family: var(--sans); font-weight: 700; color: var(--tinta)
 .hero-destacado .etiqueta { background: var(--azul-claro); color: var(--azul); }
 
 /* Diapositivas */
-.diapositiva.tema-azul { background: #1877F2; }
-.diapositiva.tema-azul::before { background: linear-gradient(120deg,rgba(24,119,242,.85) 0%,rgba(13,91,186,.6) 100%); }
+.diapositiva.tema-azul { background: #1a3a6b; }
+.diapositiva.tema-azul::before { background: linear-gradient(120deg,rgba(26,58,107,.85) 0%,rgba(15,37,64,.6) 100%); }
 
 /* Insignia */
-.insignia { background: var(--azul); color: #fff; box-shadow: 0 2px 6px rgba(24,119,242,.3); }
+.insignia { background: var(--azul); color: #fff; box-shadow: 0 2px 6px rgba(26,58,107,.3); }
 
 /* Precios */
 .tarjeta-precio { color: var(--azul); }
@@ -1559,9 +1558,9 @@ h1, h2, h3, h4 { font-family: var(--sans); font-weight: 700; color: var(--tinta)
 .perfil,
 .articulo-cabecera {
   background-image:
-    radial-gradient(900px 420px at 88% -12%,rgba(24,119,242,.18),transparent 62%),
-    radial-gradient(700px 380px at -8% 108%,rgba(24,119,242,.1),transparent 60%),
-    linear-gradient(135deg,#1877F2 0%,#0d5bba 100%);
+    radial-gradient(900px 420px at 88% -12%,rgba(26,58,107,.18),transparent 62%),
+    radial-gradient(700px 380px at -8% 108%,rgba(26,58,107,.1),transparent 60%),
+    linear-gradient(135deg,#1a3a6b 0%,#0f2540 100%);
 }
 .franja-editorial .boton-primario { background: #fff; color: var(--azul); }
 .franja-editorial .boton-primario:hover { background: var(--papel); color: var(--azul-medio); }
@@ -1570,11 +1569,11 @@ h1, h2, h3, h4 { font-family: var(--sans); font-weight: 700; color: var(--tinta)
 .perfil-cifras strong { color: #fff; font-family: var(--sans); }
 
 /* Banda CTA */
-.banda-cta { background: #0d5bba; border-block-color: rgba(255,255,255,.15); }
-.banda-cta::after { background: linear-gradient(100deg,rgba(13,91,186,.95) 0%,rgba(24,119,242,.85) 100%); }
+.banda-cta { background: #0f2540; border-block-color: rgba(255,255,255,.15); }
+.banda-cta::after { background: linear-gradient(100deg,rgba(15,37,64,.95) 0%,rgba(26,58,107,.85) 100%); }
 .banda-cta h2 { color: #fff; }
 .banda-cta p { color: rgba(255,255,255,.85); }
-.banda-cta .sobretitulo.claro { color: #E7F3FF; }
+.banda-cta .sobretitulo.claro { color: #e8eef7; }
 .banda-cta .boton-fantasma { border-color: rgba(255,255,255,.5); color: #fff; }
 .banda-cta .boton-fantasma:hover { background: rgba(255,255,255,.15); color: #fff; }
 
@@ -1596,7 +1595,7 @@ h1, h2, h3, h4 { font-family: var(--sans); font-weight: 700; color: var(--tinta)
 
 /* Autores */
 article.tarjeta-autor .especialidad { color: var(--azul); }
-.perfil .sobretitulo { color: #E7F3FF; }
+.perfil .sobretitulo { color: #e8eef7; }
 .bloque-autor .especialidad { color: var(--azul); }
 
 /* Carrusel */
@@ -1604,8 +1603,8 @@ article.tarjeta-autor .especialidad { color: var(--azul); }
 
 /* Pie */
 .pie { background: var(--azul); }
-.pie a:hover { color: #E7F3FF; }
-.pie-datos .ico { color: #E7F3FF; }
+.pie a:hover { color: #e8eef7; }
+.pie-datos .ico { color: #e8eef7; }
 .pie-redes a:hover { background: rgba(255,255,255,.15); border-color: rgba(255,255,255,.4); }
 .formulario-boletin .boton-primario { background: #fff; color: var(--azul); }
 .formulario-boletin .boton-primario:hover { background: var(--papel); color: var(--azul-medio); }
@@ -1625,9 +1624,9 @@ article.tarjeta-autor .especialidad { color: var(--azul); }
 .ventaja-icono { background: var(--azul-claro); color: var(--azul); }
 .ventaja:hover .ventaja-icono { background: var(--azul); color: #fff; }
 .ventaja strong { color: var(--azul); }
-.ventaja-card-icono { color: #E7F3FF; }
+.ventaja-card-icono { color: #e8eef7; }
 .ventaja-card:hover .ventaja-card-icono { background: var(--azul-claro); color: var(--azul); }
-.ventaja-card-cta { color: #E7F3FF; }
+.ventaja-card-cta { color: #e8eef7; }
 
 /* Categoria */
 .tcg-texto strong { color: var(--azul); }
@@ -1646,7 +1645,7 @@ article.tarjeta-autor .especialidad { color: var(--azul); }
 
 /* Cinta de portadas */
 .cinta { background: var(--azul); }
-.cinta-titulo { color: #E7F3FF; }
+.cinta-titulo { color: #e8eef7; }
 
 /* Libro efectos */
 .tarjeta-libro::after { background: var(--azul); }
@@ -1664,10 +1663,10 @@ article.tarjeta-autor .especialidad { color: var(--azul); }
 :focus-visible { outline-color: var(--azul); }
 
 /* Progreso lectura */
-.progreso-lectura { background: linear-gradient(90deg,var(--azul),#63a4ff); box-shadow: 0 0 8px rgba(24,119,242,.5); }
+.progreso-lectura { background: linear-gradient(90deg,var(--azul),#4a7ec7); box-shadow: 0 0 8px rgba(26,58,107,.5); }
 
 /* Texturas: substituye el circulo dorado por azul */
-.portada-seccion::after { border-color: rgba(24,119,242,.2); box-shadow: inset 0 0 0 60px rgba(24,119,242,.05); }
+.portada-seccion::after { border-color: rgba(26,58,107,.2); box-shadow: inset 0 0 0 60px rgba(26,58,107,.05); }
 .franja-editorial::before { border-color: rgba(255,255,255,.15); }
 
 /* Resultado de busqueda */
@@ -1777,7 +1776,7 @@ p { line-height: 1.55; }
 /* Logo: sin hover 3D */
 .logo .marca {
   border-radius: 50%;
-  outline: 2.5px solid rgba(24,119,242,.3);
+  outline: 2.5px solid rgba(26,58,107,.3);
   outline-offset: 2px;
   transition: outline-color 200ms ease !important;
 }
@@ -1799,7 +1798,7 @@ p { line-height: 1.55; }
 }
 .buscador input:focus {
   border-color: var(--azul);
-  box-shadow: 0 0 0 2px rgba(24,119,242,.25) !important;
+  box-shadow: 0 0 0 2px rgba(26,58,107,.25) !important;
 }
 .buscador button {
   border-radius: 999px !important;
@@ -1885,7 +1884,7 @@ article.tarjeta-autor:hover .tarjeta-autor-foto img { transform: none !important
 /* Ring azul FB en foto de autor */
 .tarjeta-autor-foto img {
   border: 3px solid #fff;
-  box-shadow: 0 0 0 3px rgba(24,119,242,.25);
+  box-shadow: 0 0 0 3px rgba(26,58,107,.25);
 }
 article.tarjeta-autor:hover .tarjeta-autor-foto img {
   box-shadow: 0 0 0 3px var(--azul) !important;
@@ -1965,7 +1964,7 @@ a.ventaja:hover { box-shadow: var(--sombra-s) !important; }
 }
 .campo input:focus, .campo select:focus, .campo textarea:focus {
   border-color: var(--azul) !important;
-  box-shadow: 0 0 0 2px rgba(24,119,242,.2) !important;
+  box-shadow: 0 0 0 2px rgba(26,58,107,.2) !important;
 }
 
 /* ── 18. Filtros del catalogo: estilo FB ── */
@@ -1994,7 +1993,7 @@ a.ventaja:hover { box-shadow: var(--sombra-s) !important; }
 .perfil-foto img {
   border-radius: 50% !important;
   border: 4px solid #fff !important;
-  box-shadow: 0 0 0 3px rgba(24,119,242,.35), 0 8px 24px rgba(0,0,0,.2) !important;
+  box-shadow: 0 0 0 3px rgba(26,58,107,.35), 0 8px 24px rgba(0,0,0,.2) !important;
 }
 
 /* ── 21. Franja editorial: transiciones suaves ── */
@@ -2023,7 +2022,7 @@ a.ventaja:hover { box-shadow: var(--sombra-s) !important; }
 .formulario-boletin .boton-primario { border-radius: 999px !important; }
 
 /* ── 26. Boton subir: FB ── */
-.subir { border-radius: 50% !important; box-shadow: 0 2px 12px rgba(24,119,242,.3) !important; }
+.subir { border-radius: 50% !important; box-shadow: 0 2px 12px rgba(26,58,107,.3) !important; }
 
 /* ── 27. Resultados de busqueda: FB cards ── */
 .resultado {
@@ -2093,7 +2092,7 @@ a.ventaja:hover { box-shadow: var(--sombra-s) !important; }
 
 /* ── 35. Focus visible: azul FB ── */
 :focus-visible {
-  outline: 3px solid rgba(24,119,242,.55) !important;
+  outline: 3px solid rgba(26,58,107,.55) !important;
   outline-offset: 3px !important;
   border-radius: 4px !important;
 }
@@ -2132,7 +2131,7 @@ a.ventaja:hover { box-shadow: var(--sombra-s) !important; }
   box-shadow: 0 2px 8px rgba(0,0,0,.12) !important;
   transition: background 200ms ease, box-shadow 200ms ease !important;
 }
-.carrusel-boton:hover { background: var(--azul) !important; box-shadow: 0 4px 12px rgba(24,119,242,.3) !important; }
+.carrusel-boton:hover { background: var(--azul) !important; box-shadow: 0 4px 12px rgba(26,58,107,.3) !important; }
 
 /* ── 41. Secciones: menos padding (FB es mas compacto) ── */
 .seccion { padding: clamp(2rem, 5vw, 3.5rem) 0; }
@@ -2162,4 +2161,5 @@ a.ventaja:hover { box-shadow: var(--sombra-s) !important; }
 ::-webkit-scrollbar-track { background: var(--papel); }
 ::-webkit-scrollbar-thumb { background: #CED0D4; border-radius: 4px; }
 ::-webkit-scrollbar-thumb:hover { background: #B0B3B8; }
+
 
