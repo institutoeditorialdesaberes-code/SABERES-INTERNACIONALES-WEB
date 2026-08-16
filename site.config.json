@@ -13,6 +13,9 @@
   "simboloMoneda": "$",
   "fundacion": "2019",
 
+  "_animacionEntrada": "Cortina de bienvenida con el sello dibujándose, solo en la portada y una vez por sesión. Ponlo en false si prefieres que el sitio abra directo.",
+  "animacionEntrada": true,
+
   "avisoDemo": {
     "activo": true,
     "texto": "Catálogo de demostración: los libros y autores mostrados son de ejemplo mientras se carga el fondo editorial real."

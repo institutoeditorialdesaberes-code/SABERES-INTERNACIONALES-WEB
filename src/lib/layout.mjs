@@ -226,6 +226,24 @@ export function pagina(o) {
   <script async src="https://www.googletagmanager.com/gtag/js?id=${esc(cfg.seo.googleAnalyticsId)}"></script>
   <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','${esc(cfg.seo.googleAnalyticsId)}');</script>` : '';
 
+  // Cortina de bienvenida: solo en la portada, solo la primera visita de la
+  // sesión y solo si el visitante no pidió reducir movimiento. El guion va en
+  // línea y antes del cuerpo para que no haya destello de contenido.
+  const cortina = (cfg.animacionEntrada && o.ruta === '/') ? `
+<script>try{if(!sessionStorage.getItem('si-bienvenida')&&!matchMedia('(prefers-reduced-motion: reduce)').matches){document.documentElement.classList.add('con-cortina');sessionStorage.setItem('si-bienvenida','1')}}catch(e){}</script>
+<div class="cortina" data-cortina aria-hidden="true">
+  <svg class="cortina-sello" viewBox="0 0 48 48" role="img" aria-label="${esc(cfg.nombre)}">
+    <circle class="relleno" cx="24" cy="24" r="21" fill="currentColor"/>
+    <circle class="trazo" cx="24" cy="24" r="22.2" pathLength="260"/>
+    <circle class="trazo" cx="24" cy="24" r="19.4" pathLength="260"/>
+    <path class="trazo" d="M10.5 35.6h27v-4.6h-27z" pathLength="260"/>
+    <path class="trazo" d="M12.8 31h22.4v-4.4H12.8z" pathLength="260"/>
+    <path class="trazo" d="M15.2 26.6h17.6v-4.4H15.2z" pathLength="260"/>
+    <path class="trazo" d="M17.6 22.2h12.8v-4.4H17.6z" pathLength="260"/>
+    <path class="trazo" d="M20 17.8h8v-4.6h-8zM24 13.2V7.4l5.6 1.4L24 10.2" pathLength="260"/>
+  </svg>
+</div>` : '';
+
   const aviso = cfg.avisoDemo && cfg.avisoDemo.activo ? `
 <div class="aviso-demo" data-aviso-demo>
   <div class="contenedor aviso-demo-fila">
@@ -283,6 +301,7 @@ ${escJson({ '@context': 'https://schema.org', '@graph': grafo })}
 </script>${analytics}
 </head>
 <body class="${esc(o.clase || '')}" data-ruta="${esc(o.ruta)}" data-wa="${esc(cfg.contacto.whatsapp)}">
+${cortina}
 <a class="saltar" href="#contenido">Saltar al contenido</a>
 ${aviso}
 ${cabecera(cfg, o.ruta, categorias)}

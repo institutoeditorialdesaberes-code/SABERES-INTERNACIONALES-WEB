@@ -634,3 +634,86 @@
     requestAnimationFrame(paso);
   }
 })();
+
+/* =========================================================================
+   Animación avanzada: morphing de portada entre páginas, profundidad al
+   desplazarse y barra de progreso de lectura.
+   ========================================================================= */
+(function () {
+  'use strict';
+
+  var $ = function (s) { return document.querySelector(s); };
+  var $$ = function (s) { return Array.prototype.slice.call(document.querySelectorAll(s)); };
+  var quieto = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---- Cortina de entrada: se retira en cuanto termina ------------------ */
+  var cortina = $('[data-cortina]');
+  if (cortina) {
+    var quitar = function () {
+      document.documentElement.classList.remove('con-cortina');
+      cortina.remove();
+    };
+    cortina.addEventListener('animationend', function (e) {
+      if (e.animationName === 'cortinaFuera') quitar();
+    });
+    // Red de seguridad: si la animación no llega a dispararse, no se queda tapado.
+    setTimeout(quitar, 2600);
+  }
+
+  if (quieto) return;
+
+  /* ---- Morphing de la portada al abrir un libro ------------------------- */
+  // Solo el elemento pulsado recibe el nombre, de modo que nunca hay dos
+  // iguales en la misma página (eso anularía la transición).
+  if (document.startViewTransition) {
+    document.addEventListener('click', function (e) {
+      var enlace = e.target.closest('a[href^="/libro/"]');
+      if (!enlace || e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;
+
+      var tarjeta = enlace.closest('.tarjeta-libro, .hero-destacado');
+      var img = enlace.querySelector('img') || (tarjeta && tarjeta.querySelector('img'));
+      if (!img) return;
+
+      $$('[style*="portada-activa"]').forEach(function (el) { el.style.viewTransitionName = ''; });
+      img.style.viewTransitionName = 'portada-activa';
+    }, true);
+  }
+
+  /* ---- Profundidad al desplazarse -------------------------------------- */
+  var capas = $$('.hero-carrusel, .portada-seccion, .franja-editorial');
+  var barra = null;
+  if (document.body.classList.contains('p-articulo')) {
+    barra = document.createElement('div');
+    barra.className = 'progreso-lectura';
+    barra.setAttribute('role', 'presentation');
+    document.body.appendChild(barra);
+  }
+
+  var pendiente = false;
+  function alDesplazar() {
+    if (pendiente) return;
+    pendiente = true;
+    requestAnimationFrame(function () {
+      pendiente = false;
+      var y = window.pageYOffset;
+
+      for (var i = 0; i < capas.length; i += 1) {
+        var caja = capas[i].getBoundingClientRect();
+        if (caja.bottom < -200 || caja.top > window.innerHeight + 200) continue;
+        // Desplazamiento suave y contenido: nunca más de 60 píxeles.
+        var avance = (window.innerHeight - caja.top) * 0.06;
+        capas[i].style.setProperty('--py', Math.max(-60, Math.min(60, avance)).toFixed(1) + 'px');
+      }
+
+      if (barra) {
+        var alto = document.documentElement.scrollHeight - window.innerHeight;
+        var pct = alto > 0 ? Math.min(100, (y / alto) * 100) : 0;
+        barra.style.setProperty('--avance', pct.toFixed(2) + '%');
+      }
+    });
+  }
+
+  window.addEventListener('scroll', alDesplazar, { passive: true });
+  window.addEventListener('resize', alDesplazar);
+  alDesplazar();
+})();

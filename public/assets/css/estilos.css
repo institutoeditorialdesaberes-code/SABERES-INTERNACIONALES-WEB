@@ -1091,3 +1091,111 @@ article.tarjeta-autor:hover .tarjeta-autor-foto img { transform: scale(1.06); ou
 .tarjeta-precio.sin-precio { font-size: .92rem; font-family: var(--sans); font-weight: 700; color: var(--azul-medio); }
 .precio-principal { font-size: clamp(1.6rem, 3vw, 2.3rem); }
 .ficha-autores .nota { margin: 0 .25rem 0 0; }
+
+/* =========================================================================
+   29. Animación avanzada
+   Transiciones entre páginas, cinta de portadas, cortina de entrada y
+   profundidad al desplazarse. Todo es mejora progresiva: si el navegador
+   no lo admite o el visitante pidió menos movimiento, el sitio funciona
+   exactamente igual, solo que quieto.
+   ========================================================================= */
+
+/* ---- 1. Transiciones entre páginas ------------------------------------- */
+@view-transition { navigation: auto; }
+
+@media (prefers-reduced-motion: no-preference) {
+  ::view-transition-old(root) { animation: salirPagina 220ms cubic-bezier(.4, 0, 1, 1) both; }
+  ::view-transition-new(root) { animation: entrarPagina 320ms cubic-bezier(0, 0, .2, 1) both; }
+
+  /* La portada del libro viaja de la tarjeta a la ficha. */
+  ::view-transition-group(portada-activa) { animation-duration: 460ms; }
+  ::view-transition-old(portada-activa),
+  ::view-transition-new(portada-activa) { animation: none; mix-blend-mode: normal; height: 100%; }
+}
+
+@keyframes salirPagina { to { opacity: 0; transform: translateY(-8px); } }
+@keyframes entrarPagina { from { opacity: 0; transform: translateY(10px); } }
+
+/* La ficha declara siempre el nombre; las tarjetas lo reciben al pulsarlas. */
+.ficha-portada img { view-transition-name: portada-activa; }
+.cabecera { view-transition-name: cabecera-fija; }
+
+/* ---- 2. Cinta infinita de portadas ------------------------------------- */
+.cinta {
+  overflow: hidden; padding: 2.5rem 0; background: var(--azul);
+  position: relative;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+}
+.cinta-pista {
+  display: flex; gap: 1.25rem; width: max-content;
+  animation: desplazarCinta 64s linear infinite;
+}
+.cinta:hover .cinta-pista { animation-play-state: paused; }
+.cinta-pista img {
+  width: 132px; height: 198px; object-fit: cover; border-radius: 3px; flex: none;
+  box-shadow: 0 10px 26px rgba(0, 0, 0, .45);
+  transform: rotate(-1.2deg);
+  transition: transform 400ms cubic-bezier(.2, .7, .3, 1);
+}
+.cinta-pista img:nth-child(even) { transform: rotate(1.4deg) translateY(6px); }
+.cinta-titulo {
+  position: relative; z-index: 2; text-align: center; margin: 0 0 1.75rem;
+  color: var(--oro); font-family: var(--sans); font-size: .74rem; font-weight: 700;
+  letter-spacing: .28em; text-transform: uppercase;
+}
+@keyframes desplazarCinta { to { transform: translateX(-50%); } }
+
+/* ---- 3. Cortina de entrada --------------------------------------------- */
+.cortina { display: none; }
+
+.con-cortina .cortina {
+  display: grid; place-items: center; position: fixed; inset: 0; z-index: 9999;
+  background: linear-gradient(160deg, #0e2a47, #061726);
+  animation: cortinaFuera 520ms 780ms cubic-bezier(.6, 0, .8, .2) forwards;
+}
+.con-cortina body { overflow: hidden; }
+
+.cortina-sello { width: min(190px, 42vw); height: auto; color: var(--oro); }
+.cortina-sello .trazo {
+  fill: none; stroke: currentColor; stroke-width: 1.3;
+  stroke-linecap: round; stroke-linejoin: round;
+  stroke-dasharray: 260; stroke-dashoffset: 260;
+  animation: dibujar 820ms cubic-bezier(.4, 0, .2, 1) forwards;
+}
+.cortina-sello .trazo:nth-child(2) { animation-delay: 90ms; }
+.cortina-sello .trazo:nth-child(3) { animation-delay: 180ms; }
+.cortina-sello .trazo:nth-child(4) { animation-delay: 270ms; }
+.cortina-sello .trazo:nth-child(5) { animation-delay: 360ms; }
+.cortina-sello .trazo:nth-child(6) { animation-delay: 450ms; }
+.cortina-sello .trazo:nth-child(7) { animation-delay: 540ms; }
+.cortina-sello .relleno { opacity: 0; animation: aparecerSello 420ms 620ms forwards; }
+
+@keyframes dibujar { to { stroke-dashoffset: 0; } }
+@keyframes aparecerSello { to { opacity: .22; } }
+@keyframes cortinaFuera { to { opacity: 0; visibility: hidden; transform: scale(1.06); } }
+
+/* ---- 4. Profundidad al desplazarse ------------------------------------- */
+.hero-carrusel::after { transform: translateY(var(--py, 0)) rotate(var(--giro, 0deg)); }
+.portada-seccion::after { transform: translateY(calc(var(--py, 0px) * .6)); }
+.franja-editorial { position: relative; overflow: hidden; }
+.franja-editorial::before {
+  content: ''; position: absolute; right: -8%; top: -30%; width: 460px; height: 460px;
+  border-radius: 50%; border: 1px solid rgba(201, 162, 39, .2);
+  box-shadow: inset 0 0 0 70px rgba(201, 162, 39, .04);
+  transform: translateY(var(--py, 0)); pointer-events: none;
+}
+
+/* Barra de progreso de lectura en los artículos. */
+.progreso-lectura {
+  position: fixed; top: 0; left: 0; height: 3px; z-index: 120;
+  width: var(--avance, 0%); background: linear-gradient(90deg, var(--oro), #e8cd72);
+  transition: width 90ms linear; box-shadow: 0 0 10px rgba(201, 162, 39, .5);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cinta-pista { animation: none; }
+  .cortina { display: none !important; }
+  .progreso-lectura { display: none; }
+  .hero-carrusel::after, .portada-seccion::after, .franja-editorial::before { transform: none; }
+}

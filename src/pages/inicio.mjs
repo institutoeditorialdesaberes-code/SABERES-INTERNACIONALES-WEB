@@ -2,7 +2,8 @@ import { esc, money, recorta } from '../lib/utils.mjs';
 import { icono } from '../lib/icons.mjs';
 import {
   tarjetaLibro, tarjetaAutor, tarjetaEntrada, tarjetaCategoria,
-  encabezadoSeccion, carrusel, bandaCTA, ventajas, rutaPortada, enlaceWhatsApp
+  encabezadoSeccion, carrusel, bandaCTA, ventajas, rutaPortada, enlaceWhatsApp,
+  cintaPortadas
 } from '../lib/components.mjs';
 
 export function paginaInicio(ctx) {
@@ -118,6 +119,8 @@ ${ventajas(cfg)}
     ${carrusel('carrusel-novedades', novedades.map((l) => tarjetaLibro(l, ctx)).join(''))}
   </div>
 </section>
+
+${cintaPortadas(libros, `${libros.length} títulos en catálogo`)}
 
 ${bandaCTA(cfg)}
 

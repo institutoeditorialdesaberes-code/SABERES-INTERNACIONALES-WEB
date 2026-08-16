@@ -159,6 +159,23 @@ export function ventajas(cfg) {
 </section>`;
 }
 
+/**
+ * Cinta de portadas en movimiento continuo. Es decorativa: no lleva enlaces
+ * ni texto alternativo, para no duplicar rutas del catálogo ante Google.
+ * La lista se emite dos veces seguidas: así el bucle no tiene costura.
+ */
+export function cintaPortadas(libros, titulo = 'Del fondo editorial') {
+  if (libros.length < 4) return '';
+  const imagenes = libros
+    .map((l) => `<img src="${esc(rutaPortada(l))}" alt="" width="132" height="198" loading="lazy" decoding="async">`)
+    .join('');
+  return `
+<section class="cinta">
+  <p class="cinta-titulo">${esc(titulo)}</p>
+  <div class="cinta-pista" aria-hidden="true">${imagenes}${imagenes}</div>
+</section>`;
+}
+
 export function paginaVacia(mensaje) {
   return `<div class="vacio">${icono('busqueda')}<p>${esc(mensaje)}</p></div>`;
 }
