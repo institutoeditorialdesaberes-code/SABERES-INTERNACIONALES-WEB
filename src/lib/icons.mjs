@@ -56,5 +56,5 @@ export function logotipo({ alto = 48, conTexto = true, clase = '', prioridad = f
   const marca = `<img class="marca" src="${RUTA_LOGO}" alt="" width="${alto}" height="${alto}"
        loading="${prioridad ? 'eager' : 'lazy'}" decoding="async"${prioridad ? ' fetchpriority="high"' : ''}>`;
   if (!conTexto) return marca;
-  return `<span class="logo ${clase}">${marca}<span class="logo-texto"><strong>Saberes</strong><em>Internacionales</em></span></span>`;
+  return `<span class="logo ${clase}">${marca}<span class="logo-texto"><strong>Editorial Saberes</strong><em>Internacionales</em></span></span>`;
 }
