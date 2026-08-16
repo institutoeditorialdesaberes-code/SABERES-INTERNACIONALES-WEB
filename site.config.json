@@ -17,7 +17,7 @@
   "animacionEntrada": true,
 
   "avisoDemo": {
-    "activo": true,
+    "activo": false,
     "texto": "Catálogo de demostración: los libros y autores mostrados son de ejemplo mientras se carga el fondo editorial real."
   },
 

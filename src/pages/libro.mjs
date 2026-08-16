@@ -120,6 +120,17 @@ function seccionResenas(libro, cfg) {
       <p>Todavía no hay reseñas publicadas. ¡Sé el primero en compartir tu experiencia con este libro!</p>
     </div>`}
 
+    <div class="valorar-widget" data-valorar-libro="${esc(libro.titulo)}" data-wa="${esc(cfg.contacto.whatsapp)}">
+      <div class="valorar-texto">
+        <h3>Califica este libro</h3>
+        <p>Tu valoración ayuda a otros lectores a elegir</p>
+      </div>
+      <div class="valorar-estrellas" role="group" aria-label="Calificación">
+        ${[1,2,3,4,5].map(n => `<button type="button" class="estrella-btn" data-valor="${n}" aria-label="${n} ${n === 1 ? 'estrella' : 'estrellas'}">★</button>`).join('')}
+      </div>
+      <p class="valorar-ayuda">Haz clic en una estrella para calificar</p>
+    </div>
+
     <div class="resenas-cta">
       <div class="resenas-cta-texto">
         <h3>¿Ya lo leíste?</h3>

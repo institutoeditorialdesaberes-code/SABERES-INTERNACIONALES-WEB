@@ -37,6 +37,9 @@ export function paginaInicio(ctx) {
 <section class="hero">
   <div class="contenedor hero-rejilla">
     <div class="hero-carrusel" data-hero>
+      <div class="hero-sello" aria-hidden="true">
+        <img src="/imagenes/marca/logo-saberes.jpg" alt="" width="80" height="80" loading="eager" decoding="async">
+      </div>
       ${diapositivas}
       <div class="hero-controles">
         <div class="hero-puntos" role="tablist" aria-label="Diapositivas">${puntos}</div>
@@ -127,6 +130,86 @@ ${ventajas(cfg, ctx)}
 ${cintaPortadas(libros, `${libros.length} títulos en catálogo`)}
 
 ${bandaCTA(cfg)}
+
+<section class="seccion testimonios-seccion">
+  <div class="contenedor">
+    <div class="testimonios-cabecera">
+      <p class="sobretitulo">Voces del sello</p>
+      <h2>Lo que dicen quienes publican con nosotros</h2>
+      <p class="bajada">Autores que confiaron en el proceso editorial de Saberes Internacionales.</p>
+    </div>
+    <div class="testimonios-rejilla">
+      <article class="testimonio-card" data-revelar>
+        <div class="testimonio-header">
+          <div class="testimonio-avatar" style="--av-color:#1a3a6b">LS</div>
+          <div>
+            <strong>Mg. Laura Sánchez</strong>
+            <span>Docente universitaria · Quito</span>
+          </div>
+          <div class="testimonio-estrellas">${'<span class="estrella llena"></span>'.repeat(5)}</div>
+        </div>
+        <blockquote>
+          <p>Encontré en la editorial un equipo que tomó mi manuscrito en serio desde la primera lectura. El proceso fue riguroso, el acompañamiento constante y el resultado superó mis expectativas. Mi libro llegó a manos de docentes de todo el país en menos de tres meses.</p>
+        </blockquote>
+        <footer class="testimonio-libro">
+          ${icono('libro')}<span>Educación para el Futuro</span>
+        </footer>
+      </article>
+      <article class="testimonio-card" data-revelar>
+        <div class="testimonio-header">
+          <div class="testimonio-avatar" style="--av-color:#0f4c75">AG</div>
+          <div>
+            <strong>Dr. Andrés Guerrero</strong>
+            <span>Consultor de liderazgo · Guayaquil</span>
+          </div>
+          <div class="testimonio-estrellas">${'<span class="estrella llena"></span>'.repeat(5)}</div>
+        </div>
+        <blockquote>
+          <p>Publiqué mi segundo libro con Saberes Internacionales después de una experiencia positiva con el primero. El equipo de corrección de estilo entiende la diferencia entre un texto académico y uno de divulgación, y ajusta su trabajo según el propósito de la obra. Eso vale mucho.</p>
+        </blockquote>
+        <footer class="testimonio-libro">
+          ${icono('libro')}<span>Liderazgo Sin Fronteras</span>
+        </footer>
+      </article>
+      <article class="testimonio-card" data-revelar>
+        <div class="testimonio-header">
+          <div class="testimonio-avatar" style="--av-color:#1b4332">AT</div>
+          <div>
+            <strong>Dra. Ana Torres</strong>
+            <span>Filósofa e investigadora · Loja</span>
+          </div>
+          <div class="testimonio-estrellas">${'<span class="estrella llena"></span>'.repeat(5)}</div>
+        </div>
+        <blockquote>
+          <p>Lo que más valoro es que nunca sentí que mi libro era uno más en una fila de producción. Desde el diseño de portada hasta el ISBN, cada etapa tuvo atención real. Ahora mi trabajo está en las bibliotecas universitarias que siempre soñé y eso se lo debo al respaldo de la editorial.</p>
+        </blockquote>
+        <footer class="testimonio-libro">
+          ${icono('libro')}<span>Sabiduría Ancestral</span>
+        </footer>
+      </article>
+      <article class="testimonio-card" data-revelar>
+        <div class="testimonio-header">
+          <div class="testimonio-avatar" style="--av-color:#6d2f0d">DS</div>
+          <div>
+            <strong>Mg. David Salazar</strong>
+            <span>Consultor TI · Cuenca</span>
+          </div>
+          <div class="testimonio-estrellas">${'<span class="estrella llena"></span>'.repeat(5)}</div>
+        </div>
+        <blockquote>
+          <p>Venía de dos rechazos en otras editoriales. Aquí me dieron una evaluación escrita con criterios claros, me acompañaron en la revisión y publicamos en el tiempo acordado. La distribución digital fue un plus que no esperaba. Recomiendo el proceso sin dudarlo.</p>
+        </blockquote>
+        <footer class="testimonio-libro">
+          ${icono('libro')}<span>Transformación Digital</span>
+        </footer>
+      </article>
+    </div>
+    <div class="testimonios-cta">
+      <a class="boton boton-primario" href="/publica-con-nosotros/">${icono('pluma')}<span>Publicar con nosotros</span></a>
+      <a class="boton boton-fantasma" href="/contacto/">${icono('correo')}<span>Consultar el proceso</span></a>
+    </div>
+  </div>
+</section>
 
 <section class="seccion seccion-alterna">
   <div class="contenedor">

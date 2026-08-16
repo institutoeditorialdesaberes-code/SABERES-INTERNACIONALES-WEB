@@ -452,6 +452,44 @@
   });
 
   /* ------------------------------------------------------------------ */
+  /* Estrella interactiva — valorar libro                                */
+  /* ------------------------------------------------------------------ */
+  $$('[data-valorar-libro]').forEach(function (widget) {
+    var titulo = widget.getAttribute('data-valorar-libro');
+    var wa = widget.getAttribute('data-wa');
+    var btns = $$('.estrella-btn', widget);
+    var ayuda = $('.valorar-ayuda', widget);
+    var elegida = 0;
+
+    btns.forEach(function (btn, i) {
+      btn.addEventListener('mouseenter', function () {
+        btns.forEach(function (b, j) {
+          b.classList.toggle('hover', j <= i);
+          b.classList.remove('elegida');
+        });
+      });
+      btn.addEventListener('mouseleave', function () {
+        btns.forEach(function (b, j) {
+          b.classList.remove('hover');
+          b.classList.toggle('elegida', elegida > 0 && j < elegida);
+        });
+      });
+      btn.addEventListener('click', function () {
+        var valor = Number(btn.getAttribute('data-valor'));
+        elegida = valor;
+        btns.forEach(function (b, j) { b.classList.toggle('elegida', j < valor); b.classList.add('activa'); });
+        if (ayuda) { ayuda.textContent = 'Abriendo WhatsApp para enviar tu valoración…'; ayuda.classList.add('enviando'); }
+        var texto = encodeURIComponent('Hola, quiero calificar el libro "' + titulo + '" con ' + valor + ' estrella' + (valor === 1 ? '' : 's') + '. Mi comentario: ');
+        setTimeout(function () { window.open('https://wa.me/' + wa + '?text=' + texto, '_blank'); }, 400);
+      });
+    });
+
+    widget.addEventListener('mouseleave', function () {
+      if (elegida === 0) btns.forEach(function (b) { b.classList.remove('hover', 'activa'); });
+    });
+  });
+
+  /* ------------------------------------------------------------------ */
   /* Copiar cita APA                                                     */
   /* ------------------------------------------------------------------ */
   $$('[data-copiar-apa]').forEach(function (boton) {

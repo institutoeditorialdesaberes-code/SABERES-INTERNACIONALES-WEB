@@ -2991,3 +2991,489 @@ article.tarjeta-autor:hover .tarjeta-autor-foto img {
   border-color: var(--verde) !important;
 }
 
+
+/* ==========================================================================
+   37. FUTURISTA — Categorías centradas, Sello giratorio, Testimonios,
+       Estrellas interactivas, Glassmorphism, Efectos premium
+   ========================================================================== */
+
+/* ── Sello giratorio en el hero ── */
+.hero-sello {
+  position: absolute;
+  top: 1.4rem;
+  right: 1.6rem;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 2.5px solid rgba(255,255,255,.45);
+  box-shadow: 0 0 0 4px rgba(255,255,255,.12), 0 8px 24px rgba(0,0,0,.3);
+  animation: girarLento 18s linear infinite;
+  z-index: 4;
+  cursor: default;
+}
+.hero-sello img { width: 100%; height: 100%; object-fit: cover; display: block; }
+@media (max-width: 640px) {
+  .hero-sello { width: 52px; height: 52px; top: .85rem; right: .85rem; border-width: 2px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-sello { animation: none; }
+}
+
+/* ── Categorías: títulos centrados y grandes ── */
+.tarjeta-categoria-grande.con-imagen {
+  justify-content: center !important;
+  align-items: center !important;
+  text-align: center !important;
+  min-height: 180px;
+}
+.tarjeta-categoria-grande.con-imagen .tcg-icono {
+  margin-bottom: .5rem;
+  width: 52px;
+  height: 52px;
+  background: rgba(255,255,255,.22) !important;
+  backdrop-filter: blur(8px);
+}
+.tarjeta-categoria-grande.con-imagen .tcg-texto {
+  align-items: center;
+  gap: .3rem;
+}
+.tarjeta-categoria-grande.con-imagen .tcg-texto strong {
+  font-size: 1.45rem !important;
+  font-weight: 800 !important;
+  color: #fff !important;
+  text-shadow: 0 2px 12px rgba(0,0,0,.5);
+  line-height: 1.1;
+}
+.tarjeta-categoria-grande.con-imagen .tcg-texto em {
+  font-size: .85rem !important;
+  color: rgba(255,255,255,.85) !important;
+  font-weight: 500;
+}
+.tarjeta-categoria-grande.con-imagen .tcg-flecha {
+  margin-top: .5rem;
+  width: 28px;
+  height: 28px;
+  background: rgba(255,255,255,.18);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(4px);
+  transition: background .2s ease, transform .2s ease;
+}
+.tarjeta-categoria-grande.con-imagen:hover .tcg-flecha {
+  background: rgba(255,255,255,.35);
+  transform: translateX(3px);
+}
+
+/* Las que NO tienen imagen también mejoran */
+.tarjeta-categoria-grande:not(.con-imagen) .tcg-texto strong {
+  font-size: 1.05rem !important;
+  font-weight: 700 !important;
+}
+
+/* ── Glassmorphism en hero-destacado ── */
+.hero-destacado {
+  background: rgba(255,255,255,.88) !important;
+  backdrop-filter: blur(18px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(18px) saturate(180%) !important;
+  border: 1px solid rgba(255,255,255,.7) !important;
+}
+
+/* ── Hero: mesh gradient animate ── */
+.hero-carrusel {
+  position: relative;
+}
+.hero-carrusel::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background:
+    radial-gradient(ellipse 60% 50% at 80% 20%, rgba(26,58,107,.25) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 40% at 20% 80%, rgba(15,37,64,.2) 0%, transparent 60%);
+  pointer-events: none;
+}
+.diapositiva-texto { position: relative; z-index: 2; }
+
+/* ── Gradient text en heading del hero ── */
+@media (prefers-reduced-motion: no-preference) {
+  @supports (-webkit-background-clip: text) {
+    .diapositiva[data-activa] h1 {
+      background: linear-gradient(135deg, #fff 0%, rgba(200,220,255,.9) 60%, #fff 100%);
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: gradientShift 4s ease infinite;
+    }
+  }
+}
+@keyframes gradientShift {
+  0%   { background-position: 0% center; }
+  50%  { background-position: 100% center; }
+  100% { background-position: 0% center; }
+}
+
+/* ── Orbes flotantes decorativos en franja editorial ── */
+.franja-editorial { overflow: hidden; }
+.franja-editorial .contenedor { position: relative; z-index: 2; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .franja-editorial::before {
+    content: '';
+    position: absolute;
+    width: 320px;
+    height: 320px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(74,126,199,.35) 0%, transparent 70%);
+    top: -80px;
+    right: -60px;
+    z-index: 1;
+    animation: flotarOrb 9s ease-in-out infinite;
+    pointer-events: none;
+  }
+  .franja-editorial::after {
+    content: '';
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(26,58,107,.4) 0%, transparent 70%);
+    bottom: -50px;
+    left: 5%;
+    z-index: 1;
+    animation: flotarOrb 12s ease-in-out 2s infinite reverse;
+    pointer-events: none;
+  }
+}
+@keyframes flotarOrb {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50%       { transform: translateY(-30px) scale(1.08); }
+}
+
+/* ── Testimonios ── */
+.testimonios-seccion {
+  background: linear-gradient(170deg, var(--papel) 0%, #eef2f9 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.testimonios-seccion::before {
+  content: '';
+  position: absolute;
+  width: 500px; height: 500px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(26,58,107,.06) 0%, transparent 70%);
+  top: -150px; right: -150px;
+  pointer-events: none;
+}
+
+.testimonios-cabecera {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+.testimonios-cabecera .bajada {
+  max-width: 52ch;
+  margin: .75rem auto 0;
+  color: var(--tinta-media);
+}
+.testimonios-cabecera h2 {
+  font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+  margin: .35rem 0 0;
+}
+
+.testimonios-rejilla {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.25rem;
+  margin-bottom: 2rem;
+}
+
+.testimonio-card {
+  background: rgba(255,255,255,.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,.9);
+  border-radius: var(--r-l);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  box-shadow: 0 2px 16px rgba(26,58,107,.08), 0 0 0 1px rgba(26,58,107,.06);
+  transition: box-shadow .25s ease, transform .25s cubic-bezier(.22,1,.36,1);
+  position: relative;
+}
+.testimonio-card::before {
+  content: '\201C';
+  position: absolute;
+  top: .6rem;
+  right: 1.25rem;
+  font-size: 4rem;
+  line-height: 1;
+  color: var(--azul-claro);
+  font-family: Georgia, serif;
+  pointer-events: none;
+}
+.testimonio-card:hover {
+  box-shadow: 0 8px 32px rgba(26,58,107,.14), 0 0 0 1px rgba(26,58,107,.08);
+  transform: translateY(-3px);
+}
+
+.testimonio-header {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: .85rem;
+}
+
+.testimonio-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--av-color, var(--azul));
+  color: #fff;
+  font-size: .85rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  letter-spacing: -.01em;
+  box-shadow: 0 3px 10px rgba(0,0,0,.2);
+}
+
+.testimonio-header > div:nth-child(2) {
+  display: flex;
+  flex-direction: column;
+  gap: .1rem;
+}
+
+.testimonio-header strong {
+  font-size: .9rem;
+  font-weight: 700;
+  color: var(--tinta);
+  line-height: 1.2;
+}
+
+.testimonio-header span {
+  font-size: .72rem;
+  color: var(--tinta-suave);
+}
+
+.testimonio-estrellas { display: flex; gap: 2px; flex: none; }
+.testimonio-estrellas .estrella {
+  width: 12px; height: 12px;
+}
+.testimonio-estrellas .estrella.llena { background: #f59e0b; }
+
+.testimonio-card blockquote {
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+.testimonio-card blockquote p {
+  font-size: .88rem;
+  line-height: 1.7;
+  color: var(--tinta);
+  margin: 0;
+  font-style: italic;
+}
+
+.testimonio-libro {
+  display: flex;
+  align-items: center;
+  gap: .4rem;
+  font-size: .75rem;
+  font-weight: 700;
+  color: var(--azul);
+  padding-top: .75rem;
+  border-top: 1px solid var(--linea);
+  margin: 0;
+}
+.testimonio-libro .ico { width: .9em; height: .9em; stroke: var(--azul); }
+
+.testimonios-cta {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 640px) {
+  .testimonios-rejilla { grid-template-columns: 1fr; }
+  .testimonio-header { grid-template-columns: auto 1fr; }
+  .testimonio-estrellas { grid-column: 1 / -1; }
+  .testimonios-cta { flex-direction: column; align-items: stretch; }
+  .testimonios-cta .boton { justify-content: center; }
+}
+
+/* ── Estrella interactiva (valorar libro) ── */
+.valorar-widget {
+  background: linear-gradient(135deg, var(--papel) 0%, var(--azul-claro) 100%);
+  border-radius: var(--r-l);
+  padding: 1.5rem 2rem;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.5rem;
+  border: 1px solid rgba(26,58,107,.12);
+}
+.valorar-texto h3 { margin: 0 0 .15rem; font-size: 1rem; color: var(--azul); }
+.valorar-texto p  { margin: 0; font-size: .82rem; color: var(--tinta-media); }
+
+.valorar-estrellas {
+  display: flex;
+  gap: .25rem;
+}
+.estrella-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 2rem;
+  color: var(--linea-fuerte);
+  transition: color .15s ease, transform .15s cubic-bezier(.34,1.56,.64,1);
+  line-height: 1;
+  padding: 0 .1rem;
+}
+.estrella-btn:hover,
+.estrella-btn.activa,
+.estrella-btn.hover { color: #f59e0b; transform: scale(1.25); }
+.estrella-btn.elegida { color: #f59e0b; transform: scale(1.1); }
+
+.valorar-ayuda {
+  font-size: .75rem;
+  color: var(--tinta-suave);
+  margin: 0;
+  flex-basis: 100%;
+  text-align: center;
+}
+.valorar-ayuda.enviando { color: var(--azul); font-weight: 600; }
+
+@media (max-width: 640px) {
+  .valorar-widget { flex-direction: column; align-items: flex-start; padding: 1.25rem; }
+  .valorar-estrellas { gap: .4rem; }
+  .estrella-btn { font-size: 1.75rem; }
+}
+
+/* ── Glassmorphism en ventajas card ── */
+.ventaja-card {
+  background: rgba(255,255,255,.65) !important;
+  backdrop-filter: blur(10px) !important;
+  -webkit-backdrop-filter: blur(10px) !important;
+  border: 1px solid rgba(255,255,255,.8) !important;
+}
+
+/* ── Cards de libro: glow sutil en hover ── */
+.tarjeta-libro:hover {
+  box-shadow: 0 4px 24px rgba(26,58,107,.16), 0 0 0 1.5px rgba(26,58,107,.1) !important;
+}
+
+/* ── Sección hero: borde interno animado en la portada ── */
+@media (prefers-reduced-motion: no-preference) {
+  .ficha-portada {
+    position: relative;
+  }
+  .ficha-portada::after {
+    content: '';
+    position: absolute;
+    inset: -3px;
+    border-radius: calc(var(--r-m) + 3px);
+    background: conic-gradient(
+      from 0deg,
+      var(--azul) 0deg,
+      rgba(26,58,107,.2) 90deg,
+      #4a7ec7 180deg,
+      rgba(26,58,107,.2) 270deg,
+      var(--azul) 360deg
+    );
+    animation: girarLento 6s linear infinite;
+    z-index: -1;
+    opacity: 0;
+    transition: opacity .4s ease;
+  }
+  .ficha-portada:hover::after { opacity: 1; }
+}
+
+/* ── Número animado en cifras ── */
+@media (prefers-reduced-motion: no-preference) {
+  .cifras strong {
+    background: linear-gradient(135deg, #fff 0%, rgba(200,220,255,.85) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+}
+
+/* ── Efecto neon sutil en sobretítulos ── */
+.sobretitulo {
+  transition: letter-spacing .3s ease;
+}
+
+/* ── Barra de progreso animada (pulsante) ── */
+@media (prefers-reduced-motion: no-preference) {
+  .progreso-lectura {
+    background: linear-gradient(90deg, var(--azul), #4a7ec7, var(--azul)) !important;
+    background-size: 200% auto !important;
+    animation: gradientShift 3s linear infinite !important;
+  }
+}
+
+/* ── Botón primario: shimmer premium ── */
+@media (prefers-reduced-motion: no-preference) {
+  .boton-primario {
+    position: relative;
+    overflow: hidden;
+  }
+  .boton-primario::after {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%;
+    width: 60%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,.22), transparent);
+    transform: skewX(-20deg);
+    animation: shimmerBtn 3.5s ease-in-out 2s infinite;
+  }
+}
+@keyframes shimmerBtn {
+  0%   { left: -100%; }
+  40%  { left: 130%; }
+  100% { left: 130%; }
+}
+
+/* ── Sección alt: fondo con micro-textura ── */
+.seccion-alterna {
+  background-image:
+    radial-gradient(rgba(26,58,107,.03) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+/* ── Encabezado de sección: línea decorativa animada ── */
+@media (prefers-reduced-motion: no-preference) {
+  .encabezado-seccion h2 {
+    position: relative;
+    display: inline-block;
+  }
+  .encabezado-seccion h2::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 40px;
+    height: 3px;
+    background: var(--azul);
+    border-radius: 2px;
+    animation: lineaCrece .6s cubic-bezier(.22,1,.36,1) .5s both;
+    transform-origin: left;
+  }
+}
+
+/* ── Icono pluma en nav: color azul marino ── */
+.tarjeta-autor-cta .ico { stroke: var(--azul); }
+
+/* ── Scroll suave global ── */
+html { scroll-behavior: smooth; }
+
+/* ── Selección de texto ── */
+::selection { background: rgba(26,58,107,.18); color: var(--tinta); }
+
