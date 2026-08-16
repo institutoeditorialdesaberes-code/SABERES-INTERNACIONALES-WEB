@@ -129,50 +129,9 @@ function seccionResenas(libro, cfg) {
         <p class="sobretitulo">Comunidad lectora</p>
         <h2 class="titulo-bloque">Reseñas y valoraciones</h2>
       </div>
-      <button class="boton boton-primario" type="button" data-abrir-formulario-resena>
-        ${icono('pluma')}<span>Escribir una reseña</span>
-      </button>
     </div>
 
-    <div class="resena-form-bloque" id="resena-form-bloque" hidden>
-      <form class="resena-form" data-resena-form data-libro="${esc(libro.titulo)}" data-email="${esc(cfg.contacto.email)}" novalidate>
-        <h3 class="resena-form-titulo">Tu opinión sobre este libro</h3>
-        <div class="resena-form-estrellas" role="group" aria-label="Calificación">
-          <span>Tu calificación:</span>
-          <div class="rf-estrellas">
-            ${[1,2,3,4,5].map(n => `<button type="button" class="rf-estrella" data-val="${n}" aria-label="${n} ${n===1?'estrella':'estrellas'}">★</button>`).join('')}
-          </div>
-        </div>
-        <div class="resena-form-campos">
-          <label class="resena-form-label">
-            <span>Tu nombre <em>*</em></span>
-            <input type="text" name="nombre" class="resena-form-input" placeholder="Nombre y apellido" required maxlength="80">
-          </label>
-          <label class="resena-form-label">
-            <span>Tu cargo o institución</span>
-            <input type="text" name="cargo" class="resena-form-input" placeholder="Docente, investigador, lector…" maxlength="100">
-          </label>
-          <label class="resena-form-label resena-form-full">
-            <span>Tu reseña <em>*</em></span>
-            <textarea name="texto" class="resena-form-input" rows="4" placeholder="Cuéntanos tu experiencia leyendo este libro…" required minlength="30" maxlength="600"></textarea>
-          </label>
-        </div>
-        <div class="resena-form-pie">
-          <p class="resena-form-nota">${icono('check')} Tu reseña será enviada por correo y publicada tras revisión editorial.</p>
-          <div class="resena-form-acciones">
-            <button type="button" class="boton boton-fantasma" data-cerrar-formulario-resena>Cancelar</button>
-            <button type="submit" class="boton boton-primario">${icono('envio')}<span>Enviar reseña</span></button>
-          </div>
-        </div>
-        <div class="resena-form-exito" hidden>
-          <div class="resena-exito-ico">${icono('check')}</div>
-          <h4>¡Gracias por tu reseña!</h4>
-          <p>La hemos recibido y la publicaremos tras una breve revisión editorial. Tu opinión ayuda a otros lectores.</p>
-        </div>
-      </form>
-    </div>
-
-    <div class="resenas-resumen" data-revelar>
+    <div class="resenas-resumen">
       <div class="resenas-promedio">
         <span class="resenas-numero">${promedio.toFixed(1)}</span>
         <div class="estrellas grande" aria-label="${promedio} de 5">${Array.from({ length: 5 }, (_, i) =>
@@ -194,31 +153,24 @@ function seccionResenas(libro, cfg) {
     ${resenas.length ? `
     <div class="resenas-lista">
       ${cardsResenas}
-    </div>` : `
-    <div class="resenas-vacia">
-      <p>Todavía no hay reseñas publicadas. ¡Sé el primero en compartir tu experiencia con este libro!</p>
-    </div>`}
+    </div>` : ''}
 
-    <div class="valorar-widget" data-valorar-libro="${esc(libro.titulo)}" data-wa="${esc(cfg.contacto.whatsapp)}">
-      <div class="valorar-texto">
-        <h3>Califica este libro</h3>
-        <p>Tu valoración ayuda a otros lectores a elegir</p>
+    <div class="comentarios-seccion">
+      <div class="comentarios-cabecera">
+        <h3>${icono('chat')} Comentarios y reseñas</h3>
+        <div class="comentarios-login-info">
+          <span>Inicia sesión con:</span>
+          <span class="login-badge login-fb">${icono('facebook')} Facebook</span>
+          <span class="login-badge login-google">${icono('google')} Google</span>
+        </div>
       </div>
-      <div class="valorar-estrellas" role="group" aria-label="Calificación">
-        ${[1,2,3,4,5].map(n => `<button type="button" class="estrella-btn" data-valor="${n}" aria-label="${n} ${n === 1 ? 'estrella' : 'estrellas'}">★</button>`).join('')}
-      </div>
-      <p class="valorar-ayuda">Haz clic en una estrella para calificar</p>
-    </div>
-
-    <div class="resenas-cta">
-      <div class="resenas-cta-texto">
-        <h3>¿Ya lo leíste?</h3>
-        <p>Comparte tu experiencia. Las reseñas ayudan a otros lectores y dan visibilidad a los autores.</p>
-      </div>
-      <div class="resenas-cta-acciones">
-        <a class="boton boton-wa" href="${esc(urlWA)}" target="_blank" rel="noopener">${icono('whatsapp')}<span>Reseña por WhatsApp</span></a>
-        <a class="boton boton-fantasma" href="mailto:${esc(cfg.contacto.email)}?subject=${encodeURIComponent('Reseña: ' + libro.titulo)}">${icono('correo')}<span>Reseña por correo</span></a>
-      </div>
+      <div id="disqus_thread" class="disqus-thread"></div>
+      ${!(cfg.disqus && cfg.disqus.shortname) ? `
+      <div class="disqus-pendiente">
+        <div class="disqus-pendiente-ico">${icono('chat')}</div>
+        <h4>Comentarios en configuración</h4>
+        <p>El sistema de comentarios con Facebook y Google se activará en breve.</p>
+      </div>` : ''}
     </div>
 
   </div>
@@ -460,6 +412,20 @@ ${relacionados.length ? `
       { texto: libro.titulo, url: ruta }
     ],
     extraHead: metasScholar(libro, autores, cfg, absoluta),
+    extraScript: (cfg.disqus && cfg.disqus.shortname) ? `
+<script>
+(function() {
+  var d = document, s = d.createElement('script');
+  window.disqus_config = function() {
+    this.page.url = '${absoluta}';
+    this.page.identifier = '${esc(libro.id)}';
+    this.page.title = '${esc(libro.titulo).replace(/'/g, "\\'")}';
+  };
+  s.src = 'https://${esc(cfg.disqus.shortname)}.disqus.com/embed.js';
+  s.setAttribute('data-timestamp', +new Date());
+  (d.head || d.body).appendChild(s);
+})();
+</script>` : '',
     cuerpo,
     jsonld: [libroLD, {
       '@type': 'Product',

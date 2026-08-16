@@ -61,6 +61,11 @@
     "temaColor": "#0e2a47"
   },
 
+  "_disqus": "Crea cuenta gratis en disqus.com → 'New Site' → copia el shortname aquí. Con eso se activan los comentarios con login de Facebook y Google en cada página de libro.",
+  "disqus": {
+    "shortname": ""
+  },
+
   "github": {
     "_comentario": "Usado por el panel /admin para guardar los cambios. Cambia usuario y repositorio por los tuyos.",
     "usuario": "institutoeditorialdesaberes-code",
