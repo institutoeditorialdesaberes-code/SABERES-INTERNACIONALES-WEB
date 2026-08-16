@@ -3477,3 +3477,129 @@ html { scroll-behavior: smooth; }
 /* ── Selección de texto ── */
 ::selection { background: rgba(26,58,107,.18); color: var(--tinta); }
 
+
+/* ===== SECCIÓN 38 — PASOS EDITORIALES + BOTÓN WA FLOTANTE ===== */
+
+/* ---- Proceso editorial en 4 pasos ------------------------------------ */
+.pasos-editoriales-seccion {
+  background: linear-gradient(135deg, var(--papel) 0%, var(--azul-claro) 100%);
+  position: relative;
+  overflow: hidden;
+}
+.pasos-editoriales-seccion::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%231a3a6b' fill-opacity='0.03'%3E%3Ccircle cx='30' cy='30' r='4'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  pointer-events: none;
+}
+.pasos-rejilla {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+  position: relative;
+}
+.paso-editorial {
+  background: #fff;
+  border-radius: var(--r-l);
+  padding: 1.75rem 1.5rem 1.5rem;
+  position: relative;
+  box-shadow: 0 2px 16px rgba(26,58,107,.07);
+  border: 1px solid rgba(26,58,107,.08);
+  display: flex;
+  flex-direction: column;
+  gap: .75rem;
+  transition: box-shadow .25s ease, transform .25s cubic-bezier(.22,1,.36,1);
+}
+.paso-editorial:hover {
+  box-shadow: 0 8px 32px rgba(26,58,107,.12);
+  transform: translateY(-4px);
+}
+.paso-num {
+  font-size: 3rem;
+  font-weight: 900;
+  line-height: 1;
+  color: var(--azul-claro);
+  position: absolute;
+  top: 1rem;
+  right: 1.25rem;
+  letter-spacing: -2px;
+}
+.paso-icono {
+  width: 3rem;
+  height: 3rem;
+  background: var(--azul-claro);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.paso-icono .ico { width: 1.25rem; height: 1.25rem; stroke: var(--azul); }
+.paso-editorial h3 {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--azul);
+  margin: 0;
+}
+.paso-editorial p {
+  font-size: .88rem;
+  line-height: 1.6;
+  color: var(--texto-suave);
+  margin: 0;
+}
+.pasos-cta {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* ---- Testimonios: cabecera centrada ---------------------------------- */
+.testimonios-cabecera {
+  text-align: center;
+  max-width: 600px;
+  margin: 0 auto 2rem;
+}
+.testimonios-cabecera .sobretitulo {
+  padding-left: 0;
+  justify-content: center;
+}
+.testimonios-cabecera .sobretitulo::before {
+  display: none;
+}
+
+/* ---- Botón WhatsApp flotante ----------------------------------------- */
+.wa-flotante {
+  position: fixed;
+  bottom: 1.75rem;
+  right: 1.75rem;
+  z-index: 990;
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+  background: #25d366;
+  color: #fff;
+  border-radius: 3rem;
+  padding: .75rem 1.25rem .75rem .9rem;
+  font-size: .85rem;
+  font-weight: 700;
+  text-decoration: none;
+  box-shadow: 0 4px 20px rgba(37,211,102,.4), 0 1px 6px rgba(0,0,0,.15);
+  transition: box-shadow .2s ease, transform .2s cubic-bezier(.22,1,.36,1);
+  animation: pulsar 2.5s ease-in-out 3s 3;
+}
+.wa-flotante .ico { width: 1.35rem; height: 1.35rem; flex-shrink: 0; fill: #fff; stroke: none; }
+.wa-flotante span { white-space: nowrap; }
+.wa-flotante:hover {
+  box-shadow: 0 8px 32px rgba(37,211,102,.5), 0 2px 8px rgba(0,0,0,.2);
+  transform: translateY(-2px) scale(1.03);
+}
+@media (max-width: 480px) {
+  .wa-flotante span { display: none; }
+  .wa-flotante { padding: .85rem; border-radius: 50%; bottom: 1.25rem; right: 1.25rem; }
+  .wa-flotante .ico { width: 1.55rem; height: 1.55rem; }
+  .pasos-rejilla { grid-template-columns: 1fr; gap: 1rem; }
+}
+

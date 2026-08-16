@@ -313,6 +313,7 @@ ${migasHTML(o.migas)}
 ${o.cuerpo}
 </main>
 ${pie(cfg)}
+<a class="wa-flotante" href="https://wa.me/${esc(cfg.contacto.whatsapp)}?text=${encodeURIComponent('Hola, me interesa publicar con Saberes Internacionales.')}" target="_blank" rel="noopener" aria-label="Chatear por WhatsApp">${icono('whatsapp')}<span>¿Publicar un libro?</span></a>
 <button class="subir" type="button" data-subir aria-label="Volver arriba">${icono('chevronAbajo', 'ico-subir')}</button>
 <script src="/assets/js/sitio.js?v=${esc(o.version || '')}" defer></script>
 ${o.extraScript || ''}

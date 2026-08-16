@@ -643,7 +643,8 @@
     '.rejilla-entradas > *', '.coleccion', '.servicio', '.linea-pasos li',
     '.cifras', '.franja-rejilla > div', '.banda-cta-fila > *', '.entrada-destacada',
     '.acordeon-item', '.ficha-visual', '.ficha-datos', '.perfil-datos',
-    '.tarjeta-lateral', '.prosa > h2', '.formulario-envoltura', '.datos-contacto'
+    '.tarjeta-lateral', '.prosa > h2', '.formulario-envoltura', '.datos-contacto',
+    '.testimonios-rejilla > .testimonio-card', '.resena-card', '.paso-editorial'
   ];
 
   var observador = new IntersectionObserver(function (entradas) {
