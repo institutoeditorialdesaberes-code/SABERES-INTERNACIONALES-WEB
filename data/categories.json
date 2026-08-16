@@ -1,0 +1,44 @@
+[
+  {
+    "id": "desarrollo-personal",
+    "nombre": "Desarrollo personal",
+    "descripcion": "Títulos sobre hábitos, aprendizaje, productividad y crecimiento profesional, con base en investigación y no en fórmulas mágicas.",
+    "color": "#8a5a2b",
+    "icono": "brote"
+  },
+  {
+    "id": "ciencia-tecnologia",
+    "nombre": "Ciencia y tecnología",
+    "descripcion": "Divulgación rigurosa y ensayo técnico sobre transformación digital, inteligencia artificial y método científico.",
+    "color": "#1d6a73",
+    "icono": "circuito"
+  },
+  {
+    "id": "educacion",
+    "nombre": "Educación",
+    "descripcion": "Pedagogía, didáctica, evaluación y política educativa para docentes, directivos e investigadores.",
+    "color": "#2f5d3a",
+    "icono": "birrete"
+  },
+  {
+    "id": "negocios",
+    "nombre": "Negocios y liderazgo",
+    "descripcion": "Gestión, estrategia, emprendimiento e innovación aplicados al contexto latinoamericano.",
+    "color": "#0e2a47",
+    "icono": "grafico"
+  },
+  {
+    "id": "literatura",
+    "nombre": "Humanidades y literatura",
+    "descripcion": "Ensayo, historia, filosofía y estudios culturales. El fondo más antiguo de la casa editorial.",
+    "color": "#6b2233",
+    "icono": "pluma"
+  },
+  {
+    "id": "derecho",
+    "nombre": "Derecho y sociedad",
+    "descripcion": "Obras jurídicas, análisis normativo y materiales de formación ciudadana.",
+    "color": "#3b3560",
+    "icono": "balanza"
+  }
+]

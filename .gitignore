@@ -1,0 +1,16 @@
+# Carpeta generada: se reconstruye sola en cada build.
+dist/
+
+# Node
+node_modules/
+npm-debug.log*
+
+# Sistema
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editores
+.vscode/
+.idea/
+*.swp

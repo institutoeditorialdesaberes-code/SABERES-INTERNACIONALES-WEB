@@ -1,0 +1,68 @@
+[
+  {
+    "id": "como-publicar-un-libro-en-ecuador",
+    "titulo": "Cómo publicar un libro en Ecuador: guía paso a paso",
+    "fecha": "2026-07-28",
+    "autor": "Equipo editorial",
+    "categoria": "Guías",
+    "resumen": "Del manuscrito terminado al libro registrado: ISBN, depósito legal, diseño, imprenta y distribución explicados en orden.",
+    "destacado": true,
+    "demo": true,
+    "contenido": "Publicar un libro tiene una secuencia bastante estable. Conocerla evita retrabajos caros y plazos que se estiran sin razón.\n\n## 1. Cerrar el manuscrito\n\nUn manuscrito cerrado no es un borrador avanzado. Significa que la estructura ya no va a cambiar: los capítulos están en su orden definitivo y las fuentes están verificadas. Editar sobre un texto que sigue moviéndose duplica el costo del proceso.\n\n## 2. Evaluación editorial\n\nLa editorial revisa pertinencia, originalidad y calidad del contenido. En publicaciones académicas, esta etapa suele incluir la revisión por pares: lectores externos al proyecto emiten un informe con observaciones.\n\n## 3. Corrección y edición\n\nSon dos trabajos distintos. La edición trabaja sobre la estructura y el argumento; la corrección de estilo, sobre la lengua; y la corrección de pruebas, sobre el texto ya maquetado.\n\n## 4. ISBN y depósito legal\n\nEn Ecuador, el ISBN se gestiona a través de la Cámara Ecuatoriana del Libro. Es el identificador que permite que el libro exista comercialmente: sin él, ninguna librería formal puede registrarlo en su sistema. El depósito legal, por su parte, garantiza que un ejemplar quede conservado en las bibliotecas designadas por la normativa.\n\n## 5. Diseño y maquetación\n\nPortada, tripa y preliminares. Aquí se definen formato, tipografía, caja de texto y, si aplica, tratamiento de imágenes. Un buen diseño interior no se nota: se lee.\n\n## 6. Impresión\n\nLa decisión principal es tiraje contra impresión bajo demanda. El tiraje reduce el costo unitario pero inmoviliza capital y exige bodega; la impresión bajo demanda elimina el inventario a cambio de un costo por ejemplar mayor.\n\n## 7. Distribución y presentación\n\nEl libro necesita llegar a puntos de venta y necesita ser presentado. Ambas cosas se planifican antes de que la imprenta entregue, no después.\n\nSi tienes un manuscrito en cualquiera de estas etapas, escríbenos y te decimos con franqueza en qué punto está."
+  },
+  {
+    "id": "que-es-la-revision-por-pares",
+    "titulo": "Qué es la revisión por pares y por qué la exigimos",
+    "fecha": "2026-06-14",
+    "autor": "Comité académico",
+    "categoria": "Editorial",
+    "resumen": "El filtro que separa una publicación académica de un texto simplemente impreso.",
+    "destacado": false,
+    "demo": true,
+    "contenido": "La revisión por pares consiste en someter un manuscrito al juicio de especialistas del mismo campo que no participaron en su escritura.\n\n## Cómo funciona\n\nEl texto se envía sin datos de autoría a dos o más evaluadores. Cada uno emite un informe con una recomendación: publicar, publicar con cambios menores, publicar con cambios mayores o rechazar. Cuando los informes se contradicen, se convoca a un tercer lector.\n\n## Qué evalúa realmente\n\nNo evalúa si el texto es agradable. Evalúa si las afirmaciones están sostenidas por las fuentes, si el método es adecuado al problema y si el aporte es distinguible de lo ya publicado.\n\n## Sus límites\n\nConviene decirlo: la revisión por pares no detecta fraude deliberado ni garantiza que las conclusiones sean verdaderas. Reduce errores evidentes y mejora la calidad del argumento. No hace más que eso, y ya es mucho.\n\n## Por qué la mantenemos\n\nPorque un sello editorial vale exactamente lo que vale su criterio de selección. Publicar todo lo que llega es una decisión legítima para otros modelos de negocio; no es el nuestro."
+  },
+  {
+    "id": "derechos-de-autor-para-autores-nuevos",
+    "titulo": "Derechos de autor: lo mínimo que un autor debe entender",
+    "fecha": "2026-05-30",
+    "autor": "Equipo editorial",
+    "categoria": "Guías",
+    "resumen": "Qué cede un autor cuando firma un contrato editorial y qué conserva siempre.",
+    "destacado": false,
+    "demo": true,
+    "contenido": "Un contrato editorial no transfiere la autoría. Transfiere, por un plazo y un territorio determinados, el derecho de explotar la obra.\n\n## Derechos morales\n\nSon irrenunciables e intransferibles: el reconocimiento de la autoría y la integridad de la obra. Ninguna cláusula puede quitártelos.\n\n## Derechos patrimoniales\n\nSon los que se negocian: reproducción, distribución, comunicación pública y transformación. El contrato debe decir cuáles se ceden, por cuánto tiempo, para qué territorio y para qué formatos.\n\n## Las cinco preguntas antes de firmar\n\n1. ¿Qué formatos cubre la cesión? Papel, digital y audio son negocios distintos.\n2. ¿Por cuántos años y con qué causales de terminación?\n3. ¿Cómo y cuándo se liquidan las regalías, y sobre qué base se calculan?\n4. ¿Quién decide sobre traducciones y ediciones en otros países?\n5. ¿Qué pasa si el libro se descataloga?\n\nUn contrato claro protege a las dos partes. Si alguna de estas respuestas no está por escrito, todavía no hay acuerdo."
+  },
+  {
+    "id": "tiraje-o-impresion-bajo-demanda",
+    "titulo": "Tiraje o impresión bajo demanda: cómo decidir",
+    "fecha": "2026-04-19",
+    "autor": "Producción",
+    "categoria": "Producción",
+    "resumen": "Un criterio numérico simple para elegir entre imprimir mil ejemplares o imprimir de a poco.",
+    "destacado": false,
+    "demo": true,
+    "contenido": "La pregunta se responde con tres datos: costo unitario en cada modalidad, ventas mensuales estimadas y capacidad de almacenamiento.\n\n## Tiraje\n\nBaja el costo por ejemplar de forma notable a partir de cierto volumen. A cambio, inmoviliza dinero y ocupa bodega. Si la rotación estimada es baja, el ahorro unitario se lo come el tiempo.\n\n## Impresión bajo demanda\n\nCada ejemplar cuesta más, pero no hay inventario ni riesgo de sobrestock. Es la opción razonable para primeras ediciones de autores sin público consolidado y para títulos de nicho académico.\n\n## Una regla práctica\n\nSi no puedes justificar con una proyección conservadora la venta del sesenta por ciento del tiraje en dieciocho meses, imprime bajo demanda. Siempre podrás pasar a tiraje cuando la demanda lo confirme.\n\n## El error frecuente\n\nDecidir el tiraje por el precio por ejemplar que ofrece la imprenta. El número correcto no es el más barato por unidad: es el que menos capital deja quieto."
+  },
+  {
+    "id": "escribir-un-libro-academico-legible",
+    "titulo": "Cómo escribir un libro académico que se pueda leer",
+    "fecha": "2026-03-11",
+    "autor": "Equipo editorial",
+    "categoria": "Escritura",
+    "resumen": "El rigor y la claridad no están peleados. Siete decisiones de escritura que cambian un manuscrito.",
+    "destacado": true,
+    "demo": true,
+    "contenido": "La prosa académica ilegible no es un requisito del rigor. Suele ser un síntoma de que el argumento todavía no está claro para quien escribe.\n\n## Siete decisiones\n\n1. **Una idea por párrafo.** Si el párrafo tiene dos, sepáralos.\n2. **El sujeto cerca del verbo.** Las incisas largas entre ambos obligan a releer.\n3. **Voz activa por defecto.** La pasiva refleja se usa cuando el agente no importa, no como uniforme.\n4. **Citas que trabajan.** Si la cita no cambia lo que puedes afirmar, es decoración.\n5. **Definir una vez.** El término técnico se define la primera vez y se usa igual siempre.\n6. **Cerrar cada capítulo.** Un párrafo que diga qué quedó establecido y qué abre el siguiente.\n7. **Leer en voz alta.** Donde el aire se acaba, hay que puntuar.\n\n## Una prueba final\n\nEntrega el capítulo a un lector competente ajeno a tu especialidad. Si puede reconstruir tu tesis en tres frases, está listo. Si no, el problema no es del lector."
+  },
+  {
+    "id": "novedades-editoriales-2026",
+    "titulo": "Nuestro plan editorial para el segundo semestre",
+    "fecha": "2026-02-02",
+    "autor": "Dirección editorial",
+    "categoria": "Editorial",
+    "resumen": "Las colecciones que abrimos, los títulos en preparación y las convocatorias abiertas.",
+    "destacado": false,
+    "demo": true,
+    "contenido": "Cerramos el primer semestre con el fondo ordenado en cinco colecciones y con dos convocatorias abiertas.\n\n## Colecciones activas\n\n- **Saberes Aplicados**: obras de formación profesional con base en evidencia.\n- **Biblioteca de Humanidades**: ensayo, historia y filosofía.\n- **Cuadernos Pedagógicos**: materiales para docentes y formadores.\n- **Alta Dirección**: gestión, estrategia e innovación.\n- **Ensayo Contemporáneo**: análisis del presente.\n\n## Convocatorias abiertas\n\nRecibimos propuestas para las colecciones de Humanidades y Cuadernos Pedagógicos durante todo el año. El envío se hace desde la página de publicaciones e incluye índice comentado, capítulo de muestra y hoja de vida académica.\n\n## Qué buscamos\n\nManuscritos con una tesis identificable, fuentes verificables y un lector concreto en mente. No buscamos compilaciones sin hilo conductor ni tesis de posgrado enviadas sin adaptación al formato libro."
+  }
+]

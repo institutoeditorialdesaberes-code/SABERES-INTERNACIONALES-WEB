@@ -1,0 +1,144 @@
+{
+  "_comentario": "ÚNICO archivo que debes tocar para cambiar dominio, contactos y textos globales. Todo el sitio se reconstruye a partir de aquí.",
+
+  "url": "https://saberesinternacionales.com",
+  "nombre": "Saberes Internacionales",
+  "nombreLegal": "Editorial Saberes Internacionales",
+  "lema": "Editorial académica independiente",
+  "descripcion": "Editorial académica independiente con sede en Quito, Ecuador. Publicamos libros de investigación, educación, pensamiento y desarrollo profesional con revisión editorial rigurosa.",
+  "idioma": "es",
+  "locale": "es_EC",
+  "pais": "EC",
+  "moneda": "USD",
+  "simboloMoneda": "$",
+  "fundacion": "2019",
+
+  "avisoDemo": {
+    "activo": true,
+    "texto": "Catálogo de demostración: los libros y autores mostrados son de ejemplo mientras se carga el fondo editorial real."
+  },
+
+  "contacto": {
+    "email": "institutoeditorialdesaberes@gmail.com",
+    "emailPublicaciones": "institutoeditorialdesaberes@gmail.com",
+    "telefono": "+593 99 999 9999",
+    "whatsapp": "593999999999",
+    "whatsappMensaje": "Hola, me interesa el libro",
+    "direccion": "Av. Amazonas y Naciones Unidas",
+    "ciudad": "Quito",
+    "provincia": "Pichincha",
+    "codigoPostal": "170135",
+    "horario": "Lunes a viernes, 09:00 a 18:00 (GMT-5)",
+    "mapaEmbed": ""
+  },
+
+  "redes": {
+    "facebook": "",
+    "instagram": "",
+    "x": "",
+    "linkedin": "",
+    "youtube": "",
+    "tiktok": ""
+  },
+
+  "seo": {
+    "tituloPorDefecto": "Saberes Internacionales | Editorial académica en Quito, Ecuador",
+    "plantillaTitulo": "%s | Saberes Internacionales",
+    "palabrasClave": [
+      "editorial ecuatoriana",
+      "editorial académica Quito",
+      "publicar libro Ecuador",
+      "libros académicos Ecuador",
+      "editorial universitaria",
+      "ISBN Ecuador"
+    ],
+    "twitterUser": "",
+    "googleSiteVerification": "",
+    "googleAnalyticsId": "",
+    "temaColor": "#0e2a47"
+  },
+
+  "github": {
+    "_comentario": "Usado por el panel /admin para guardar los cambios. Cambia usuario y repositorio por los tuyos.",
+    "usuario": "TU-USUARIO",
+    "repositorio": "saberes-internacionales",
+    "rama": "main"
+  },
+
+  "menu": [
+    { "texto": "Inicio", "url": "/" },
+    { "texto": "Catálogo", "url": "/libros/" },
+    { "texto": "Novedades", "url": "/novedades/" },
+    { "texto": "Autores", "url": "/autores/" },
+    { "texto": "Publica con nosotros", "url": "/publica-con-nosotros/" },
+    { "texto": "Blog", "url": "/blog/" },
+    { "texto": "Nosotros", "url": "/nosotros/" },
+    { "texto": "Contacto", "url": "/contacto/" }
+  ],
+
+  "hero": [
+    {
+      "titulo": "Publicamos el conocimiento que merece durar",
+      "texto": "Sello editorial académico con revisión por pares, ISBN propio y distribución nacional e internacional desde Quito.",
+      "boton": "Ver catálogo",
+      "url": "/libros/",
+      "tema": "azul"
+    },
+    {
+      "titulo": "¿Tienes un manuscrito?",
+      "texto": "Recibimos propuestas todo el año. Evaluación editorial en 15 días hábiles y acompañamiento en todo el proceso.",
+      "boton": "Publica con nosotros",
+      "url": "/publica-con-nosotros/",
+      "tema": "vino"
+    },
+    {
+      "titulo": "Novedades del sello",
+      "texto": "Los títulos más recientes de nuestro fondo editorial, disponibles en tapa blanda, tapa dura y formato digital.",
+      "boton": "Ver novedades",
+      "url": "/novedades/",
+      "tema": "verde"
+    }
+  ],
+
+  "ventajas": [
+    { "icono": "envio", "titulo": "Envíos a todo el Ecuador", "texto": "Despacho en 24-72 horas desde Quito a todo el país." },
+    { "icono": "sello", "titulo": "ISBN y depósito legal", "texto": "Cada título se registra oficialmente en la Cámara Ecuatoriana del Libro." },
+    { "icono": "pares", "titulo": "Revisión por pares", "texto": "Comité académico externo evalúa cada manuscrito antes de publicarse." },
+    { "icono": "soporte", "titulo": "Atención directa", "texto": "Habla con el equipo editorial por WhatsApp o correo, sin intermediarios." }
+  ],
+
+  "footer": {
+    "textoLegal": "Todos los derechos reservados.",
+    "columnas": [
+      {
+        "titulo": "Catálogo",
+        "enlaces": [
+          { "texto": "Todos los libros", "url": "/libros/" },
+          { "texto": "Novedades", "url": "/novedades/" },
+          { "texto": "Más vendidos", "url": "/libros/?orden=populares" },
+          { "texto": "Autores", "url": "/autores/" },
+          { "texto": "Buscar", "url": "/buscar/" }
+        ]
+      },
+      {
+        "titulo": "Editorial",
+        "enlaces": [
+          { "texto": "Quiénes somos", "url": "/nosotros/" },
+          { "texto": "Publica con nosotros", "url": "/publica-con-nosotros/" },
+          { "texto": "Servicios editoriales", "url": "/servicios/" },
+          { "texto": "Blog", "url": "/blog/" },
+          { "texto": "Contacto", "url": "/contacto/" }
+        ]
+      },
+      {
+        "titulo": "Ayuda",
+        "enlaces": [
+          { "texto": "Preguntas frecuentes", "url": "/faq/" },
+          { "texto": "Envíos y entregas", "url": "/envios/" },
+          { "texto": "Términos y condiciones", "url": "/terminos/" },
+          { "texto": "Política de privacidad", "url": "/privacidad/" }
+        ]
+      }
+    ]
+  }
+}

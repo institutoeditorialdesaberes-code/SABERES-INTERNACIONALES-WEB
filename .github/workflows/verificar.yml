@@ -1,0 +1,45 @@
+name: Verificar el sitio
+
+# Corre en cada cambio del catálogo. Si alguien (o el panel /admin) deja un
+# JSON mal formado o un identificador repetido, este trabajo falla y avisa
+# ANTES de que Cloudflare publique un sitio roto.
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  construir:
+    name: Construir y validar
+    runs-on: ubuntu-latest
+    steps:
+      - name: Descargar el repositorio
+        uses: actions/checkout@v4
+
+      - name: Preparar Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Generar el sitio
+        run: node src/build.mjs
+
+      - name: Comprobar que se generaron las páginas clave
+        run: |
+          set -e
+          for archivo in dist/index.html dist/libros/index.html dist/sitemap.xml dist/robots.txt dist/rss.xml dist/indice-busqueda.json; do
+            if [ ! -s "$archivo" ]; then
+              echo "Falta o está vacío: $archivo"
+              exit 1
+            fi
+          done
+          echo "Páginas generadas: $(find dist -name 'index.html' | wc -l)"
+
+      - name: Guardar el sitio generado
+        uses: actions/upload-artifact@v4
+        with:
+          name: sitio
+          path: dist
+          retention-days: 7

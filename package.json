@@ -1,0 +1,15 @@
+{
+  "name": "saberes-internacionales",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Sitio web de Editorial Saberes Internacionales (Quito, Ecuador). Generador estático sin dependencias.",
+  "scripts": {
+    "build": "node src/build.mjs",
+    "dev": "node src/dev.mjs",
+    "start": "node src/dev.mjs"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
