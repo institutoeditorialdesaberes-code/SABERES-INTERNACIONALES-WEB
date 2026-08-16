@@ -1,6 +1,6 @@
 import { esc, markdown, fechaLarga, recorta, tiempoLectura, url } from '../lib/utils.mjs';
 import { icono } from '../lib/icons.mjs';
-import { tarjetaEntrada } from '../lib/components.mjs';
+import { tarjetaEntrada, rutaBanner } from '../lib/components.mjs';
 
 export function paginaBlog(ctx) {
   const { cfg, posts } = ctx;
@@ -21,7 +21,7 @@ ${principal ? `
   <div class="contenedor">
     <article class="entrada-destacada">
       <a class="entrada-destacada-imagen" href="/blog/${esc(principal.id)}/" tabindex="-1" aria-hidden="true">
-        <img src="/assets/blog/${esc(principal.id)}.svg" alt="" width="1200" height="480" fetchpriority="high" decoding="async">
+        <img src="${esc(rutaBanner(principal, ctx))}" alt="" width="1200" height="480" fetchpriority="high" decoding="async">
       </a>
       <div>
         <p class="tarjeta-entrada-meta"><span class="pastilla">${esc(principal.categoria)}</span><time datetime="${esc(principal.fecha)}">${fechaLarga(principal.fecha)}</time><span>${tiempoLectura(principal.contenido)} min de lectura</span></p>
@@ -40,7 +40,7 @@ ${principal ? `
       ${categorias.map((c) => `<button type="button" data-etiqueta="${esc(c)}">${esc(c)}</button>`).join('')}
     </div>
     <div class="rejilla-entradas" data-rejilla-blog>
-      ${resto.map((p) => `<div data-categoria-entrada="${esc(p.categoria)}">${tarjetaEntrada(p)}</div>`).join('')}
+      ${resto.map((p) => `<div data-categoria-entrada="${esc(p.categoria)}">${tarjetaEntrada(p, ctx)}</div>`).join('')}
     </div>
   </div>
 </section>`;
@@ -92,7 +92,7 @@ export function paginaEntrada(ctx, post) {
   </header>
 
   <figure class="articulo-imagen">
-    <img src="/assets/blog/${esc(post.id)}.svg" alt="" width="1200" height="480" fetchpriority="high" decoding="async">
+    <img src="${esc(rutaBanner(post, ctx))}" alt="" width="1200" height="480" fetchpriority="high" decoding="async">
   </figure>
 
   <div class="contenedor estrecho">
@@ -115,7 +115,7 @@ export function paginaEntrada(ctx, post) {
 <section class="seccion seccion-alterna">
   <div class="contenedor">
     <h2 class="titulo-bloque">Sigue leyendo</h2>
-    <div class="rejilla-entradas">${relacionadas.map(tarjetaEntrada).join('')}</div>
+    <div class="rejilla-entradas">${relacionadas.map((p) => tarjetaEntrada(p, ctx)).join('')}</div>
   </div>
 </section>`;
 
@@ -124,6 +124,9 @@ export function paginaEntrada(ctx, post) {
     titulo: post.titulo,
     descripcion: recorta(post.resumen, 200),
     palabrasClave: [post.categoria, 'editorial', 'publicar libro', 'Ecuador'],
+    // Las redes sociales no renderizan SVG: solo se declara imagen cuando
+    // hay un banner real subido por la editorial.
+    imagen: /\.(png|jpe?g|webp)$/i.test(rutaBanner(post, ctx)) ? rutaBanner(post, ctx) : undefined,
     tipo: 'article',
     clase: 'p-articulo',
     migas: [

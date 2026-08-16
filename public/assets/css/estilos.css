@@ -354,6 +354,13 @@ input, select, textarea { font: inherit; color: inherit; }
 .portada-seccion h1 { color: #fff; margin-bottom: .6rem; }
 .portada-seccion .bajada { color: #b9c9d9; }
 .portada-seccion .sobretitulo .ico { width: 1.1em; height: 1.1em; }
+.portada-seccion.con-fondo { background: var(--azul-oscuro, #061422); padding: 0; }
+.portada-fondo {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover; object-position: center 30%; opacity: .38;
+  pointer-events: none;
+}
+.portada-seccion.con-fondo .contenedor { position: relative; z-index: 1; padding-top: clamp(2.5rem, 6vw, 4.5rem); padding-bottom: clamp(2.5rem, 6vw, 4.5rem); }
 
 /* ---------- 9. Encabezado de sección ------------------------------------ */
 .encabezado-seccion {
@@ -460,6 +467,31 @@ input, select, textarea { font: inherit; color: inherit; }
 .tcg-texto em { font-style: normal; font-size: .82rem; color: var(--tinta-suave); }
 .tcg-flecha { color: var(--tinta-suave); transition: transform var(--transicion); }
 .tarjeta-categoria-grande:hover .tcg-flecha { transform: translateX(4px); color: var(--c); }
+
+/* Tarjeta de categoría con fotografía de fondo */
+.tarjeta-categoria-grande.con-imagen {
+  position: relative; overflow: hidden; min-height: 140px;
+  border-left-width: 0; border-bottom: 3px solid var(--c);
+  flex-direction: column; align-items: flex-start; justify-content: flex-end;
+  padding: 1.1rem 1.2rem; color: #fff;
+}
+.tarjeta-categoria-grande.con-imagen img {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover; object-position: center; transition: transform 500ms ease;
+}
+.tarjeta-categoria-grande.con-imagen:hover img { transform: scale(1.05); }
+.tcg-velo {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, color-mix(in srgb, var(--c) 80%, #000) 0%, rgba(0,0,0,.25) 100%);
+}
+.tarjeta-categoria-grande.con-imagen .tcg-icono,
+.tarjeta-categoria-grande.con-imagen .tcg-texto,
+.tarjeta-categoria-grande.con-imagen .tcg-flecha { position: relative; z-index: 1; }
+.tarjeta-categoria-grande.con-imagen .tcg-icono { background: rgba(255,255,255,.18); color: #fff; }
+.tarjeta-categoria-grande.con-imagen .tcg-texto strong { color: #fff; }
+.tarjeta-categoria-grande.con-imagen .tcg-texto em { color: rgba(255,255,255,.75); }
+.tarjeta-categoria-grande.con-imagen .tcg-flecha { color: rgba(255,255,255,.6); }
+.tarjeta-categoria-grande.con-imagen:hover .tcg-flecha { color: #fff; }
 
 /* ---------- 13. Tarjeta de libro ---------------------------------------- */
 .rejilla-libros { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 1.5rem; }
@@ -768,6 +800,20 @@ article.tarjeta-autor .meta { font-size: .78rem; color: var(--tinta-suave); marg
 .coleccion-icono { background: color-mix(in srgb, var(--c) 12%, #fff); color: var(--c); }
 .coleccion h3, .servicio h2 { font-size: 1.15rem; }
 .coleccion p, .servicio p { font-size: .92rem; color: var(--tinta-media); }
+
+/* Colección con fotografía en la sección "Nuestras colecciones" */
+.coleccion.con-imagen { padding: 0; overflow: hidden; border-top: none; }
+.coleccion-imagen {
+  display: block; width: 100%; aspect-ratio: 5 / 2;
+  object-fit: cover; object-position: center;
+}
+.coleccion.con-imagen .coleccion-icono,
+.coleccion.con-imagen h3,
+.coleccion.con-imagen p,
+.coleccion.con-imagen .enlace-flecha { margin-left: 1.6rem; margin-right: 1.6rem; }
+.coleccion.con-imagen .coleccion-icono { margin-top: 1.4rem; }
+.coleccion.con-imagen p { margin-bottom: .8rem; }
+.coleccion.con-imagen .enlace-flecha { margin-bottom: 1.4rem; }
 
 .linea-pasos { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
 .linea-pasos li { display: flex; gap: 1rem; align-items: flex-start; padding: 1.4rem; background: #fff; border: 1px solid var(--linea); border-radius: var(--r-m); }

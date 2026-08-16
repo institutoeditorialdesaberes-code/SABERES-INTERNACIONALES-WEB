@@ -14,6 +14,22 @@ export function rutaRetrato(autor) {
   return `/assets/autores/${autor.id}.svg`;
 }
 
+/**
+ * Cabecera de una entrada del blog. Si el editor subió una imagen real a
+ * public/imagenes/blog/<id>.jpg (o .png/.webp), se usa esa; si no, cae al
+ * banner SVG generado por código. La comprobación la hace el build, que es
+ * quien conoce el sistema de archivos; aquí solo se decide la ruta pública.
+ */
+export function rutaBanner(post, ctx) {
+  const real = ctx.bannersReales && ctx.bannersReales.get(post.id);
+  return real || `/assets/blog/${post.id}.svg`;
+}
+
+/** Imagen de apoyo para una sección institucional fija (nosotros, publica-con-nosotros…). */
+export function rutaSeccion(id, ctx) {
+  return (ctx.imagenesSecciones && ctx.imagenesSecciones.get(id)) || '';
+}
+
 /** Todos los autores de un libro, en el orden en que figuran en la obra. */
 export function autoresDe(libro, ctx) {
   return (libro.autores || [libro.autorId])
@@ -80,11 +96,11 @@ export function tarjetaAutor(autor, ctx) {
 </article>`;
 }
 
-export function tarjetaEntrada(post) {
+export function tarjetaEntrada(post, ctx) {
   return `
 <article class="tarjeta-entrada">
   <a class="tarjeta-entrada-imagen" href="/blog/${esc(post.id)}/" tabindex="-1" aria-hidden="true">
-    <img src="/assets/blog/${esc(post.id)}.svg" alt="" width="1200" height="480" loading="lazy" decoding="async">
+    <img src="${esc(rutaBanner(post, ctx))}" alt="" width="1200" height="480" loading="lazy" decoding="async">
   </a>
   <div class="tarjeta-entrada-cuerpo">
     <p class="tarjeta-entrada-meta"><span class="pastilla">${esc(post.categoria)}</span><time datetime="${esc(post.fecha)}">${fechaLarga(post.fecha)}</time></p>
@@ -95,7 +111,26 @@ export function tarjetaEntrada(post) {
 </article>`;
 }
 
-export function tarjetaCategoria(categoria, cantidad) {
+export function tarjetaCategoria(categoria, cantidad, ctx) {
+  const imagen = ctx && ctx.imagenesCategorias && ctx.imagenesCategorias.get(categoria.id);
+
+  // Con imagen la tarjeta se convierte en una pieza visual: la fotografía va
+  // al fondo, oscurecida con el color de la colección para que el texto se
+  // lea siempre, tenga la imagen los tonos que tenga.
+  if (imagen) {
+    return `
+<a class="tarjeta-categoria-grande con-imagen" href="/categoria/${esc(categoria.id)}/" style="--c:${esc(categoria.color)}">
+  <img src="${esc(imagen)}" alt="" width="690" height="276" loading="lazy" decoding="async">
+  <span class="tcg-velo"></span>
+  <span class="tcg-icono">${icono(categoria.icono)}</span>
+  <span class="tcg-texto">
+    <strong>${esc(categoria.nombre)}</strong>
+    <em>${cantidad} ${cantidad === 1 ? 'título' : 'títulos'}</em>
+  </span>
+  ${icono('chevronDer', 'tcg-flecha')}
+</a>`;
+  }
+
   return `
 <a class="tarjeta-categoria-grande" href="/categoria/${esc(categoria.id)}/" style="--c:${esc(categoria.color)}">
   <span class="tcg-icono">${icono(categoria.icono)}</span>

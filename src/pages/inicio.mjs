@@ -75,7 +75,7 @@ ${ventajas(cfg)}
       textoEnlace: 'Ver catálogo completo'
     })}
     <div class="rejilla-categorias">
-      ${categorias.map((c) => tarjetaCategoria(c, (librosPorCategoria.get(c.id) || []).length)).join('')}
+      ${categorias.map((c) => tarjetaCategoria(c, (librosPorCategoria.get(c.id) || []).length, ctx)).join('')}
     </div>
   </div>
 </section>
@@ -166,7 +166,7 @@ ${bandaCTA(cfg)}
       textoEnlace: 'Ver el blog'
     })}
     <div class="rejilla-entradas">
-      ${posts.slice(0, 3).map(tarjetaEntrada).join('')}
+      ${posts.slice(0, 3).map((p) => tarjetaEntrada(p, ctx)).join('')}
     </div>
   </div>
 </section>`;

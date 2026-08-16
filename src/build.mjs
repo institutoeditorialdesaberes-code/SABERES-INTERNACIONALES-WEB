@@ -38,6 +38,29 @@ const errores = [];
 /* ---------------------------------------------------------------- */
 /* Carga y validación                                                */
 /* ---------------------------------------------------------------- */
+const EXTENSIONES_IMAGEN = ['.jpg', '.jpeg', '.png', '.webp'];
+
+/**
+ * Busca, para cada id de una lista, si existe public/imagenes/<carpeta>/<id>.*
+ * Devuelve un Map id -> ruta pública ("/imagenes/<carpeta>/<id>.jpg"), solo
+ * con los que sí tienen archivo. Así una sección puede pasar de imagen
+ * generada a imagen real con solo colocar el archivo, sin tocar ningún JSON.
+ */
+function mapaDeImagenes(carpetaRelativa, ids) {
+  const mapa = new Map();
+  const base = path.join(RAIZ, 'public', carpetaRelativa);
+  if (!fs.existsSync(base)) return mapa;
+  for (const id of ids) {
+    for (const ext of EXTENSIONES_IMAGEN) {
+      if (fs.existsSync(path.join(base, `${id}${ext}`))) {
+        mapa.set(id, `/${carpetaRelativa}/${id}${ext}`);
+        break;
+      }
+    }
+  }
+  return mapa;
+}
+
 function leerJSON(rel) {
   const ruta = path.join(RAIZ, rel);
   try {
@@ -203,9 +226,17 @@ function construir() {
     librosPorCategoria.get(l.categoria).push(l);
   }
 
+  // Imágenes reales subidas a public/imagenes/: si existen, sustituyen a
+  // las generadas por código. Se detectan por convención de nombre, sin
+  // que haga falta declararlas en ningún JSON.
+  const bannersReales = mapaDeImagenes('imagenes/blog', posts.map((p) => p.id));
+  const imagenesCategorias = mapaDeImagenes('imagenes/categorias', categorias.map((c) => c.id));
+  const imagenesSecciones = mapaDeImagenes('imagenes/secciones', ['nosotros', 'publica-con-nosotros', 'servicios']);
+
   const ctx = {
     cfg, libros, autores, categorias, posts,
     autoresPorId, categoriasPorId, librosPorAutor, librosPorCategoria,
+    bannersReales, imagenesCategorias, imagenesSecciones,
     rutas: []
   };
 
@@ -255,6 +286,7 @@ function construir() {
     escribir(`assets/autores/${autor.id}.svg`, retratoSVG(autor, primerLibro ? primerLibro.categoria : '_defecto'));
   }
   for (const post of posts) {
+    if (bannersReales.has(post.id)) continue; // imagen real: no se genera el SVG
     escribir(`assets/blog/${post.id}.svg`, bannerSVG(post.titulo, 'negocios'));
   }
 
@@ -449,7 +481,7 @@ function escribirIndiceBusqueda(ctx) {
       titulo: p.titulo,
       sub: p.categoria,
       url: `/blog/${p.id}/`,
-      img: `/assets/blog/${p.id}.svg`,
+      img: ctx.bannersReales.get(p.id) || `/assets/blog/${p.id}.svg`,
       texto: [p.titulo, p.categoria, p.resumen].join(' ').toLowerCase()
     }))
   ];

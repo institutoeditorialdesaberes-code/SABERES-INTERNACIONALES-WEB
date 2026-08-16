@@ -125,8 +125,11 @@ export function paginaCategoria(ctx, categoria) {
   const libros = librosPorCategoria.get(categoria.id) || [];
   const ruta = `/categoria/${categoria.id}/`;
 
+  const imagen = ctx.imagenesCategorias && ctx.imagenesCategorias.get(categoria.id);
+
   const cuerpo = `
-<section class="portada-seccion" style="--c:${esc(categoria.color)}">
+<section class="portada-seccion${imagen ? ' con-fondo' : ''}" style="--c:${esc(categoria.color)}">
+  ${imagen ? `<img class="portada-fondo" src="${esc(imagen)}" alt="" width="690" height="276" fetchpriority="high" decoding="async">` : ''}
   <div class="contenedor">
     <p class="sobretitulo claro">${icono(categoria.icono)} Colección</p>
     <h1>${esc(categoria.nombre)}</h1>

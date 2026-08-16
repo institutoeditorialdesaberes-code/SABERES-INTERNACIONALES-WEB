@@ -1,6 +1,6 @@
 import { esc } from '../lib/utils.mjs';
 import { icono } from '../lib/icons.mjs';
-import { bandaCTA, tarjetaLibro } from '../lib/components.mjs';
+import { bandaCTA, tarjetaLibro, rutaSeccion } from '../lib/components.mjs';
 
 const HOY = new Date().toISOString().slice(0, 10);
 
@@ -9,8 +9,10 @@ const HOY = new Date().toISOString().slice(0, 10);
 /* ------------------------------------------------------------------ */
 export function paginaNosotros(ctx) {
   const { cfg, libros, autores, categorias } = ctx;
+  const imagen = rutaSeccion('nosotros', ctx);
   const cuerpo = `
-<section class="portada-seccion">
+<section class="portada-seccion${imagen ? ' con-fondo' : ''}">
+  ${imagen ? `<img class="portada-fondo" src="${esc(imagen)}" alt="" width="690" height="276" fetchpriority="high" decoding="async">` : ''}
   <div class="contenedor">
     <p class="sobretitulo claro">Desde ${esc(cfg.fundacion)} en ${esc(cfg.contacto.ciudad)}</p>
     <h1>La editorial</h1>
@@ -60,13 +62,17 @@ export function paginaNosotros(ctx) {
   <div class="contenedor">
     <h2 class="titulo-bloque">Nuestras colecciones</h2>
     <div class="rejilla-colecciones">
-      ${categorias.map((c) => `
-      <article class="coleccion" style="--c:${esc(c.color)}">
+      ${categorias.map((c) => {
+        const img = ctx.imagenesCategorias && ctx.imagenesCategorias.get(c.id);
+        return `
+      <article class="coleccion${img ? ' con-imagen' : ''}" style="--c:${esc(c.color)}">
+        ${img ? `<img class="coleccion-imagen" src="${esc(img)}" alt="" width="690" height="276" loading="lazy" decoding="async">` : ''}
         <span class="coleccion-icono">${icono(c.icono)}</span>
         <h3>${esc(c.nombre)}</h3>
         <p>${esc(c.descripcion)}</p>
         <a class="enlace-flecha" href="/categoria/${esc(c.id)}/">Ver títulos ${icono('flechaDer')}</a>
-      </article>`).join('')}
+      </article>`;
+      }).join('')}
     </div>
   </div>
 </section>
@@ -195,6 +201,7 @@ export function paginaContacto(ctx) {
 /* ------------------------------------------------------------------ */
 export function paginaPublica(ctx) {
   const { cfg } = ctx;
+  const imagen = rutaSeccion('publica-con-nosotros', ctx);
   const pasos = [
     ['Envía tu propuesta', 'Índice comentado, capítulo de muestra, resumen de la obra y hoja de vida académica en un solo PDF.'],
     ['Lectura editorial', 'Revisamos pertinencia, originalidad y estado del manuscrito. Te confirmamos recepción y plazo.'],
@@ -205,7 +212,8 @@ export function paginaPublica(ctx) {
   ];
 
   const cuerpo = `
-<section class="portada-seccion">
+<section class="portada-seccion${imagen ? ' con-fondo' : ''}">
+  ${imagen ? `<img class="portada-fondo" src="${esc(imagen)}" alt="" width="690" height="276" fetchpriority="high" decoding="async">` : ''}
   <div class="contenedor">
     <p class="sobretitulo claro">Convocatoria abierta todo el año</p>
     <h1>Publica con nosotros</h1>
