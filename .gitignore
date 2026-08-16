@@ -1,6 +1,10 @@
 # Carpeta generada: se reconstruye sola en cada build.
 dist/
 
+# Claves de API: nunca deben subirse al repositorio.
+.env.local
+.env
+
 # Node
 node_modules/
 npm-debug.log*
