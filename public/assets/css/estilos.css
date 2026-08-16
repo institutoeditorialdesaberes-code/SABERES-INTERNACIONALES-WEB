@@ -3804,3 +3804,20 @@ html { scroll-behavior: smooth; }
 .disqus-pendiente h4 { font-size: 1rem; color: var(--azul); margin: 0 0 .35rem; }
 .disqus-pendiente p { font-size: .87rem; color: var(--texto-suave); margin: 0; }
 
+
+/* ===== SECCIÓN 41 — FIX COMENTARIOS COMPACTOS ===== */
+.resenas-resumen { padding: 1rem 1.25rem; margin-bottom: 1rem; }
+.resenas-promedio { gap: .35rem; }
+.resenas-numero { font-size: 2.5rem; line-height: 1; }
+.resenas-total { font-size: .8rem; }
+.resena-barra { gap: .5rem; }
+.barra-label { font-size: .78rem; min-width: 1.4rem; }
+.barra-pct { font-size: .78rem; min-width: 2.2rem; text-align: right; }
+.comentarios-seccion { margin-top: 1.5rem; padding-top: 1.25rem; }
+.comentarios-cabecera { gap: .35rem; margin-bottom: 1rem; flex-direction: column; align-items: flex-start; }
+.comentarios-cabecera h3 { font-size: 1rem; }
+.comentarios-sub { font-size: .82rem; color: var(--texto-suave); margin: 0; }
+.comentarios-login-info { display: none; }
+.disqus-thread { min-height: 0; }
+.disqus-cargando { display: flex; align-items: center; gap: .6rem; color: var(--texto-suave); font-size: .85rem; padding: 1rem 0; }
+.disqus-spinner { width: 1rem; height: 1rem; border: 2px solid var(--linea); border-top-color: var(--azul); border-radius: 50%; animation: girarLento .8s linear infinite; flex-shrink: 0; }

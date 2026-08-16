@@ -157,20 +157,15 @@ function seccionResenas(libro, cfg) {
 
     <div class="comentarios-seccion">
       <div class="comentarios-cabecera">
-        <h3>${icono('chat')} Comentarios y reseñas</h3>
-        <div class="comentarios-login-info">
-          <span>Inicia sesión con:</span>
-          <span class="login-badge login-fb">${icono('facebook')} Facebook</span>
-          <span class="login-badge login-google">${icono('google')} Google</span>
+        <h3>${icono('chat')} Comentarios</h3>
+        <p class="comentarios-sub">Inicia sesión con tu cuenta de Facebook, Google o Disqus para comentar.</p>
+      </div>
+      <div id="disqus_thread" class="disqus-thread">
+        <div class="disqus-cargando" aria-live="polite">
+          <span class="disqus-spinner"></span>
+          <span>Cargando comentarios…</span>
         </div>
       </div>
-      <div id="disqus_thread" class="disqus-thread"></div>
-      ${!(cfg.disqus && cfg.disqus.shortname) ? `
-      <div class="disqus-pendiente">
-        <div class="disqus-pendiente-ico">${icono('chat')}</div>
-        <h4>Comentarios en configuración</h4>
-        <p>El sistema de comentarios con Facebook y Google se activará en breve.</p>
-      </div>` : ''}
     </div>
 
   </div>
