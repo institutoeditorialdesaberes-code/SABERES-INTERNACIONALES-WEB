@@ -101,7 +101,8 @@ function cabecera(cfg, rutaActual, categorias) {
 <header class="cabecera" id="cabecera">
   <div class="barra-superior">
     <div class="contenedor barra-superior-fila">
-      <p class="barra-mensaje">${icono('envio')} Envíos a todo el Ecuador · Atención de ${esc(cfg.contacto.horario)}</p>
+      <p class="barra-mensaje">${icono('envio')}<span>${esc(cfg.contacto.ciudad)} · ${esc(cfg.contacto.horario)}</span></p>
+      <p class="barra-nombre-editorial">${esc(cfg.nombreLegal)}</p>
       <ul class="barra-enlaces">
         <li><a href="tel:${esc(cfg.contacto.telefono.replace(/\s/g, ''))}">${icono('telefono')}<span>${esc(cfg.contacto.telefono)}</span></a></li>
         <li><a href="mailto:${esc(cfg.contacto.email)}">${icono('correo')}<span>${esc(cfg.contacto.email)}</span></a></li>

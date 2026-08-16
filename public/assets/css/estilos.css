@@ -240,6 +240,11 @@ input, select, textarea { font: inherit; color: inherit; }
 .barra-superior-fila { display: flex; align-items: center; justify-content: space-between; gap: 1rem; min-height: 38px; }
 .barra-mensaje { margin: 0; display: flex; align-items: center; gap: .5rem; }
 .barra-mensaje .ico { color: var(--oro); }
+.barra-nombre-editorial {
+  margin: 0; font-weight: 700; font-size: .78rem;
+  letter-spacing: .12em; text-transform: uppercase; color: #fff;
+  text-align: center; flex: 1;
+}
 .barra-enlaces { display: flex; gap: 1.25rem; margin: 0; padding: 0; list-style: none; }
 .barra-enlaces a { color: #cfdcea; display: flex; align-items: center; gap: .4rem; }
 .barra-enlaces a:hover { color: #fff; }
@@ -648,6 +653,24 @@ a.ventaja:hover .ventaja-flecha { transform: translateX(4px); color: var(--azul)
 .tarjeta-libro-imagen { position: relative; display: block; background: var(--papel-hondo); aspect-ratio: 2 / 3; overflow: hidden; }
 .tarjeta-libro-imagen img { width: 100%; height: 100%; object-fit: cover; transition: transform 400ms ease; }
 .tarjeta-libro:hover .tarjeta-libro-imagen img { transform: scale(1.03); }
+/* Título sobre la portada */
+.tarjeta-libro-cover {
+  position: absolute; inset: 0; display: flex; flex-direction: column;
+  justify-content: flex-end;
+  background: linear-gradient(to top, rgba(6,23,38,.92) 0%, rgba(6,23,38,.45) 45%, transparent 75%);
+  padding: .75rem .65rem .8rem;
+  pointer-events: none;
+}
+.tarjeta-libro-cover strong {
+  display: block; color: #fff; font-family: var(--serif); font-size: .8rem;
+  font-weight: 700; line-height: 1.22; letter-spacing: -.01em;
+  text-shadow: 0 1px 4px rgba(0,0,0,.6);
+}
+.tarjeta-libro-cover em {
+  display: block; color: var(--oro); font-style: normal;
+  font-size: .68rem; margin-top: .25rem; opacity: .9;
+  text-shadow: 0 1px 3px rgba(0,0,0,.5);
+}
 .insignia {
   position: absolute; top: .7rem; left: .7rem; background: var(--oro); color: #2c2306;
   font-size: .68rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
@@ -1214,11 +1237,17 @@ h3 { font-weight: 600; letter-spacing: -.012em; font-variation-settings: 'opsz' 
 .hero { background: linear-gradient(180deg, var(--papel) 0%, var(--papel-hondo) 100%); }
 .hero-carrusel { box-shadow: var(--sombra-l); }
 .hero-carrusel::after {
-  content: ''; position: absolute; right: -86px; bottom: -132px;
-  width: 420px; height: 420px; border-radius: 50%; z-index: 1; pointer-events: none;
+  content: ''; position: absolute;
+  top: 50%; left: 50%;
+  width: 480px; height: 480px; border-radius: 50%; z-index: 1; pointer-events: none;
   background: url('/imagenes/marca/logo-saberes.jpg') center / cover;
-  opacity: .16; mix-blend-mode: luminosity;
-  animation: girarLento 140s linear infinite;
+  opacity: .13; mix-blend-mode: luminosity;
+  transform: translate(-50%, -50%);
+  animation: girarLentoCentrado 180s linear infinite;
+}
+@keyframes girarLentoCentrado {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to   { transform: translate(-50%, -50%) rotate(360deg); }
 }
 .diapositiva[data-activa] .diapositiva-texto > * { animation: subir .8s both; }
 .diapositiva[data-activa] .diapositiva-texto > *:nth-child(1) { animation-delay: .05s; }
@@ -1391,12 +1420,7 @@ article.tarjeta-autor:hover .tarjeta-autor-foto img { transform: scale(1.06); ou
 /* ---- 3. Cortina de entrada --------------------------------------------- */
 .cortina { display: none; }
 
-.con-cortina .cortina {
-  display: grid; place-items: center; position: fixed; inset: 0; z-index: 9999;
-  background: linear-gradient(160deg, #0e2a47, #061726);
-  animation: cortinaFuera 520ms 780ms cubic-bezier(.6, 0, .8, .2) forwards;
-}
-.con-cortina body { overflow: hidden; }
+.con-cortina .cortina { display: none; }
 
 .cortina-sello { width: min(190px, 42vw); height: auto; color: var(--oro); }
 .cortina-sello .trazo {

@@ -66,6 +66,10 @@ export function tarjetaLibro(libro, ctx, { prioridad = false } = {}) {
   <a class="tarjeta-libro-imagen" href="/libro/${esc(libro.id)}/" tabindex="-1" aria-hidden="true">
     <img src="${esc(rutaPortada(libro))}" alt="" width="400" height="600"
          loading="${prioridad ? 'eager' : 'lazy'}" decoding="async"${prioridad ? ' fetchpriority="high"' : ''}>
+    <div class="tarjeta-libro-cover">
+      <strong>${esc(libro.titulo)}</strong>
+      ${autor ? `<em>${esc(autor.nombre)}</em>` : ''}
+    </div>
     ${libro.insignia ? `<span class="insignia">${esc(libro.insignia)}</span>` : ''}
   </a>
   <div class="tarjeta-libro-cuerpo">
