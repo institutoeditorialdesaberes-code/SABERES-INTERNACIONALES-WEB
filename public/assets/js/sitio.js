@@ -718,3 +718,47 @@
   window.addEventListener('resize', alDesplazar);
   alDesplazar();
 })();
+
+/* ---- Lector PDF en línea ----------------------------------------------- */
+(function () {
+  var btn = document.querySelector('[data-leer-pdf]');
+  if (!btn) return;
+
+  var modal = document.createElement('div');
+  modal.className = 'modal-pdf';
+  modal.setAttribute('role', 'dialog');
+  modal.setAttribute('aria-modal', 'true');
+  modal.setAttribute('aria-label', 'Lector de libro');
+  modal.innerHTML =
+    '<div class="modal-pdf-caja">' +
+    '<div class="modal-pdf-barra">' +
+    '<strong>Vista previa del libro</strong>' +
+    '<button class="modal-pdf-cerrar" type="button" aria-label="Cerrar lector">' +
+    '<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/></svg>' +
+    '</button>' +
+    '</div>' +
+    '<iframe title="Vista previa del libro" allowfullscreen></iframe>' +
+    '</div>';
+  document.body.appendChild(modal);
+
+  var iframe = modal.querySelector('iframe');
+  var cerrarBtn = modal.querySelector('.modal-pdf-cerrar');
+
+  function abrir() {
+    iframe.src = btn.dataset.leerPdf;
+    modal.classList.add('abierto');
+    document.body.style.overflow = 'hidden';
+    cerrarBtn.focus();
+  }
+  function cerrar() {
+    modal.classList.remove('abierto');
+    document.body.style.overflow = '';
+    iframe.src = '';
+    btn.focus();
+  }
+
+  btn.addEventListener('click', abrir);
+  cerrarBtn.addEventListener('click', cerrar);
+  modal.addEventListener('click', function (e) { if (e.target === modal) cerrar(); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && modal.classList.contains('abierto')) cerrar(); });
+})();

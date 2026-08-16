@@ -188,6 +188,37 @@ input, select, textarea { font: inherit; color: inherit; }
 .boton-wa { background: var(--verde-wa); color: #fff; }
 .boton-wa:hover { background: var(--verde-wa-hover); color: #fff; }
 
+.boton-leer { background: var(--oro); color: #2c2306; border-color: transparent; }
+.boton-leer:hover { background: #b8920a; color: #fff; border-color: transparent; }
+
+/* ---------- Modal lector PDF -------------------------------------------- */
+.modal-pdf {
+  display: none; position: fixed; inset: 0; z-index: 9000;
+  background: rgba(6, 18, 30, .82); align-items: center; justify-content: center;
+  padding: 1rem;
+}
+.modal-pdf.abierto { display: flex; }
+.modal-pdf-caja {
+  position: relative; width: min(900px, 100%); height: min(85vh, 700px);
+  background: #fff; border-radius: var(--r-l); overflow: hidden;
+  box-shadow: 0 24px 80px rgba(0,0,0,.55);
+  display: flex; flex-direction: column;
+}
+.modal-pdf-barra {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: .75rem 1.1rem; background: var(--azul); color: #fff; flex: none;
+}
+.modal-pdf-barra strong { font-size: .92rem; }
+.modal-pdf-cerrar {
+  background: none; border: none; color: #fff; cursor: pointer; padding: .3rem;
+  display: grid; place-items: center; border-radius: var(--r-s);
+  transition: background var(--transicion);
+}
+.modal-pdf-cerrar:hover { background: rgba(255,255,255,.18); }
+.modal-pdf iframe {
+  flex: 1; border: none; width: 100%; background: var(--papel);
+}
+
 .enlace-flecha {
   display: inline-flex; align-items: center; gap: .45rem; font-weight: 600; font-size: .92rem;
   color: var(--azul-medio); white-space: nowrap;
@@ -444,13 +475,33 @@ input, select, textarea { font: inherit; color: inherit; }
 /* ---------- 11. Ventajas ------------------------------------------------ */
 .ventajas { background: #fff; border-block: 1px solid var(--linea); }
 .ventajas-rejilla { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; padding-block: 1.6rem; }
-.ventaja { display: flex; gap: .85rem; align-items: flex-start; }
+.ventaja { display: flex; gap: .85rem; align-items: flex-start; color: var(--tinta); }
+a.ventaja { text-decoration: none; border-radius: var(--r-m); transition: background var(--transicion), box-shadow var(--transicion); }
+a.ventaja:hover { background: var(--papel); box-shadow: var(--sombra-s); }
 .ventaja-icono {
   width: 44px; height: 44px; flex: none; display: grid; place-items: center;
   background: var(--azul-claro); color: var(--azul); border-radius: var(--r-m);
 }
+.ventaja-texto { flex: 1; }
 .ventaja strong { display: block; font-size: .93rem; color: var(--azul); }
 .ventaja span { display: block; font-size: .84rem; color: var(--tinta-media); line-height: 1.45; }
+.ventaja-flecha { color: var(--tinta-suave); align-self: center; transition: transform var(--transicion); }
+a.ventaja:hover .ventaja-flecha { transform: translateX(4px); color: var(--azul); }
+
+/* Ventaja con fotografía */
+.ventajas.ventajas-con-imagenes .ventajas-rejilla { padding-block: 0; gap: 0; }
+.ventaja.con-imagen {
+  flex-direction: column; gap: 0; padding: 0; overflow: hidden;
+  border: 1px solid var(--linea); border-radius: var(--r-m); background: #fff;
+}
+.ventaja-imagen { width: 100%; aspect-ratio: 5 / 3; object-fit: cover; object-position: center; }
+.ventaja.con-imagen .ventaja-icono,
+.ventaja.con-imagen .ventaja-texto,
+.ventaja.con-imagen .ventaja-flecha { margin: 0 1.2rem; }
+.ventaja.con-imagen .ventaja-icono { margin-top: 1.2rem; }
+.ventaja.con-imagen .ventaja-texto { margin-top: .6rem; margin-bottom: .2rem; }
+.ventaja.con-imagen .ventaja-flecha { margin-bottom: 1.1rem; }
+a.ventaja.con-imagen:hover { background: #fff; box-shadow: var(--sombra-m); transform: translateY(-3px); }
 
 /* ---------- 12. Categorías ---------------------------------------------- */
 .rejilla-categorias { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem; }

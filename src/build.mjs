@@ -249,11 +249,12 @@ function construir() {
   const bannersReales = mapaDeImagenes('imagenes/blog', posts.map((p) => p.id));
   const imagenesCategorias = mapaDeImagenes('imagenes/categorias', categorias.map((c) => c.id));
   const imagenesSecciones = mapaDeImagenes('imagenes/secciones', ['nosotros', 'publica-con-nosotros', 'servicios']);
+  const imagenesVentajas = mapaDeImagenes('imagenes/ventajas', (cfg.ventajas || []).map((v) => v.id).filter(Boolean));
 
   const ctx = {
     cfg, libros, autores, categorias, posts,
     autoresPorId, categoriasPorId, librosPorAutor, librosPorCategoria,
-    bannersReales, imagenesCategorias, imagenesSecciones,
+    bannersReales, imagenesCategorias, imagenesSecciones, imagenesVentajas,
     version: versionDeAssets(),
     rutas: []
   };

@@ -104,10 +104,10 @@
   ],
 
   "ventajas": [
-    { "icono": "envio", "titulo": "Envíos a todo el Ecuador", "texto": "Despacho en 24-72 horas desde Quito a todo el país." },
-    { "icono": "sello", "titulo": "ISBN y depósito legal", "texto": "Cada título se registra oficialmente en la Cámara Ecuatoriana del Libro." },
-    { "icono": "pares", "titulo": "Revisión por pares", "texto": "Comité académico externo evalúa cada manuscrito antes de publicarse." },
-    { "icono": "soporte", "titulo": "Atención directa", "texto": "Habla con el equipo editorial por WhatsApp o correo, sin intermediarios." }
+    { "id": "envios", "icono": "envio", "titulo": "Envíos a todo el Ecuador", "texto": "Despacho en 24-72 horas desde Quito a todo el país.", "url": "/envios/" },
+    { "id": "isbn", "icono": "sello", "titulo": "ISBN y depósito legal", "texto": "Cada título se registra oficialmente en la Cámara Ecuatoriana del Libro.", "url": "/servicios/" },
+    { "id": "pares", "icono": "pares", "titulo": "Revisión por pares", "texto": "Comité académico externo evalúa cada manuscrito antes de publicarse.", "url": "/nosotros/" },
+    { "id": "atencion", "icono": "soporte", "titulo": "Atención directa", "texto": "Habla con el equipo editorial por WhatsApp o correo, sin intermediarios.", "url": "/contacto/" }
   ],
 
   "footer": {

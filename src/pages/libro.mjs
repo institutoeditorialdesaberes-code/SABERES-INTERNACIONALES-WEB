@@ -85,6 +85,7 @@ export function paginaLibro(ctx, libro) {
             ${icono('whatsapp')}<span>Pedir por WhatsApp</span>
           </a>
           <a class="boton boton-fantasma grande" href="/contacto/?libro=${esc(libro.id)}">${icono('correo')}<span>Consultar por correo</span></a>
+          ${libro.urlPdf ? `<button type="button" class="boton boton-leer grande" data-leer-pdf="${esc(libro.urlPdf)}">${icono('libro')}<span>Leer en línea</span></button>` : ''}
         </div>
         <p class="nota">Pedidos institucionales y compras por volumen: escríbenos y preparamos una cotización con descuento por cantidad.</p>
       </div>

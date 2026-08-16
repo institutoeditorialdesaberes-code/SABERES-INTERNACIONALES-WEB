@@ -181,15 +181,23 @@ export function bandaCTA(cfg) {
 </section>`;
 }
 
-export function ventajas(cfg) {
+export function ventajas(cfg, ctx) {
+  const hayImagenes = cfg.ventajas.some((v) => v.id && ctx?.imagenesVentajas?.get(v.id));
   return `
-<section class="ventajas">
+<section class="ventajas${hayImagenes ? ' ventajas-con-imagenes' : ''}">
   <div class="contenedor ventajas-rejilla">
-    ${cfg.ventajas.map((v) => `
-    <div class="ventaja">
+    ${cfg.ventajas.map((v) => {
+      const imagen = v.id && ctx?.imagenesVentajas?.get(v.id);
+      const tag = v.url ? 'a' : 'div';
+      const href = v.url ? ` href="${esc(v.url)}"` : '';
+      return `
+    <${tag} class="ventaja${imagen ? ' con-imagen' : ''}"${href}>
+      ${imagen ? `<img class="ventaja-imagen" src="${esc(imagen)}" alt="" width="400" height="240" loading="lazy" decoding="async">` : ''}
       <span class="ventaja-icono">${icono(v.icono)}</span>
-      <div><strong>${esc(v.titulo)}</strong><span>${esc(v.texto)}</span></div>
-    </div>`).join('')}
+      <div class="ventaja-texto"><strong>${esc(v.titulo)}</strong><span>${esc(v.texto)}</span></div>
+      ${v.url ? `<span class="ventaja-flecha">${icono('chevronDer')}</span>` : ''}
+    </${tag}>`;
+    }).join('')}
   </div>
 </section>`;
 }
