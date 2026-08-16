@@ -994,11 +994,25 @@ article.tarjeta-autor .meta { font-size: .78rem; color: var(--tinta-suave); marg
   .pie-marca, .pie-boletin { grid-column: auto; }
   .ventajas-rejilla { grid-template-columns: 1fr; }
   .cifras { grid-template-columns: 1fr 1fr; }
-  .rejilla-libros { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 1rem; }
-  .carrusel-pista { grid-auto-columns: minmax(180px, 1fr); gap: 1rem; }
-  .tarjeta-libro { display: flex; flex-direction: row; gap: .75rem; align-items: flex-start; }
-  .tarjeta-libro-imagen { width: 90px; flex: none; aspect-ratio: 2 / 3; border-radius: 4px; }
-  .tarjeta-libro-cuerpo { flex: 1; min-width: 0; padding-top: .25rem; }
+  /* Rejilla de libros: layout horizontal para que el placeholder crema no ocupe toda la pantalla */
+  .rejilla-libros { grid-template-columns: 1fr; gap: .75rem; }
+  .rejilla-libros .tarjeta-libro { display: flex; flex-direction: row; gap: .75rem; align-items: flex-start; }
+  .rejilla-libros .tarjeta-libro-imagen { width: 88px; flex: none; aspect-ratio: 2 / 3; border-radius: 4px; }
+  .rejilla-libros .tarjeta-libro-cuerpo { flex: 1; min-width: 0; padding-top: .25rem; }
+  /* Carruseles: tarjetas verticales compactas */
+  .carrusel-pista { grid-auto-columns: minmax(150px, 160px); gap: .75rem; }
+  .carrusel-pista .tarjeta-libro { display: flex; flex-direction: column; }
+  .carrusel-pista .tarjeta-libro-imagen { width: 100%; aspect-ratio: 2 / 3; }
+  .carrusel-pista .tarjeta-libro-cuerpo { padding: .5rem .25rem; }
+  .carrusel-pista .tarjeta-titulo { font-size: .82rem; }
+  .carrusel-pista .tarjeta-autor, .carrusel-pista .tarjeta-valoracion { font-size: .75rem; }
+  .carrusel-pista .tarjeta-pie { flex-direction: row; align-items: center; flex-wrap: wrap; gap: .3rem; }
+  .carrusel-pista .tarjeta-precio { font-size: .78rem; }
+  .carrusel-pista .boton-compacto { padding: .35rem .6rem; font-size: .75rem; }
+  /* Encabezados de sección: quitar el link al lado del título */
+  .encabezado-seccion { flex-direction: column; align-items: flex-start; gap: .5rem; margin-bottom: 1.25rem; }
+  .encabezado-seccion h2 { font-size: clamp(1.35rem, 5vw, 1.65rem); }
+  .encabezado-seccion .bajada { margin-bottom: .25rem; }
   .campo-fila { grid-template-columns: 1fr; }
   .barra-enlaces { font-size: .75rem; gap: .75rem; }
   .barra-enlaces a span { display: none; }
