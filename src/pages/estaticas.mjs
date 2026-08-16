@@ -1,6 +1,6 @@
 import { esc } from '../lib/utils.mjs';
 import { icono } from '../lib/icons.mjs';
-import { bandaCTA } from '../lib/components.mjs';
+import { bandaCTA, tarjetaLibro } from '../lib/components.mjs';
 
 const HOY = new Date().toISOString().slice(0, 10);
 
@@ -616,13 +616,7 @@ export function pagina404(ctx) {
 <section class="seccion seccion-alterna">
   <div class="contenedor">
     <h2 class="titulo-bloque">Quizá te interese</h2>
-    <div class="rejilla-libros">${sugeridos.map((l) => `
-      <article class="tarjeta-libro">
-        <a class="tarjeta-libro-imagen" href="/libro/${esc(l.id)}/"><img src="/assets/portadas/${esc(l.id)}.svg" alt="" width="400" height="600" loading="lazy"></a>
-        <div class="tarjeta-libro-cuerpo">
-          <h3 class="tarjeta-titulo"><a href="/libro/${esc(l.id)}/">${esc(l.titulo)}</a></h3>
-        </div>
-      </article>`).join('')}</div>
+    <div class="rejilla-libros">${sugeridos.map((l) => tarjetaLibro(l, ctx)).join('')}</div>
   </div>
 </section>`;
 
