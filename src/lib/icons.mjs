@@ -1,7 +1,7 @@
 // Iconografía en SVG en línea. Trazo uniforme de 1.6 para que todo el
 // sistema visual se vea coherente. Ningún icono depende de una fuente externa.
 
-const T = 'fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"';
+const T = 'fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"';
 
 const TRAZOS = {
   busqueda: `<circle cx="11" cy="11" r="6.5" ${T}/><path d="m16 16 4.5 4.5" ${T}/>`,

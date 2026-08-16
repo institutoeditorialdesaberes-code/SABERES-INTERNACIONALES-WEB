@@ -1676,3 +1676,490 @@ article.tarjeta-autor .especialidad { color: var(--azul); }
 /* Subir */
 .subir { background: var(--azul); }
 
+
+/* ==========================================================================
+   31. Rediseño profundo estilo Facebook
+   Tipografia, bordes, sombras, animaciones y componentes completos.
+   ========================================================================== */
+
+/* ── 1. Eliminar TODA la tipografia serif ── */
+*,
+h1, h2, h3, h4,
+.logo-texto strong,
+.precio-principal, .precio-secundario,
+.tarjeta-precio, .tarjeta-titulo,
+.ficha-subtitulo, .prosa blockquote,
+.entrada-destacada h2, .hero-destacado h2,
+.perfil h1, .encabezado-seccion h2,
+.titulo-bloque, .diapositiva h1,
+.diapositiva .titulo-diapositiva,
+.codigo-error, .linea-pasos .numero,
+.cifras strong, .perfil-cifras strong,
+.coleccion h3, .servicio h2,
+.acordeon-item summary,
+.tcg-texto strong,
+.tarjeta-autor h3,
+.tarjeta-entrada-cuerpo h3,
+.articulo-cabecera h1,
+.bloque-autor h2,
+.filtros legend {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+               'Helvetica Neue', Arial, sans-serif !important;
+  font-variation-settings: normal !important;
+  letter-spacing: -.01em;
+}
+
+/* Ajuste de pesos para que los titulos no se vean feos sin serif */
+h1 { font-weight: 800; letter-spacing: -.03em; }
+h2 { font-weight: 700; letter-spacing: -.025em; }
+h3 { font-weight: 700; letter-spacing: -.015em; }
+.precio-principal { font-weight: 800; }
+.cifras strong, .perfil-cifras strong { font-weight: 800; font-size: 2rem; }
+
+/* Cuerpo: un poco mas grande y comodo, como FB */
+body { font-size: 15px; line-height: 1.4; }
+p { line-height: 1.55; }
+.bajada { font-size: 1.05rem; line-height: 1.6; }
+
+/* ── 2. Variables suavizadas ── */
+:root {
+  --r-s:  6px;
+  --r-m: 10px;
+  --r-l: 16px;
+  --transicion: 200ms ease;
+  /* Sombras FB: muy sutiles */
+  --sombra-s: 0 1px 2px rgba(0,0,0,.08), 0 0 0 1px rgba(0,0,0,.06);
+  --sombra-m: 0 2px 8px rgba(0,0,0,.12), 0 0 0 1px rgba(0,0,0,.05);
+  --sombra-l: 0 4px 20px rgba(0,0,0,.14), 0 0 0 1px rgba(0,0,0,.05);
+}
+
+/* ── 3. Botones al estilo Facebook ── */
+.boton {
+  border-radius: 6px !important;
+  font-size: .9375rem;
+  font-weight: 600;
+  letter-spacing: 0;
+  transition: background 200ms ease, opacity 200ms ease, box-shadow 200ms ease !important;
+}
+/* Sin elevacion en hover — FB no levanta botones */
+.boton:hover { transform: none !important; }
+.boton:active { transform: scale(.98) !important; }
+
+/* Sin efecto shimmer */
+.boton-primario::after,
+.boton-wa::after { display: none !important; }
+
+/* Boton secundario (fantasma) al estilo FB: gris claro */
+.boton-fantasma {
+  background: #E4E6EB !important;
+  border: none !important;
+  color: var(--tinta) !important;
+}
+.boton-fantasma:hover { background: #D8DADF !important; color: var(--tinta) !important; }
+
+/* Boton WA: verde sólido FB-compatible */
+.boton-wa { border-radius: 6px !important; }
+
+/* ── 4. Iconos más gruesos (FB usa trazos mas anchos) ── */
+.ico { stroke-width: 2; }
+/* Icono de busqueda un poco mas grande */
+.buscador button .ico { width: 1.1em; height: 1.1em; }
+
+/* ── 5. Barra superior FB: sin serif, espaciado FB ── */
+.barra-superior { padding-block: .45rem; font-size: .82rem; }
+.barra-nombre-editorial { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important; font-weight: 700; letter-spacing: .08em; }
+
+/* ── 6. Header / Cabecera estilo FB ── */
+.cabecera { box-shadow: 0 1px 0 #CED0D4; }
+.cabecera-principal { padding-block: 0; }
+.cabecera-fila { padding-block: .75rem; gap: 1rem; }
+
+/* Logo: sin hover 3D */
+.logo .marca {
+  border-radius: 50%;
+  outline: 2.5px solid rgba(24,119,242,.3);
+  outline-offset: 2px;
+  transition: outline-color 200ms ease !important;
+}
+.cabecera-logo:hover .marca {
+  transform: none !important;
+  outline-color: var(--azul) !important;
+  box-shadow: none !important;
+}
+.logo-texto strong { font-size: 1.3rem; font-weight: 800; color: var(--azul); }
+.logo-texto em { font-size: .6rem; letter-spacing: .22em; color: var(--tinta-media); }
+
+/* Buscador pill — FB usa input redondeado */
+.buscador input {
+  border-radius: 999px !important;
+  padding-left: 1.1rem;
+  background: var(--papel);
+  border-color: var(--linea);
+  font-size: .9375rem;
+}
+.buscador input:focus {
+  border-color: var(--azul);
+  box-shadow: 0 0 0 2px rgba(24,119,242,.25) !important;
+}
+.buscador button {
+  border-radius: 999px !important;
+  right: 4px; top: 4px; bottom: 4px;
+  width: 38px;
+}
+
+/* ── 7. Navegacion estilo FB ── */
+.nav-principal { background: #fff; border-top: 1px solid #E4E6EB; }
+.nav-enlaces a {
+  border-bottom: 3px solid transparent !important;
+  font-size: .9375rem;
+  font-weight: 500;
+  transition: color 200ms ease, border-color 200ms ease !important;
+}
+.nav-enlaces a::after { display: none !important; } /* quitamos el underline animado */
+.nav-enlaces a:hover { color: var(--azul); border-bottom-color: var(--azul) !important; }
+.nav-enlaces a.activo { color: var(--azul); border-bottom-color: var(--azul) !important; font-weight: 700; }
+.menu-categorias > button { border-radius: 6px 6px 0 0 !important; font-size: .9375rem; }
+
+/* ── 8. Hero FB: sin efectos 3D ni giratorio ── */
+.hero { background: var(--papel); }
+.hero-carrusel::after { display: none !important; } /* quita el sello giratorio */
+.hero-carrusel { border-radius: var(--r-l) !important; }
+
+/* Diapositivas: transicion suave sin animacion agresiva */
+.diapositiva[data-activa] .diapositiva-texto > * { animation: none !important; }
+.diapositiva h1, .diapositiva .titulo-diapositiva {
+  font-size: clamp(1.9rem, 3.8vw, 3rem);
+  font-weight: 800;
+  letter-spacing: -.03em;
+}
+.diapositiva .bajada { font-size: 1.05rem; }
+
+/* Controles del carrusel redondeados */
+.hero-flechas button { border-radius: 999px !important; }
+
+/* Hero destacado: card FB */
+.hero-destacado {
+  border-radius: var(--r-l) !important;
+  border: none !important;
+  box-shadow: var(--sombra-s) !important;
+}
+.hero-destacado::before { height: 3px !important; background: var(--azul) !important; }
+.hero-destacado h2 { font-size: 1.15rem; }
+
+/* ── 9. Tarjetas de libro: estilo FB ── */
+.tarjeta-libro {
+  border-radius: var(--r-l) !important;
+  border: none !important;
+  box-shadow: var(--sombra-s) !important;
+  transition: box-shadow 200ms ease !important;
+}
+.tarjeta-libro:hover {
+  transform: none !important;
+  box-shadow: var(--sombra-m) !important;
+  border-color: transparent !important;
+}
+/* Quitar efectos 3D y barra de oro */
+.tarjeta-libro-imagen img { transform: none !important; transition: none !important; }
+.tarjeta-libro:hover .tarjeta-libro-imagen img { transform: none !important; }
+.tarjeta-libro::after { display: none !important; }
+.tarjeta-libro-imagen::before { display: none !important; } /* quita sombra lomo */
+
+/* Insignia pill */
+.insignia { border-radius: 999px !important; font-size: .72rem; padding: .2rem .65rem; }
+
+/* ── 10. Tarjetas de autor: estilo FB ── */
+article.tarjeta-autor {
+  border-radius: var(--r-l) !important;
+  border: none !important;
+  box-shadow: var(--sombra-s) !important;
+  transition: box-shadow 200ms ease !important;
+}
+article.tarjeta-autor:hover {
+  transform: none !important;
+  box-shadow: var(--sombra-m) !important;
+}
+/* Sin escala en la foto */
+.tarjeta-autor-foto img { transition: none !important; outline: none !important; }
+article.tarjeta-autor:hover .tarjeta-autor-foto img { transform: none !important; outline: none !important; }
+
+/* Ring azul FB en foto de autor */
+.tarjeta-autor-foto img {
+  border: 3px solid #fff;
+  box-shadow: 0 0 0 3px rgba(24,119,242,.25);
+}
+article.tarjeta-autor:hover .tarjeta-autor-foto img {
+  box-shadow: 0 0 0 3px var(--azul) !important;
+}
+
+/* ── 11. Tarjetas de blog: estilo FB ── */
+.tarjeta-entrada {
+  border-radius: var(--r-l) !important;
+  border: none !important;
+  box-shadow: var(--sombra-s) !important;
+  transition: box-shadow 200ms ease !important;
+}
+.tarjeta-entrada:hover {
+  transform: none !important;
+  box-shadow: var(--sombra-m) !important;
+}
+
+/* ── 12. Categorias: sin animacion exagerada ── */
+.tarjeta-categoria-grande {
+  border-radius: var(--r-l) !important;
+  transition: box-shadow 200ms ease, border-color 200ms ease !important;
+}
+.tarjeta-categoria-grande:hover {
+  transform: none !important;
+  box-shadow: var(--sombra-m) !important;
+}
+.tarjeta-categoria-grande::before { display: none !important; }
+.tcg-icono { transition: none !important; }
+.tarjeta-categoria-grande:hover .tcg-icono { transform: none !important; }
+
+/* ── 13. Ventajas: estilo FB ── */
+.ventaja-icono { border-radius: 50% !important; }
+.ventaja:hover .ventaja-icono { transform: none !important; }
+a.ventaja:hover { box-shadow: var(--sombra-s) !important; }
+
+/* ── 14. Colecciones y servicios: FB cards ── */
+.coleccion, .servicio {
+  border-radius: var(--r-l) !important;
+  border: none !important;
+  box-shadow: var(--sombra-s) !important;
+  transition: box-shadow 200ms ease !important;
+}
+.coleccion:hover, .servicio:hover {
+  transform: none !important;
+  box-shadow: var(--sombra-m) !important;
+}
+.coleccion-icono, .servicio-icono { border-radius: 50% !important; }
+
+/* ── 15. Ficha de libro: FB ── */
+.ficha-compra {
+  border-radius: var(--r-l) !important;
+  border: none !important;
+  box-shadow: var(--sombra-s) !important;
+}
+.ficha-portada img {
+  border-radius: var(--r-m) !important;
+  transition: box-shadow 200ms ease !important;
+}
+.ficha-portada:hover img { transform: none !important; box-shadow: var(--sombra-m) !important; }
+
+/* Autores pill en ficha */
+.ficha-autores a { border-radius: 999px !important; transition: background 200ms ease !important; }
+.ficha-autores a:hover { transform: none !important; border-color: var(--azul) !important; background: var(--azul-claro) !important; }
+
+/* ── 16. Acordeon: bordes redondeados ── */
+.acordeon-item { border-radius: var(--r-m) !important; }
+.acordeon-item summary { border-radius: var(--r-m) !important; }
+
+/* ── 17. Inputs: estilo FB ── */
+.campo input, .campo select, .campo textarea,
+.buscador-grande input {
+  border-radius: var(--r-m) !important;
+  background: #fff !important;
+  border-color: var(--linea) !important;
+  font-size: .9375rem;
+  transition: border-color 200ms ease, box-shadow 200ms ease !important;
+}
+.campo input:focus, .campo select:focus, .campo textarea:focus {
+  border-color: var(--azul) !important;
+  box-shadow: 0 0 0 2px rgba(24,119,242,.2) !important;
+}
+
+/* ── 18. Filtros del catalogo: estilo FB ── */
+.filtros-panel {
+  border-radius: var(--r-l) !important;
+  border: none !important;
+  box-shadow: var(--sombra-s) !important;
+}
+.filtro-etiquetas button {
+  border-radius: 999px !important;
+  font-size: .88rem;
+  transition: background 200ms ease, border-color 200ms ease, color 200ms ease !important;
+}
+.filtro-etiquetas button:hover { transform: none !important; }
+
+/* ── 19. Sugerencias del buscador: FB ── */
+.sugerencias {
+  border-radius: var(--r-m) !important;
+  border: none !important;
+  box-shadow: 0 8px 24px rgba(0,0,0,.15) !important;
+}
+.sugerencias a { border-radius: 6px !important; }
+.sugerencias a:hover, .sugerencias a.activa { background: var(--papel) !important; }
+
+/* ── 20. Perfil de autor: FB ── */
+.perfil-foto img {
+  border-radius: 50% !important;
+  border: 4px solid #fff !important;
+  box-shadow: 0 0 0 3px rgba(24,119,242,.35), 0 8px 24px rgba(0,0,0,.2) !important;
+}
+
+/* ── 21. Franja editorial: transiciones suaves ── */
+.portada-seccion::after,
+.franja-editorial::before { display: none !important; } /* quita los circulos decorativos */
+
+/* ── 22. Cifras: sin levitacion ── */
+.cifras li { transition: background 200ms ease !important; }
+.cifras li:hover { transform: none !important; background: rgba(255,255,255,.12) !important; }
+
+/* ── 23. Cinta de portadas: mas suave ── */
+.cinta-pista img {
+  transform: none !important;
+  border-radius: 8px !important;
+  transition: box-shadow 200ms ease !important;
+}
+.cinta-pista img:nth-child(even) { transform: none !important; }
+.cinta:hover .cinta-pista img { box-shadow: 0 6px 18px rgba(0,0,0,.35) !important; }
+
+/* ── 24. Migas de pan: FB style ── */
+.migas { background: #fff; border-bottom: 1px solid #E4E6EB; }
+
+/* ── 25. Pie de pagina: FB style ── */
+.pie-redes a { border-radius: 50% !important; }
+.formulario-boletin input { border-radius: 999px !important; }
+.formulario-boletin .boton-primario { border-radius: 999px !important; }
+
+/* ── 26. Boton subir: FB ── */
+.subir { border-radius: 50% !important; box-shadow: 0 2px 12px rgba(24,119,242,.3) !important; }
+
+/* ── 27. Resultados de busqueda: FB cards ── */
+.resultado {
+  border-radius: var(--r-m) !important;
+  border: none !important;
+  box-shadow: var(--sombra-s) !important;
+  transition: box-shadow 200ms ease !important;
+}
+.resultado:hover {
+  transform: none !important;
+  box-shadow: var(--sombra-m) !important;
+  border-color: transparent !important;
+}
+
+/* ── 28. Entrada destacada: FB ── */
+.entrada-destacada {
+  border-radius: var(--r-l) !important;
+  border: none !important;
+  box-shadow: var(--sombra-s) !important;
+  overflow: hidden;
+}
+
+/* ── 29. Tarjeta lateral en perfil: FB ── */
+.tarjeta-lateral, .tarjeta-contacto-autor {
+  border-radius: var(--r-l) !important;
+  border: none !important;
+  box-shadow: var(--sombra-s) !important;
+  background: #fff !important;
+}
+
+/* ── 30. Pasos: FB ── */
+.linea-pasos li {
+  border-radius: var(--r-l) !important;
+  border: none !important;
+  box-shadow: var(--sombra-s) !important;
+  transition: box-shadow 200ms ease !important;
+}
+.linea-pasos li:hover { box-shadow: var(--sombra-m) !important; }
+.linea-pasos .numero { font-size: 2rem; font-weight: 800; }
+
+/* ── 31. Aviso demo: pill ── */
+.aviso-demo { border-radius: 0; } /* barra completa */
+.aviso-demo button { border-radius: 50% !important; }
+
+/* ── 32. Animacion de reveal: FB style (fade sin translateY exagerado) ── */
+[data-revelar] {
+  opacity: 0;
+  transform: translateY(10px) !important; /* mas sutil que 26px original */
+  transition: opacity 400ms ease, transform 400ms ease !important;
+}
+[data-revelar].visible { opacity: 1; transform: none !important; }
+
+/* ── 33. Transiciones entre paginas: mas suaves ── */
+@media (prefers-reduced-motion: no-preference) {
+  ::view-transition-old(root) { animation: salirPaginaFB 180ms ease both; }
+  ::view-transition-new(root) { animation: entrarPaginaFB 250ms ease both; }
+}
+@keyframes salirPaginaFB  { to { opacity: 0; } }
+@keyframes entrarPaginaFB { from { opacity: 0; } }
+
+/* ── 34. Barra de progreso: azul FB ── */
+.progreso-lectura {
+  height: 3px !important;
+  background: var(--azul) !important;
+  box-shadow: none !important;
+}
+
+/* ── 35. Focus visible: azul FB ── */
+:focus-visible {
+  outline: 3px solid rgba(24,119,242,.55) !important;
+  outline-offset: 3px !important;
+  border-radius: 4px !important;
+}
+
+/* ── 36. Compartir en ficha: bordes redondeados ── */
+.ficha-compartir a, .ficha-compartir button {
+  border-radius: 50% !important;
+  transition: background 200ms ease, border-color 200ms ease !important;
+}
+
+/* ── 37. Tabs / pestanas en ficha: FB ── */
+.pestanas-botones {
+  border-bottom: 2px solid #E4E6EB !important;
+}
+.pestanas-botones button {
+  font-size: .9375rem;
+  border-radius: 0 !important;
+  transition: color 200ms ease, border-color 200ms ease !important;
+}
+
+/* ── 38. Filtros panel: FB ── */
+.filtros legend { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important; }
+
+/* ── 39. Nav categorias desplegable: FB ── */
+.menu-categorias ul {
+  border-radius: 0 var(--r-m) var(--r-m) var(--r-m) !important;
+  border: none !important;
+  box-shadow: 0 8px 24px rgba(0,0,0,.15) !important;
+}
+.menu-categorias a { border-radius: var(--r-s) !important; font-size: .9375rem; }
+
+/* ── 40. Carrusel: FB ── */
+.carrusel-boton {
+  border-radius: 50% !important;
+  border: none !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,.12) !important;
+  transition: background 200ms ease, box-shadow 200ms ease !important;
+}
+.carrusel-boton:hover { background: var(--azul) !important; box-shadow: 0 4px 12px rgba(24,119,242,.3) !important; }
+
+/* ── 41. Secciones: menos padding (FB es mas compacto) ── */
+.seccion { padding: clamp(2rem, 5vw, 3.5rem) 0; }
+
+/* ── 42. Hero controles: pill buttons ── */
+.hero-puntos button::before { border-radius: 2px !important; }
+.hero-flechas button {
+  border: none !important;
+  background: rgba(255,255,255,.18) !important;
+  backdrop-filter: blur(6px);
+  transition: background 200ms ease !important;
+}
+.hero-flechas button:hover { background: rgba(255,255,255,.32) !important; }
+
+/* ── 43. Ventajas visuales: sin transformaciones bruscas ── */
+.ventaja-card-img { transition: transform 400ms ease, filter 400ms ease !important; }
+.ventaja-card:hover .ventaja-card-img { transform: scale(1.04) !important; }
+.ventaja-card-body { transform: none !important; transition: none !important; }
+.ventaja-card:hover .ventaja-card-body { transform: none !important; }
+
+/* ── 44. Modal PDF: FB ── */
+.modal-pdf-caja { border-radius: var(--r-l) !important; }
+.modal-pdf-barra { background: var(--azul) !important; }
+
+/* ── 45. Scrollbar suave ── */
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: var(--papel); }
+::-webkit-scrollbar-thumb { background: #CED0D4; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #B0B3B8; }
+
