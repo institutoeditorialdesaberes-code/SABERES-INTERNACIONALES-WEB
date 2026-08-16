@@ -130,6 +130,7 @@
     <button role="tab" aria-selected="false" data-vista="autores">Autores</button>
     <button role="tab" aria-selected="false" data-vista="entradas">Blog</button>
     <button role="tab" aria-selected="false" data-vista="ajustes">Configuración</button>
+    <button role="tab" aria-selected="false" data-vista="versiones">Versiones</button>
   </div>
 
   <!-- Libros -->
@@ -420,6 +421,47 @@
         <a class="boton boton-fantasma" id="ver-commits" target="_blank" rel="noopener">Ver historial de cambios</a>
         <a class="boton boton-fantasma" href="/" target="_blank" rel="noopener">Abrir el sitio</a>
       </div>
+    </div>
+  </section>
+
+  <!-- Versiones -->
+  <section data-panel="versiones" class="oculto">
+    <div class="fila-flex" style="justify-content:space-between;margin-bottom:1.25rem">
+      <h2 style="margin:0">Versiones guardadas</h2>
+      <button class="boton boton-primario" id="nueva-version">+ Crear versión ahora</button>
+    </div>
+
+    <div class="tarjeta" id="panel-crear-version" style="display:none">
+      <h3>Crear versión</h3>
+      <p style="font-size:.9rem;color:var(--tinta-media)">
+        Se guardará una copia de todos los libros, autores, entradas y configuración en este momento.
+        Podrás restaurarla después con un clic.
+      </p>
+      <div class="campo">
+        <label for="v-etiqueta">Nombre o nota (opcional)</label>
+        <input id="v-etiqueta" placeholder="Ej: antes de actualizar precios, catálogo enero 2026…">
+      </div>
+      <div class="acciones">
+        <button class="boton boton-primario" id="confirmar-version">Guardar versión</button>
+        <button class="boton boton-fantasma" id="cancelar-version">Cancelar</button>
+      </div>
+    </div>
+
+    <div class="tarjeta" style="padding:0;overflow-x:auto">
+      <table>
+        <thead><tr><th>Fecha</th><th>Nota</th><th>Libros</th><th>Autores</th><th>Entradas</th><th></th></tr></thead>
+        <tbody id="tabla-versiones"><tr><td colspan="6" style="text-align:center;color:var(--tinta-suave);padding:2rem">Cargando versiones…</td></tr></tbody>
+      </table>
+    </div>
+
+    <div class="tarjeta" style="margin-top:1.25rem">
+      <h3>¿Cómo funciona?</h3>
+      <ul style="font-size:.88rem;color:var(--tinta-media);padding-left:1.2rem;margin:0;line-height:2">
+        <li>Cada versión guarda una copia completa de libros, autores, blog y configuración.</li>
+        <li>Las versiones se almacenan en tu repositorio GitHub en la carpeta <code>data/versions/</code>.</li>
+        <li>Restaurar reemplaza los archivos actuales con los de esa versión y dispara un nuevo despliegue en Cloudflare.</li>
+        <li>Las versiones antiguas no se borran automáticamente; puedes eliminarlas manualmente desde GitHub.</li>
+      </ul>
     </div>
   </section>
 </main>
@@ -1038,6 +1080,7 @@
       document.querySelectorAll('[data-panel]').forEach(function (s) {
         s.classList.toggle('oculto', s.getAttribute('data-panel') !== b.getAttribute('data-vista'));
       });
+      if (b.getAttribute('data-vista') === 'versiones') listarVersiones();
     });
   });
 
@@ -1081,6 +1124,137 @@
   $('#salir').addEventListener('click', function () {
     try { localStorage.removeItem('si-token'); } catch (e) {}
     location.reload();
+  });
+
+  /* ======================== VERSIONES ======================== */
+
+  var CARPETA_VERSIONES = 'data/versions';
+
+  function isoALocal(iso) {
+    var d = new Date(iso);
+    return d.toLocaleDateString('es-EC', { day: '2-digit', month: 'short', year: 'numeric' }) +
+      ' ' + d.toLocaleTimeString('es-EC', { hour: '2-digit', minute: '2-digit' });
+  }
+
+  function listarVersiones() {
+    var tbody = $('#tabla-versiones');
+    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--tinta-suave);padding:2rem">Cargando…</td></tr>';
+
+    api('/repos/' + estado.duenio + '/' + estado.repo + '/contents/' + CARPETA_VERSIONES + '?ref=' + estado.rama)
+      .then(function (archivos) {
+        if (!archivos || !archivos.length) {
+          tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--tinta-suave);padding:2rem">No hay versiones guardadas todavía. Crea la primera con el botón de arriba.</td></tr>';
+          return;
+        }
+        var jsonFiles = archivos.filter(function (f) { return f.name.endsWith('.json'); })
+          .sort(function (a, b) { return b.name.localeCompare(a.name); });
+
+        Promise.all(jsonFiles.slice(0, 20).map(function (f) {
+          return fetch(f.download_url).then(function (r) { return r.json(); })
+            .then(function (v) { return { archivo: f.name, sha: f.sha, datos: v }; });
+        })).then(function (versiones) {
+          tbody.innerHTML = versiones.map(function (v) {
+            var d = v.datos;
+            var libros = (d.datos && d.datos.books ? d.datos.books.length : '?');
+            var autores = (d.datos && d.datos.authors ? d.datos.authors.length : '?');
+            var entradas = (d.datos && d.datos.posts ? d.datos.posts.length : '?');
+            var fecha = d.fecha ? isoALocal(d.fecha) : v.archivo.replace('.json', '');
+            var nota = esc(d.etiqueta || '—');
+            return '<tr>' +
+              '<td style="white-space:nowrap">' + esc(fecha) + '</td>' +
+              '<td>' + nota + '</td>' +
+              '<td>' + libros + '</td>' +
+              '<td>' + autores + '</td>' +
+              '<td>' + entradas + '</td>' +
+              '<td><button class="boton boton-fantasma" data-restaurar="' + esc(v.archivo) + '" style="padding:.35rem .7rem">Restaurar</button></td>' +
+              '</tr>';
+          }).join('');
+        });
+      }).catch(function () {
+        tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--tinta-suave);padding:2rem">No hay versiones guardadas todavía.</td></tr>';
+      });
+  }
+
+  $('#nueva-version').addEventListener('click', function () {
+    $('#v-etiqueta').value = '';
+    $('#panel-crear-version').style.display = '';
+    $('#panel-crear-version').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+
+  $('#cancelar-version').addEventListener('click', function () {
+    $('#panel-crear-version').style.display = 'none';
+  });
+
+  $('#confirmar-version').addEventListener('click', function () {
+    var boton = this;
+    boton.disabled = true;
+    boton.textContent = 'Guardando…';
+
+    var ahora = new Date();
+    var nombre = ahora.toISOString().replace(/[:.]/g, '-').slice(0, 19) + '.json';
+    var version = {
+      fecha: ahora.toISOString(),
+      etiqueta: $('#v-etiqueta').value.trim(),
+      datos: {
+        books: estado.libros,
+        authors: estado.autores,
+        posts: estado.entradas,
+        config: estado.config
+      }
+    };
+
+    var ruta = CARPETA_VERSIONES + '/' + nombre;
+    // Limpiamos sha para que no intente actualizar (es archivo nuevo)
+    delete estado.archivos[ruta];
+
+    escribirArchivo(ruta, JSON.stringify(version, null, 2) + '\n',
+      'Versión: ' + (version.etiqueta || ahora.toLocaleDateString('es-EC')))
+      .then(function () {
+        $('#panel-crear-version').style.display = 'none';
+        mensaje('Versión guardada correctamente.', 'ok');
+        listarVersiones();
+      }).catch(function (e) {
+        mensaje(e.message, 'mal');
+      }).then(function () {
+        boton.disabled = false;
+        boton.textContent = 'Guardar versión';
+      });
+  });
+
+  document.addEventListener('click', function (e) {
+    var b = e.target.closest('[data-restaurar]');
+    if (!b) return;
+    var archivo = b.getAttribute('data-restaurar');
+    if (!confirm('¿Restaurar la versión «' + archivo.replace('.json', '') + '»?\n\nSe reemplazarán los libros, autores, entradas y configuración actuales. Esta acción no se puede deshacer desde aquí (pero puedes crear otra versión antes).')) return;
+
+    b.disabled = true;
+    b.textContent = 'Restaurando…';
+
+    fetch('https://raw.githubusercontent.com/' + estado.duenio + '/' + estado.repo + '/' + estado.rama + '/' + CARPETA_VERSIONES + '/' + archivo)
+      .then(function (r) { return r.json(); })
+      .then(function (v) {
+        var d = v.datos;
+        var etiqueta = v.etiqueta ? ' (desde «' + v.etiqueta + '»)' : '';
+        var msg = 'Restauración' + etiqueta + ' — ' + new Date(v.fecha).toLocaleDateString('es-EC');
+        return Promise.all([
+          guardarJSON('data/books.json',   d.books,   msg),
+          guardarJSON('data/authors.json', d.authors, msg),
+          guardarJSON('data/posts.json',   d.posts,   msg),
+          guardarJSON('site.config.json',  d.config,  msg)
+        ]).then(function () {
+          estado.libros   = d.books;
+          estado.autores  = d.authors;
+          estado.entradas = d.posts;
+          estado.config   = d.config;
+          pintarTodo();
+          mensaje('Restauración completada. El sitio se está reconstruyendo con esa versión.', 'ok');
+        });
+      }).catch(function (e) {
+        mensaje('Error al restaurar: ' + e.message, 'mal');
+      }).then(function () {
+        b.disabled = false;
+        b.textContent = 'Restaurar';
+      });
   });
 
   // Arranque: lee la configuración generada en el build y reconecta si hay token.
