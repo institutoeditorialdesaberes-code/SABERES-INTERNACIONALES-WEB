@@ -181,18 +181,15 @@ export function bandaCTA(cfg) {
 </section>`;
 }
 
-export function ventajas(cfg, ctx) {
-  const hayImagenes = cfg.ventajas.some((v) => v.id && ctx?.imagenesVentajas?.get(v.id));
+export function ventajas(cfg) {
   return `
-<section class="ventajas${hayImagenes ? ' ventajas-con-imagenes' : ''}">
+<section class="ventajas">
   <div class="contenedor ventajas-rejilla">
     ${cfg.ventajas.map((v) => {
-      const imagen = v.id && ctx?.imagenesVentajas?.get(v.id);
       const tag = v.url ? 'a' : 'div';
       const href = v.url ? ` href="${esc(v.url)}"` : '';
       return `
-    <${tag} class="ventaja${imagen ? ' con-imagen' : ''}"${href}>
-      ${imagen ? `<img class="ventaja-imagen" src="${esc(imagen)}" alt="" width="400" height="240" loading="lazy" decoding="async">` : ''}
+    <${tag} class="ventaja"${href}>
       <span class="ventaja-icono">${icono(v.icono)}</span>
       <div class="ventaja-texto"><strong>${esc(v.titulo)}</strong><span>${esc(v.texto)}</span></div>
       ${v.url ? `<span class="ventaja-flecha">${icono('chevronDer')}</span>` : ''}

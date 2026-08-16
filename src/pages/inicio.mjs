@@ -63,7 +63,7 @@ export function paginaInicio(ctx) {
   </div>
 </section>
 
-${ventajas(cfg, ctx)}
+${ventajas(cfg)}
 
 <section class="seccion">
   <div class="contenedor">
