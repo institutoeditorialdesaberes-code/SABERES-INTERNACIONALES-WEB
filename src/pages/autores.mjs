@@ -5,7 +5,8 @@ import { tarjetaLibro, tarjetaAutor, rutaRetrato } from '../lib/components.mjs';
 export function paginaAutores(ctx) {
   const { cfg, autores } = ctx;
   const cuerpo = `
-<section class="portada-seccion">
+<section class="portada-seccion con-fondo">
+  <img class="portada-fondo" src="/imagenes/portadas/autores.jpg" alt="" aria-hidden="true" loading="eager">
   <div class="contenedor">
     <p class="sobretitulo claro">Comité y colaboradores</p>
     <h1>Autores del sello</h1>
@@ -76,7 +77,6 @@ export function paginaAutor(ctx, autor) {
       <ul class="perfil-cifras">
         <li><strong>${libros.length}</strong><span>${libros.length === 1 ? 'título publicado' : 'títulos publicados'}</span></li>
         <li><strong>${autor.aniosExperiencia}</strong><span>años de trayectoria</span></li>
-        <li><strong>${autor.premios}</strong><span>reconocimientos</span></li>
       </ul>
       ${autor.sitioWeb ? `<a class="enlace-flecha" href="${esc(autor.sitioWeb)}" target="_blank" rel="noopener">Sitio personal ${icono('flechaDer')}</a>` : ''}
     </div>
