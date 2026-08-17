@@ -27,7 +27,7 @@ export function organizacionLD(cfg) {
       width: 512,
       height: 512
     },
-    image: url(cfg.url, '/assets/img/portada-social.png'),
+    image: url(cfg.url, '/imagenes/marca/logo-saberes.jpg'),
     description: cfg.descripcion,
     foundingDate: cfg.fundacion,
     email: cfg.contacto.email,
@@ -218,7 +218,7 @@ export function pagina(o) {
     || (o.ruta === '/' ? cfg.seo.tituloPorDefecto : cfg.seo.plantillaTitulo.replace('%s', o.titulo));
   const imagen = o.imagen
     ? (o.imagen.startsWith('http') ? o.imagen : url(cfg.url, o.imagen))
-    : url(cfg.url, '/assets/img/portada-social.png');
+    : url(cfg.url, '/imagenes/marca/logo-saberes.jpg');
 
   const grafo = [organizacionLD(cfg), sitioLD(cfg), ...(o.jsonld || [])];
   if (o.migas && o.migas.length > 1) grafo.push(migasLD(cfg, o.migas));
@@ -289,8 +289,12 @@ ${cfg.seo.twitterUser ? `<meta name="twitter:site" content="${esc(cfg.seo.twitte
 <meta name="twitter:description" content="${esc(o.descripcion)}">
 <meta name="twitter:image" content="${esc(imagen)}">
 
-<link rel="icon" href="/imagenes/marca/logo-saberes.jpg" type="image/jpeg">
-<link rel="apple-touch-icon" href="/imagenes/marca/logo-saberes.jpg">
+<!-- El logo real de la editorial. No declarar aquí /favicon.svg: es un emblema
+     sintético y tanto los navegadores como Google lo prefieren al PNG, así que
+     acabaría mostrándose en lugar del logo. -->
+<link rel="icon" href="/assets/img/icono-192.png" type="image/png" sizes="192x192">
+<link rel="icon" href="/assets/img/icono-512.png" type="image/png" sizes="512x512">
+<link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
 <link rel="manifest" href="/manifest.webmanifest">
 <link rel="alternate" type="application/rss+xml" title="Blog de ${esc(cfg.nombre)}" href="/rss.xml">
 <link rel="sitemap" type="application/xml" href="/sitemap.xml">

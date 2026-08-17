@@ -73,6 +73,8 @@
   },
   "_redirecciones": "Direcciones que existieron y ya no (libros o autores borrados que Google alcanzó a indexar). Sin esto devuelven 404. Añade una línea por cada página retirada y el build genera la redirección 301 sola.",
   "redirecciones": [
+    { "de": "/favicon.ico", "a": "/assets/img/icono-192.png" },
+    { "de": "/favicon.svg", "a": "/assets/img/icono-192.png" },
     { "de": "/equipo/", "a": "/nosotros/" },
     { "de": "/equipo.html", "a": "/nosotros/" },
     { "de": "/acerca", "a": "/nosotros/" },
