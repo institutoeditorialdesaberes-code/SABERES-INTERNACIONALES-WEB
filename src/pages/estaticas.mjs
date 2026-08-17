@@ -1,4 +1,4 @@
-import { esc } from '../lib/utils.mjs';
+import { esc, calle } from '../lib/utils.mjs';
 import { icono } from '../lib/icons.mjs';
 import { bandaCTA, tarjetaLibro, rutaSeccion } from '../lib/components.mjs';
 
@@ -11,8 +11,8 @@ export function paginaNosotros(ctx) {
   const { cfg, libros, autores, categorias } = ctx;
   const imagen = rutaSeccion('nosotros', ctx);
   const cuerpo = `
-<section class="portada-seccion${imagen ? ' con-fondo' : ''}">
-  ${imagen ? `<img class="portada-fondo" src="${esc(imagen)}" alt="" width="690" height="276" fetchpriority="high" decoding="async">` : ''}
+<section class="portada-seccion con-fondo">
+  <img class="portada-fondo" src="${imagen || '/imagenes/portadas/nosotros.jpg'}" alt="" aria-hidden="true" loading="eager">
   <div class="contenedor">
     <p class="sobretitulo claro">Desde ${esc(cfg.fundacion)} en ${esc(cfg.contacto.ciudad)}</p>
     <h1>La editorial</h1>
@@ -51,7 +51,7 @@ export function paginaNosotros(ctx) {
         <li><strong>${new Date().getFullYear() - Number(cfg.fundacion)}</strong> años de trabajo</li>
       </ul>
       <h3>Dónde estamos</h3>
-      <p>${icono('ubicacion')} ${esc(cfg.contacto.direccion)}<br>${esc(cfg.contacto.ciudad)} — ${esc(cfg.contacto.provincia)}, Ecuador</p>
+      <p>${icono('ubicacion')} ${calle(cfg, '<br>')}${esc(cfg.contacto.ciudad)} — ${esc(cfg.contacto.provincia)}, Ecuador</p>
       <p>${icono('reloj')} ${esc(cfg.contacto.horario)}</p>
       <a class="boton boton-primario ancho" href="/contacto/">Contactar al equipo</a>
     </aside>
@@ -105,7 +105,8 @@ export function paginaContacto(ctx) {
   const wa = `https://wa.me/${esc(cfg.contacto.whatsapp)}`;
 
   const cuerpo = `
-<section class="portada-seccion">
+<section class="portada-seccion con-fondo">
+  <img class="portada-fondo" src="/imagenes/portadas/contacto.jpg" alt="" aria-hidden="true" loading="eager">
   <div class="contenedor">
     <p class="sobretitulo claro">Estamos en ${esc(cfg.contacto.ciudad)}</p>
     <h1>Contacto</h1>
@@ -166,7 +167,7 @@ export function paginaContacto(ctx) {
         <li>${icono('whatsapp')}<div><strong>WhatsApp</strong><a href="${wa}" target="_blank" rel="noopener">${esc(cfg.contacto.telefono)}</a></div></li>
         <li>${icono('correo')}<div><strong>Correo general</strong><a href="mailto:${esc(cfg.contacto.email)}">${esc(cfg.contacto.email)}</a></div></li>
         <li>${icono('pluma')}<div><strong>Propuestas editoriales</strong><a href="mailto:${esc(cfg.contacto.emailPublicaciones)}">${esc(cfg.contacto.emailPublicaciones)}</a></div></li>
-        <li>${icono('ubicacion')}<div><strong>Oficina</strong><span>${esc(cfg.contacto.direccion)}<br>${esc(cfg.contacto.ciudad)} — ${esc(cfg.contacto.provincia)}, Ecuador</span></div></li>
+        <li>${icono('ubicacion')}<div><strong>Ubicación</strong><span>${calle(cfg, '<br>')}${esc(cfg.contacto.ciudad)} — ${esc(cfg.contacto.provincia)}, Ecuador</span></div></li>
         <li>${icono('reloj')}<div><strong>Horario</strong><span>${esc(cfg.contacto.horario)}</span></div></li>
       </ul>
       ${cfg.contacto.mapaEmbed ? `<div class="mapa">${cfg.contacto.mapaEmbed}</div>` : `
@@ -212,8 +213,8 @@ export function paginaPublica(ctx) {
   ];
 
   const cuerpo = `
-<section class="portada-seccion${imagen ? ' con-fondo' : ''}">
-  ${imagen ? `<img class="portada-fondo" src="${esc(imagen)}" alt="" width="690" height="276" fetchpriority="high" decoding="async">` : ''}
+<section class="portada-seccion con-fondo">
+  <img class="portada-fondo" src="${imagen || '/imagenes/portadas/publica.jpg'}" alt="" aria-hidden="true" loading="eager">
   <div class="contenedor">
     <p class="sobretitulo claro">Convocatoria abierta todo el año</p>
     <h1>Publica con nosotros</h1>
@@ -298,7 +299,8 @@ export function paginaServicios(ctx) {
   ];
 
   const cuerpo = `
-<section class="portada-seccion">
+<section class="portada-seccion con-fondo">
+  <img class="portada-fondo" src="/imagenes/portadas/publica.jpg" alt="" aria-hidden="true" loading="eager">
   <div class="contenedor">
     <p class="sobretitulo claro">Para autores e instituciones</p>
     <h1>Servicios editoriales</h1>
@@ -381,7 +383,8 @@ const PREGUNTAS = [
 export function paginaFAQ(ctx) {
   const { cfg } = ctx;
   const cuerpo = `
-<section class="portada-seccion">
+<section class="portada-seccion con-fondo">
+  <img class="portada-fondo" src="/imagenes/portadas/blog.jpg" alt="" aria-hidden="true" loading="eager">
   <div class="contenedor">
     <p class="sobretitulo claro">Todo lo que suelen preguntarnos</p>
     <h1>Preguntas frecuentes</h1>
@@ -501,7 +504,7 @@ export function paginaTerminos(ctx) {
     intro: 'Condiciones que rigen el uso de este sitio y las compras gestionadas a través de él.',
     secciones: [
       ['1. Titular del sitio', [
-        `Este sitio web es operado por ${cfg.nombreLegal}, con domicilio en ${cfg.contacto.direccion}, ${cfg.contacto.ciudad}, Ecuador, y correo de contacto ${cfg.contacto.email}.`
+        `Este sitio web es operado por ${cfg.nombreLegal}, con domicilio en ${calle(cfg)}${cfg.contacto.ciudad}, Ecuador, y correo de contacto ${cfg.contacto.email}.`
       ]],
       ['2. Objeto', [
         'El sitio presenta el catálogo editorial, información institucional y contenidos del blog. Los pedidos no se cierran en línea: se gestionan por WhatsApp o correo con el equipo editorial, que confirma disponibilidad, valor final y forma de pago.'
@@ -536,7 +539,7 @@ export function paginaPrivacidad(ctx) {
     intro: 'Qué datos recogemos, para qué los usamos y qué derechos tienes sobre ellos.',
     secciones: [
       ['Responsable del tratamiento', [
-        `${cfg.nombreLegal}, ${cfg.contacto.direccion}, ${cfg.contacto.ciudad}, Ecuador. Correo de contacto: ${cfg.contacto.email}.`
+        `${cfg.nombreLegal}, ${calle(cfg)}${cfg.contacto.ciudad}, Ecuador. Correo de contacto: ${cfg.contacto.email}.`
       ]],
       ['Datos que recogemos', [
         'Solo tratamos los datos que tú nos entregas voluntariamente:',
@@ -570,7 +573,8 @@ export function paginaPrivacidad(ctx) {
 export function paginaBuscar(ctx) {
   const { cfg } = ctx;
   const cuerpo = `
-<section class="portada-seccion">
+<section class="portada-seccion con-fondo">
+  <img class="portada-fondo" src="/imagenes/portadas/catalogo.jpg" alt="" aria-hidden="true" loading="lazy">
   <div class="contenedor">
     <p class="sobretitulo claro">Catálogo, autores y artículos</p>
     <h1>Buscar</h1>

@@ -1,7 +1,7 @@
 // Estructura común de todas las páginas: <head> con SEO completo,
 // cabecera, navegación, pie y datos estructurados.
 
-import { esc, escJson, url } from './utils.mjs';
+import { esc, escJson, url, calle } from './utils.mjs';
 import { icono, logotipo } from './icons.mjs';
 
 const REDES = [
@@ -34,10 +34,12 @@ export function organizacionLD(cfg) {
     telephone: cfg.contacto.telefono,
     address: {
       '@type': 'PostalAddress',
-      streetAddress: cfg.contacto.direccion,
+      /* Calle y código postal solo si están declarados: declarar campos vacíos
+         a Google es peor que omitirlos. */
+      ...(cfg.contacto.direccion ? { streetAddress: cfg.contacto.direccion } : {}),
       addressLocality: cfg.contacto.ciudad,
       addressRegion: cfg.contacto.provincia,
-      postalCode: cfg.contacto.codigoPostal,
+      ...(cfg.contacto.codigoPostal ? { postalCode: cfg.contacto.codigoPostal } : {}),
       addressCountry: cfg.pais
     },
     ...(perfiles.length ? { sameAs: perfiles } : {})
@@ -164,7 +166,7 @@ function pie(cfg) {
       <a href="/" aria-label="${esc(cfg.nombre)} — inicio">${logotipo({ alto: 46, clase: 'logo-claro' })}</a>
       <p>${esc(cfg.descripcion)}</p>
       <ul class="pie-datos">
-        <li>${icono('ubicacion')}<span>${esc(cfg.contacto.direccion)}, ${esc(cfg.contacto.ciudad)} — ${esc(cfg.contacto.provincia)}, Ecuador</span></li>
+        <li>${icono('ubicacion')}<span>${calle(cfg)}${esc(cfg.contacto.ciudad)} — ${esc(cfg.contacto.provincia)}, Ecuador</span></li>
         <li>${icono('correo')}<a href="mailto:${esc(cfg.contacto.email)}">${esc(cfg.contacto.email)}</a></li>
         <li>${icono('telefono')}<a href="tel:${esc(cfg.contacto.telefono.replace(/\s/g, ''))}">${esc(cfg.contacto.telefono)}</a></li>
         <li>${icono('reloj')}<span>${esc(cfg.contacto.horario)}</span></li>

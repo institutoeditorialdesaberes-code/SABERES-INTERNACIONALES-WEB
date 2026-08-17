@@ -10,7 +10,7 @@
   "pais": "EC",
   "moneda": "USD",
   "simboloMoneda": "$",
-  "fundacion": "2019",
+  "fundacion": "2026",
   "_animacionEntrada": "Cortina de bienvenida con el sello dibujándose, solo en la portada y una vez por sesión. Ponlo en false si prefieres que el sitio abra directo.",
   "animacionEntrada": true,
   "avisoDemo": {
@@ -23,10 +23,10 @@
     "telefono": "+593 99 999 9999",
     "whatsapp": "593999999999",
     "whatsappMensaje": "Hola, me interesa el libro",
-    "direccion": "Av. Amazonas y Naciones Unidas",
+    "direccion": "",
     "ciudad": "Quito",
     "provincia": "Pichincha",
-    "codigoPostal": "170135",
+    "codigoPostal": "",
     "horario": "Lunes a viernes, 09:00 a 18:00 (GMT-5)",
     "mapaEmbed": ""
   },

@@ -9,6 +9,17 @@ export function esc(value = '') {
     .replace(/'/g, '&#39;');
 }
 
+/**
+ * Calle seguida de su separador, o nada si no hay dirección declarada.
+ * Permite dejar `contacto.direccion` vacío y mostrar solo la ciudad, sin que
+ * queden comas huérfanas del tipo «con domicilio en , Quito».
+ * El separador NO se escapa, para poder pasar `<br>`.
+ */
+export function calle(cfg, separador = ', ') {
+  const via = String(cfg.contacto.direccion || '').trim();
+  return via ? `${esc(via)}${separador}` : '';
+}
+
 /** Escapa texto que va dentro de un bloque <script type="application/ld+json">. */
 export function escJson(data) {
   return JSON.stringify(data, null, 2).replace(/</g, '\\u003c');
