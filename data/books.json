@@ -1,12 +1,52 @@
 [
   {
+    "id": "comunicacion-no-violenta-entornos-escolares",
+    "titulo": "Comunicación No Violenta en Entornos Escolares",
+    "subtitulo": "Del lenguaje que hiere al lenguaje que conecta",
+    "autores": [
+      "jacqueline-toaquiza",
+      "sandra-casa"
+    ],
+    "categoria": "educacion",
+    "coleccion": "Cuadernos Pedagógicos",
+    "precio": 0,
+    "precioDigital": 0,
+    "portada": "/imagenes/libros/comunicacion-no-violenta-entornos-escolares.jpg",
+    "insignia": "Novedad",
+    "isbn": "",
+    "paginas": 216,
+    "anio": 2026,
+    "edicion": "Primera edición impresa",
+    "formato": "Impreso",
+    "urlPdf": "",
+    "dimensiones": "",
+    "idioma": "Español",
+    "valoracion": 0,
+    "resenas": 0,
+    "esNuevo": true,
+    "esDestacado": true,
+    "disponibilidad": "disponible",
+    "temas": [
+      "Comunicación no violenta",
+      "Convivencia escolar",
+      "Bullying",
+      "Lenguaje docente",
+      "Microagresiones",
+      "Educación emocional",
+      "Pedagogía"
+    ],
+    "resumen": "Manual para docentes que transforma la comunicación en el aula: identifica el lenguaje que hiere y ofrece herramientas concretas para reemplazarlo por un lenguaje que conecta, escucha y construye.",
+    "descripcion": "Este libro nace de una convicción compartida por sus autoras: la violencia que más daño hace en la escuela no siempre es visible. Se esconde en una frase dicha sin pensar, en un silencio cómplice, en una comparación que humilla sin levantar la voz.\n\nLa Comunicación No Violenta (CNV), desarrollada por Marshall Rosenberg, ofrece una respuesta concreta: aprender a observar sin juzgar, a expresar lo que sentimos sin atacar, a pedir sin exigir y a escuchar sin defenderse. Aplicada al entorno escolar, esa respuesta se convierte en una herramienta de transformación real.\n\n## Qué encontrarás en este libro\n\nEl libro está organizado en dos partes. La primera examina el problema: qué es la comunicación violenta, cómo se manifiesta en el aula a través de microagresiones y silencios, cómo opera el bullying como distorsión comunicativa y qué responsabilidad tiene el docente como modelo de lenguaje.\n\nLa segunda parte desarrolla los fundamentos de la CNV y propone herramientas prácticas para aplicarlos en el día a día escolar: en la relación con los estudiantes, con las familias y con los colegas.\n\n## Para quién es\n\nEscrito para docentes de educación básica y bachillerato, directivos escolares, orientadores y estudiantes de pedagogía que quieran transformar su práctica comunicativa desde adentro.",
+    "resenas_detalle": []
+  },
+  {
     "id": "narrativas-contra-la-violencia",
     "titulo": "Narrativas contra la violencia basadas en la Divina Comedia",
     "subtitulo": "Cien talleres de redacción creativa que examinan el comportamiento humano mientras recorres el Infierno de Dante",
     "autores": [
       "jaime-andrango",
       "raquel-guishcaso",
-      "jacqueline-toaquiza"
+      "luis-gaona"
     ],
     "categoria": "educacion",
     "coleccion": "Cuadernos Pedagógicos",
@@ -17,8 +57,8 @@
     "isbn": "",
     "paginas": 199,
     "anio": 2026,
-    "edicion": "Primera edición digital",
-    "formato": "Digital (PDF)",
+    "edicion": "Primera edición impresa",
+    "formato": "Impreso",
     "urlPdf": "/pdfs/narrativas-contra-la-violencia.pdf",
     "dimensiones": "",
     "idioma": "Español",

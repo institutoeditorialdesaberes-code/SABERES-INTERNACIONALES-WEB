@@ -1,5 +1,33 @@
 [
   {
+    "id": "luis-gaona",
+    "nombre": "Luis Eduardo Gaona Paccha",
+    "iniciales": "LG",
+    "especialidad": "Educación",
+    "grado": "",
+    "institucion": "",
+    "pais": "Ecuador",
+    "resumen": "Docente ecuatoriano coautor del libro Narrativas contra la violencia basadas en la Divina Comedia.",
+    "bio": "Luis Eduardo Gaona Paccha nació el 5 de octubre de 1992 en Ecuador. Es coautor del libro Narrativas contra la violencia basadas en la Divina Comedia, publicado por Editorial Saberes Internacionales en 2026.",
+    "premios": 0,
+    "aniosExperiencia": 0,
+    "sitioWeb": ""
+  },
+  {
+    "id": "sandra-casa",
+    "nombre": "Sandra Lizeth Casa Román",
+    "iniciales": "SC",
+    "especialidad": "Educación y comunicación",
+    "grado": "Licenciada en Ciencias de la Educación",
+    "institucion": "",
+    "pais": "Ecuador",
+    "resumen": "Docente ecuatoriana especializada en comunicación educativa y coautora del libro Comunicación No Violenta en Entornos Escolares.",
+    "bio": "Sandra Lizeth Casa Román es licenciada en Ciencias de la Educación. Es coautora del libro Comunicación No Violenta en Entornos Escolares: Del lenguaje que hiere al lenguaje que conecta, publicado por Editorial Saberes Internacionales en 2026.",
+    "premios": 0,
+    "aniosExperiencia": 0,
+    "sitioWeb": ""
+  },
+  {
     "id": "jaime-andrango",
     "nombre": "Jaime Darío Andrango",
     "iniciales": "JA",
