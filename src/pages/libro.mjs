@@ -8,6 +8,82 @@ const DISPONIBILIDAD_SCHEMA = {
   agotado: 'https://schema.org/OutOfStock'
 };
 
+/* ── Dublin Core meta tags (BASE, OAIster, repositorios) ── */
+function metasDC(libro, autores, cfg, absoluta) {
+  const lines = [];
+  const m = (name, content) => {
+    if (content) lines.push(`<meta name="${name}" content="${esc(String(content))}">`);
+  };
+  m('DC.title', libro.titulo);
+  autores.forEach(a => m('DC.creator', a.nombre));
+  m('DC.date', String(libro.anio));
+  m('DC.publisher', cfg.nombreLegal);
+  m('DC.type', 'Text');
+  m('DC.format', 'text/html');
+  m('DC.language', cfg.idioma);
+  m('DC.identifier', absoluta);
+  if (libro.isbn) m('DC.identifier', `ISBN:${libro.isbn}`);
+  (libro.temas || []).forEach(t => m('DC.subject', t));
+  if (libro.resumen) m('DC.description', recorta(libro.resumen, 500));
+  m('DC.rights', `© ${libro.anio} ${cfg.nombreLegal}`);
+  return lines.join('\n');
+}
+
+/* ── COinS: detección automática por Zotero / Mendeley ── */
+function coins(libro, autores, cfg, absoluta) {
+  const p = [];
+  p.push('ctx_ver=Z39.88-2004');
+  p.push('rft_val_fmt=info:ofi/fmt:kev:mtx:book');
+  p.push('rft.genre=book');
+  p.push('rft.btitle=' + encodeURIComponent(libro.titulo));
+  autores.forEach(a => p.push('rft.au=' + encodeURIComponent(a.nombre)));
+  p.push('rft.date=' + libro.anio);
+  p.push('rft.pub=' + encodeURIComponent(cfg.nombreLegal));
+  p.push('rft.place=' + encodeURIComponent(cfg.contacto.ciudad + ', Ecuador'));
+  if (libro.isbn) p.push('rft.isbn=' + encodeURIComponent(libro.isbn));
+  if (libro.paginas) p.push('rft.tpages=' + libro.paginas);
+  p.push('rft_id=' + encodeURIComponent(absoluta));
+  return `<span class="Z3988" title="${esc(p.join('&'))}"></span>`;
+}
+
+/* ── BibTeX plano (para archivo descargable) ── */
+function generarBibTeX(libro, autores, cfg, absoluta) {
+  const key = (autores[0]?.nombre?.split(/\s+/).pop() || 'autor') + libro.anio;
+  const autStr = autores.map(a => a.nombre).join(' and ') || cfg.nombreLegal;
+  const lines = [`@book{${key},`];
+  lines.push(`  title     = {${libro.titulo}},`);
+  if (libro.subtitulo) lines.push(`  subtitle  = {${libro.subtitulo}},`);
+  lines.push(`  author    = {${autStr}},`);
+  lines.push(`  year      = {${libro.anio}},`);
+  lines.push(`  publisher = {${cfg.nombreLegal}},`);
+  lines.push(`  address   = {${cfg.contacto.ciudad}, Ecuador},`);
+  if (libro.isbn) lines.push(`  isbn      = {${libro.isbn}},`);
+  if (libro.paginas) lines.push(`  pages     = {${libro.paginas}},`);
+  lines.push(`  url       = {${absoluta}},`);
+  lines.push(`  note      = {Recuperado de ${absoluta}}`);
+  lines.push('}');
+  return lines.join('\n');
+}
+
+/* ── RIS (EndNote, RefWorks, Zotero) ── */
+function generarRIS(libro, autores, cfg, absoluta) {
+  const lines = ['TY  - BOOK'];
+  lines.push(`TI  - ${libro.titulo}`);
+  if (libro.subtitulo) lines.push(`T2  - ${libro.subtitulo}`);
+  autores.forEach(a => lines.push(`AU  - ${a.nombre}`));
+  lines.push(`PY  - ${libro.anio}`);
+  lines.push(`PB  - ${cfg.nombreLegal}`);
+  lines.push(`CY  - ${cfg.contacto.ciudad}, Ecuador`);
+  if (libro.isbn) lines.push(`SN  - ${libro.isbn}`);
+  if (libro.paginas) lines.push(`EP  - ${libro.paginas}`);
+  if (libro.resumen) lines.push(`AB  - ${recorta(libro.resumen, 500)}`);
+  (libro.temas || []).forEach(t => lines.push(`KW  - ${t}`));
+  lines.push(`UR  - ${absoluta}`);
+  lines.push(`LA  - ${cfg.idioma}`);
+  lines.push('ER  - ');
+  return lines.join('\r\n');
+}
+
 /* ── Metaetiquetas citation_* para Google Scholar ── */
 function metasScholar(libro, autores, cfg, absoluta) {
   const lines = [];
@@ -229,11 +305,6 @@ export function paginaLibro(ctx, libro) {
         ${autores.map((a) => `<a href="/autor/${esc(a.id)}/"><img src="${esc(rutaRetrato(a))}" alt="" width="28" height="28" loading="lazy">${esc(a.nombre)}</a>`).join('')}
       </div>` : ''}
 
-      <div class="ficha-valoracion">
-        ${estrellas(libro.valoracion)}
-        <span><strong>${libro.valoracion.toFixed(1)}</strong> sobre 5 · <a href="#resenas" class="resenas-link">${libro.resenas} valoraciones</a></span>
-      </div>
-
       <p class="ficha-resumen">${esc(libro.resumen)}</p>
 
       <div class="ficha-compra">
@@ -315,10 +386,19 @@ export function paginaLibro(ctx, libro) {
         <div class="apa-bloque">
           <p class="apa-etiqueta">Cita bibliográfica · Formato APA 7.ª edición</p>
           <blockquote class="apa-cita" id="apa-texto">${apa}</blockquote>
-          <button type="button" class="boton boton-fantasma boton-copiar-apa" data-copiar-apa>
-            ${icono('descarga')}<span>Copiar cita</span>
-          </button>
-          <p class="apa-nota">La cita sigue las normas APA 7.ª edición (American Psychological Association, 2020). Verifica los datos de edición antes de incluirla en un trabajo académico.</p>
+          <div class="cita-acciones">
+            <button type="button" class="boton boton-fantasma boton-copiar-apa" data-copiar-apa>
+              ${icono('descarga')}<span>Copiar APA</span>
+            </button>
+            <a class="boton boton-fantasma" href="/citar/${esc(libro.id)}.bib" download="${esc(libro.id)}.bib">
+              ${icono('descarga')}<span>Descargar BibTeX</span>
+            </a>
+            <a class="boton boton-fantasma" href="/citar/${esc(libro.id)}.ris" download="${esc(libro.id)}.ris">
+              ${icono('descarga')}<span>Descargar RIS</span>
+            </a>
+          </div>
+          <p class="apa-nota">Compatible con Zotero, Mendeley, EndNote y RefWorks. La cita APA sigue la 7.ª edición (2020).</p>
+          ${coins(libro, autores, cfg, absoluta)}
         </div>
       </div>
     </div>
@@ -352,8 +432,6 @@ export function paginaLibro(ctx, libro) {
     </div>
   </div>
 </section>
-
-${seccionResenas(libro, cfg)}
 
 ${relacionados.length ? `
 <section class="seccion seccion-alterna">
@@ -434,21 +512,7 @@ ${relacionados.length ? `
       ...(categoria ? [{ texto: categoria.nombre, url: `/categoria/${categoria.id}/` }] : []),
       { texto: libro.titulo, url: ruta }
     ],
-    extraHead: metasScholar(libro, autores, cfg, absoluta),
-    extraScript: (cfg.disqus && cfg.disqus.shortname) ? `
-<script>
-(function() {
-  var d = document, s = d.createElement('script');
-  window.disqus_config = function() {
-    this.page.url = '${absoluta}';
-    this.page.identifier = '${esc(libro.id)}';
-    this.page.title = '${esc(libro.titulo).replace(/'/g, "\\'")}';
-  };
-  s.src = 'https://${esc(cfg.disqus.shortname)}.disqus.com/embed.js';
-  s.setAttribute('data-timestamp', +new Date());
-  (d.head || d.body).appendChild(s);
-})();
-</script>` : '',
+    extraHead: metasScholar(libro, autores, cfg, absoluta) + '\n' + metasDC(libro, autores, cfg, absoluta),
     cuerpo,
     jsonld: [libroLD, {
       '@type': 'Product',

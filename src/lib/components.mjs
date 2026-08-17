@@ -76,7 +76,6 @@ export function tarjetaLibro(libro, ctx, { prioridad = false } = {}) {
     ${categoria ? `<a class="tarjeta-categoria" href="/categoria/${esc(categoria.id)}/" style="--c:${esc(categoria.color)}">${esc(categoria.nombre)}</a>` : ''}
     <h3 class="tarjeta-titulo"><a href="/libro/${esc(libro.id)}/">${esc(libro.titulo)}</a></h3>
     ${autor ? `<p class="tarjeta-autor"><a href="/autor/${esc(autor.id)}/">${esc(autor.nombre)}</a>${otros > 0 ? ` <span>y ${otros} ${otros === 1 ? 'autor más' : 'autores más'}</span>` : ''}</p>` : ''}
-    <div class="tarjeta-valoracion">${estrellas(libro.valoracion)}<span>${libro.valoracion.toFixed(1)} (${libro.resenas})</span></div>
     <div class="tarjeta-pie">
       <p class="tarjeta-precio ${libro.precio > 0 ? '' : 'sin-precio'}">${precioTexto(libro, cfg)}<span class="disp ${claseDisp}">${textoDisp}</span></p>
       <a class="boton boton-compacto boton-wa" href="${esc(enlaceWhatsApp(cfg, libro))}" target="_blank" rel="noopener">${icono('whatsapp')}<span>Pedir</span></a>
