@@ -71,6 +71,11 @@
     "repositorio": "SABERES-INTERNACIONALES-WEB",
     "rama": "main"
   },
+  "_redirecciones": "Direcciones que existieron y ya no (libros o autores borrados que Google alcanzó a indexar). Sin esto devuelven 404. Añade una línea por cada página retirada y el build genera la redirección 301 sola.",
+  "redirecciones": [
+    { "de": "/libro/culturas-del-mundo/", "a": "/libros/" },
+    { "de": "/libro/metodologia-de-la-investigacion/", "a": "/libros/" }
+  ],
   "menu": [
     {
       "texto": "Inicio",

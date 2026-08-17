@@ -229,7 +229,7 @@ function construir() {
     }
     if (!l.autores.length) avisos.push(`El libro "${l.titulo}" no tiene ningún autor asignado.`);
     if (!categoriasPorId.has(l.categoria)) avisos.push(`El libro "${l.titulo}" usa la categoría "${l.categoria}", que no existe en data/categories.json.`);
-    if (!l.precio) avisos.push(`El libro "${l.titulo}" no tiene precio: la ficha mostrará "Consultar precio" hasta que lo definas.`);
+    if (!l.precio && !l.urlPdf) avisos.push(`El libro "${l.titulo}" no tiene precio ni PDF: la ficha mostrará "Consultar precio" hasta que definas uno de los dos.`);
   }
 
   const librosPorAutor = new Map();
@@ -310,9 +310,20 @@ function construir() {
   }
 
   escribir('assets/img/portada-social.png', tarjetaSocial());
-  escribir('assets/img/icono-192.png', iconoPNG(192));
-  escribir('assets/img/icono-512.png', iconoPNG(512));
-  escribir('assets/img/apple-touch-icon.png', iconoPNG(180));
+  // Íconos del logo real (convertidos de logo-saberes.jpg a PNG)
+  const marcaDir = path.join(RAIZ, 'public/imagenes/marca');
+  for (const [src, dst] of [
+    ['icono-192.png',        'assets/img/icono-192.png'],
+    ['icono-512.png',        'assets/img/icono-512.png'],
+    ['apple-touch-icon.png', 'assets/img/apple-touch-icon.png'],
+  ]) {
+    const srcPath = path.join(marcaDir, src);
+    if (fs.existsSync(srcPath)) {
+      escribir(dst, fs.readFileSync(srcPath));
+    } else {
+      escribir(dst, iconoPNG(parseInt(src.match(/\d+/) || ['192'])));
+    }
+  }
   // Favicon vectorial: síntesis del medallón (aro dorado + torre del saber).
   escribir('favicon.svg', `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" role="img" aria-label="${esc(cfg.nombre)}">
   <circle cx="24" cy="24" r="23" fill="#c9a227"/>
@@ -333,11 +344,16 @@ function construir() {
 
   /* --- Archivos técnicos ------------------------------------------ */
   escribirSitemap(ctx);
-  escribirRobots(ctx);
+  ampliarRobots(ctx);
   escribirRSS(ctx);
   escribirManifiesto(ctx);
   escribirIndiceBusqueda(ctx);
-  escribirCabecerasCloudflare();
+  escribirCabecerasCloudflare(ctx);
+
+  /* --- Indexación académica --------------------------------------- */
+  escribirCitaciones(ctx);
+  escribirOPDS(ctx);
+  escribirOAIPMH(ctx);
 
   /* --- Recursos estáticos y panel --------------------------------- */
   copiarDirectorio(path.join(RAIZ, 'public'), DIST);
@@ -507,7 +523,7 @@ function escribirIndiceBusqueda(ctx) {
   escribir('indice-busqueda.json', JSON.stringify(registros));
 }
 
-function escribirCabecerasCloudflare() {
+function escribirCabecerasCloudflare(ctx) {
   escribir('_headers', `/*
   X-Content-Type-Options: nosniff
   X-Frame-Options: SAMEORIGIN
@@ -524,11 +540,33 @@ function escribirCabecerasCloudflare() {
 /indice-busqueda.json
   Cache-Control: public, max-age=3600
 
+/*.xml
+  Content-Type: application/xml; charset=utf-8
+  Cache-Control: public, max-age=3600
+
+/opds/*
+  Content-Type: application/atom+xml; charset=utf-8
+  Cache-Control: public, max-age=3600
+
+/citar/*.bib
+  Content-Type: text/plain; charset=utf-8
+  Content-Disposition: attachment
+
+/citar/*.ris
+  Content-Type: application/x-research-info-systems; charset=utf-8
+  Content-Disposition: attachment
+
 /admin/*
   X-Robots-Tag: noindex, nofollow
 `);
 
-  escribir('_redirects', `# Rutas antiguas del sitio anterior -> estructura nueva
+  escribir('_redirects', `# OAI-PMH: redirige /oai a /oai.xml
+/oai                   /oai.xml               301
+
+# www -> sin www (manejado por Cloudflare, pero por si acaso)
+https://www.saberesinternacionales.org/*  https://saberesinternacionales.org/:splat  301
+
+# Rutas antiguas del sitio anterior -> estructura nueva
 /index.html            /                      301
 /libros.html           /libros/               301
 /libro-detalle.html    /libros/               301
@@ -543,7 +581,203 @@ function escribirCabecerasCloudflare() {
 /terminos.html         /terminos/             301
 /politica-envio.html   /envios/               301
 /libro/:id             /libro/:id/            301
+/politicas.html        /privacidad/           301
+/buscar.html           /buscar/               301
 /autor/:id             /autor/:id/            301
+${redireccionesRetiradas(ctx)}`);
+}
+
+/* Páginas que existieron y ya no: si se borra un libro o un autor que Google
+   había indexado, su dirección queda muerta y aparece como 404 en Search
+   Console. Se declaran en site.config.json (bloque "redirecciones") para que
+   apunten a donde corresponda en lugar de devolver error. */
+function redireccionesRetiradas(ctx) {
+  const lista = (ctx && ctx.cfg && ctx.cfg.redirecciones) || [];
+  const lineas = lista
+    .filter((r) => r && r.de && r.a)
+    .map((r) => `${r.de.padEnd(22)} ${r.a.padEnd(22)} 301`);
+  if (!lineas.length) return '';
+  return `\n# Paginas retiradas -> destino vigente (evita 404 en Search Console)\n${lineas.join('\n')}\n`;
+}
+
+/* =========================================================================
+   INDEXACIÓN ACADÉMICA
+   ========================================================================= */
+
+function autoresStr(libro, autoresPorId) {
+  const a = autoresPorId.get(libro.autorId);
+  return a ? a.nombre : '';
+}
+
+function escribirCitaciones(ctx) {
+  const { cfg, libros, autoresPorId } = ctx;
+
+  for (const libro of libros) {
+    const autores = (Array.isArray(libro.autorId) ? libro.autorId : [libro.autorId])
+      .map(id => autoresPorId.get(id)).filter(Boolean);
+    const absoluta = `${cfg.url}/libro/${libro.id}/`;
+
+    /* BibTeX */
+    const bibKey = (autores[0]?.nombre?.split(/\s+/).pop() || 'autor') + libro.anio;
+    const autStr = autores.map(a => a.nombre).join(' and ') || cfg.nombreLegal;
+    const bib = [
+      `@book{${bibKey},`,
+      `  title     = {${libro.titulo}},`,
+      libro.subtitulo ? `  subtitle  = {${libro.subtitulo}},` : null,
+      `  author    = {${autStr}},`,
+      `  year      = {${libro.anio}},`,
+      `  publisher = {${cfg.nombreLegal}},`,
+      `  address   = {${cfg.contacto.ciudad}, Ecuador},`,
+      libro.isbn ? `  isbn      = {${libro.isbn}},` : null,
+      libro.paginas ? `  pages     = {${libro.paginas}},` : null,
+      `  url       = {${absoluta}}`,
+      '}'
+    ].filter(Boolean).join('\n');
+    escribir(`citar/${libro.id}.bib`, bib);
+
+    /* RIS */
+    const ris = [
+      'TY  - BOOK',
+      `TI  - ${libro.titulo}`,
+      libro.subtitulo ? `T2  - ${libro.subtitulo}` : null,
+      ...autores.map(a => `AU  - ${a.nombre}`),
+      `PY  - ${libro.anio}`,
+      `PB  - ${cfg.nombreLegal}`,
+      `CY  - ${cfg.contacto.ciudad}, Ecuador`,
+      libro.isbn ? `SN  - ${libro.isbn}` : null,
+      libro.paginas ? `EP  - ${libro.paginas}` : null,
+      libro.resumen ? `AB  - ${libro.resumen.replace(/\n/g, ' ').slice(0, 500)}` : null,
+      ...(libro.temas || []).map(t => `KW  - ${t}`),
+      `UR  - ${absoluta}`,
+      `LA  - ${cfg.idioma}`,
+      'ER  - '
+    ].filter(Boolean).join('\r\n');
+    escribir(`citar/${libro.id}.ris`, ris);
+  }
+}
+
+function escribirOPDS(ctx) {
+  const { cfg, libros, autoresPorId, categoriasPorId } = ctx;
+  const ahora = new Date().toISOString();
+
+  const entradas = libros.map(libro => {
+    const autor = autoresPorId.get(libro.autorId);
+    const cat = categoriasPorId.get(libro.categoria);
+    return `  <entry>
+    <title>${esc(libro.titulo)}</title>
+    <id>${cfg.url}/libro/${libro.id}/</id>
+    <updated>${ahora}</updated>
+    ${autor ? `<author><name>${esc(autor.nombre)}</name></author>` : ''}
+    ${cat ? `<category term="${esc(cat.id)}" label="${esc(cat.nombre)}"/>` : ''}
+    ${libro.isbn ? `<dc:identifier>ISBN:${esc(libro.isbn)}</dc:identifier>` : ''}
+    <dc:language>${esc(cfg.idioma)}</dc:language>
+    <dc:publisher>${esc(cfg.nombreLegal)}</dc:publisher>
+    ${libro.resumen ? `<summary>${esc(libro.resumen.slice(0, 300))}</summary>` : ''}
+    <link rel="alternate" type="text/html" href="${cfg.url}/libro/${libro.id}/"/>
+    <link rel="http://opds-spec.org/image" type="image/jpeg" href="${cfg.url}/imagenes/portadas/${libro.id}.jpg"/>
+  </entry>`;
+  }).join('\n');
+
+  escribir('opds/catalog.xml', `<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"
+      xmlns:opds="http://opds-spec.org/2010/catalog"
+      xmlns:dc="http://purl.org/dc/terms/">
+  <id>${cfg.url}/opds/catalog.xml</id>
+  <title>${esc(cfg.nombreLegal)} — Catálogo OPDS</title>
+  <updated>${ahora}</updated>
+  <author>
+    <name>${esc(cfg.nombreLegal)}</name>
+    <uri>${cfg.url}</uri>
+  </author>
+  <link rel="self" href="${cfg.url}/opds/catalog.xml" type="application/atom+xml;profile=opds-catalog"/>
+  <link rel="start" href="${cfg.url}/opds/catalog.xml" type="application/atom+xml;profile=opds-catalog"/>
+${entradas}
+</feed>`);
+}
+
+function escribirOAIPMH(ctx) {
+  const { cfg, libros, autoresPorId } = ctx;
+  const ahora = new Date().toISOString().slice(0, 10);
+
+  const registros = libros.map(libro => {
+    const autores = (Array.isArray(libro.autorId) ? libro.autorId : [libro.autorId])
+      .map(id => autoresPorId.get(id)).filter(Boolean);
+    const id = `oai:${cfg.url.replace('https://', '')}:${libro.id}`;
+    return `    <record>
+      <header>
+        <identifier>${esc(id)}</identifier>
+        <datestamp>${ahora}</datestamp>
+        <setSpec>books</setSpec>
+      </header>
+      <metadata>
+        <oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/"
+                   xmlns:dc="http://purl.org/dc/elements/1.1/"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+          <dc:title>${esc(libro.titulo)}</dc:title>
+          ${autores.map(a => `<dc:creator>${esc(a.nombre)}</dc:creator>`).join('\n          ')}
+          <dc:publisher>${esc(cfg.nombreLegal)}</dc:publisher>
+          <dc:date>${libro.anio}</dc:date>
+          <dc:type>Text</dc:type>
+          <dc:type>book</dc:type>
+          <dc:format>text/html</dc:format>
+          <dc:language>${esc(cfg.idioma)}</dc:language>
+          <dc:identifier>${cfg.url}/libro/${libro.id}/</dc:identifier>
+          ${libro.isbn ? `<dc:identifier>ISBN:${esc(libro.isbn)}</dc:identifier>` : ''}
+          ${(libro.temas || []).map(t => `<dc:subject>${esc(t)}</dc:subject>`).join('\n          ')}
+          ${libro.resumen ? `<dc:description>${esc(libro.resumen.slice(0, 500))}</dc:description>` : ''}
+          <dc:rights>© ${libro.anio} ${esc(cfg.nombreLegal)}</dc:rights>
+        </oai_dc:dc>
+      </metadata>
+    </record>`;
+  }).join('\n');
+
+  /* ListRecords estático — BASE y otros agregadores pueden consumirlo */
+  escribir('oai.xml', `<?xml version="1.0" encoding="UTF-8"?>
+<OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/ http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd">
+  <responseDate>${new Date().toISOString()}</responseDate>
+  <request verb="ListRecords" metadataPrefix="oai_dc">${cfg.url}/oai</request>
+  <ListRecords>
+${registros}
+  </ListRecords>
+</OAI-PMH>`);
+}
+
+function ampliarRobots(ctx) {
+  const { cfg } = ctx;
+  escribir('robots.txt', `# ${cfg.nombreLegal}
+User-agent: *
+Allow: /
+Disallow: /admin/
+
+# Rastreadores académicos — acceso total al catálogo
+User-agent: Googlebot
+Allow: /
+User-agent: Googlebot-Scholar
+Allow: /
+User-agent: ia_archiver
+Allow: /
+User-agent: BASE
+Allow: /
+User-agent: OAIHarvester
+Allow: /
+User-agent: Zotero
+Allow: /
+User-agent: GPTBot
+Allow: /
+User-agent: ClaudeBot
+Allow: /
+User-agent: PerplexityBot
+Allow: /
+
+Sitemap: ${cfg.url}/sitemap.xml
+
+# OAI-PMH para repositorios académicos
+# ${cfg.url}/oai?verb=ListRecords&metadataPrefix=oai_dc
+# Catálogo OPDS para bibliotecas digitales
+# ${cfg.url}/opds/catalog.xml
 `);
 }
 
