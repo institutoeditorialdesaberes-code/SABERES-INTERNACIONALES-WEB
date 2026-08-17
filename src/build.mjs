@@ -565,11 +565,12 @@ function escribirCabecerasCloudflare(ctx) {
      producción: /politicas.html y /buscar.html estaban debajo de /libro/:id y
      devolvían 404). Todas las reglas estáticas van primero; las dinámicas, al
      final del archivo y nunca antes de una estática. */
+  /* NO poner URLs absolutas aquí: Cloudflare rechaza el archivo completo con
+     "Only relative URLs are allowed [code: 100324]" y el despliegue falla, así
+     que ninguna redirección se aplica. El paso de www a sin-www lo resuelve la
+     Redirect Rule del panel de Cloudflare, no este archivo. */
   escribir('_redirects', `# OAI-PMH: redirige /oai a /oai.xml
 /oai                   /oai.xml               301
-
-# www -> sin www (manejado por Cloudflare, pero por si acaso)
-https://www.saberesinternacionales.org/*  https://saberesinternacionales.org/:splat  301
 ${redireccionesRetiradas(ctx)}
 # Rutas antiguas del sitio anterior -> estructura nueva
 /index.html            /                      301
