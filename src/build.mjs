@@ -560,12 +560,17 @@ function escribirCabecerasCloudflare(ctx) {
   X-Robots-Tag: noindex, nofollow
 `);
 
+  /* IMPORTANTE: el orden manda. Cloudflare deja de aplicar las reglas estáticas
+     que aparecen DESPUÉS de una regla dinámica con :marcador (verificado en
+     producción: /politicas.html y /buscar.html estaban debajo de /libro/:id y
+     devolvían 404). Todas las reglas estáticas van primero; las dinámicas, al
+     final del archivo y nunca antes de una estática. */
   escribir('_redirects', `# OAI-PMH: redirige /oai a /oai.xml
 /oai                   /oai.xml               301
 
 # www -> sin www (manejado por Cloudflare, pero por si acaso)
 https://www.saberesinternacionales.org/*  https://saberesinternacionales.org/:splat  301
-
+${redireccionesRetiradas(ctx)}
 # Rutas antiguas del sitio anterior -> estructura nueva
 /index.html            /                      301
 /libros.html           /libros/               301
@@ -580,11 +585,13 @@ https://www.saberesinternacionales.org/*  https://saberesinternacionales.org/:sp
 /privacidad.html       /privacidad/           301
 /terminos.html         /terminos/             301
 /politica-envio.html   /envios/               301
-/libro/:id             /libro/:id/            301
 /politicas.html        /privacidad/           301
 /buscar.html           /buscar/               301
+
+# Reglas dinámicas: SIEMPRE al final (ver nota de orden más arriba)
+/libro/:id             /libro/:id/            301
 /autor/:id             /autor/:id/            301
-${redireccionesRetiradas(ctx)}`);
+`);
 }
 
 /* Páginas que existieron y ya no: si se borra un libro o un autor que Google

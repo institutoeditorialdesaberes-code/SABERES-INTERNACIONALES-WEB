@@ -78,6 +78,7 @@
     { "de": "/acerca", "a": "/nosotros/" },
     { "de": "/acerca.html", "a": "/nosotros/" },
     { "de": "/archivos.html", "a": "/libros/" },
+    { "de": "/indexaciones.html", "a": "/servicios/" },
     { "de": "/narrativas-contra-la-violencia", "a": "/libro/narrativas-contra-la-violencia/" },
     { "de": "/narrativas-contra-la-violencia.html", "a": "/libro/narrativas-contra-la-violencia/" },
     { "de": "/libro/culturas-del-mundo/", "a": "/libros/" },
