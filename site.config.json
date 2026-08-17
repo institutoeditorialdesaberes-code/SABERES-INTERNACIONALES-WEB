@@ -73,6 +73,13 @@
   },
   "_redirecciones": "Direcciones que existieron y ya no (libros o autores borrados que Google alcanzó a indexar). Sin esto devuelven 404. Añade una línea por cada página retirada y el build genera la redirección 301 sola.",
   "redirecciones": [
+    { "de": "/equipo/", "a": "/nosotros/" },
+    { "de": "/equipo.html", "a": "/nosotros/" },
+    { "de": "/acerca", "a": "/nosotros/" },
+    { "de": "/acerca.html", "a": "/nosotros/" },
+    { "de": "/archivos.html", "a": "/libros/" },
+    { "de": "/narrativas-contra-la-violencia", "a": "/libro/narrativas-contra-la-violencia/" },
+    { "de": "/narrativas-contra-la-violencia.html", "a": "/libro/narrativas-contra-la-violencia/" },
     { "de": "/libro/culturas-del-mundo/", "a": "/libros/" },
     { "de": "/libro/metodologia-de-la-investigacion/", "a": "/libros/" }
   ],
