@@ -1,6 +1,5 @@
 {
   "_comentario": "ÚNICO archivo que debes tocar para cambiar dominio, contactos y textos globales. Todo el sitio se reconstruye a partir de aquí.",
-
   "url": "https://saberesinternacionales.org",
   "nombre": "Saberes Internacionales",
   "nombreLegal": "Editorial Saberes Internacionales",
@@ -12,15 +11,12 @@
   "moneda": "USD",
   "simboloMoneda": "$",
   "fundacion": "2019",
-
   "_animacionEntrada": "Cortina de bienvenida con el sello dibujándose, solo en la portada y una vez por sesión. Ponlo en false si prefieres que el sitio abra directo.",
   "animacionEntrada": true,
-
   "avisoDemo": {
-    "activo": false,
+    "activo": true,
     "texto": "Catálogo de demostración: los libros y autores mostrados son de ejemplo mientras se carga el fondo editorial real."
   },
-
   "contacto": {
     "email": "institutoeditorialdesaberes@gmail.com",
     "emailPublicaciones": "institutoeditorialdesaberes@gmail.com",
@@ -34,7 +30,6 @@
     "horario": "Lunes a viernes, 09:00 a 18:00 (GMT-5)",
     "mapaEmbed": ""
   },
-
   "redes": {
     "facebook": "",
     "instagram": "",
@@ -43,7 +38,6 @@
     "youtube": "",
     "tiktok": ""
   },
-
   "seo": {
     "tituloPorDefecto": "Saberes Internacionales | Editorial académica en Quito, Ecuador",
     "plantillaTitulo": "%s | Saberes Internacionales",
@@ -60,7 +54,6 @@
     "googleAnalyticsId": "G-GX3ZBN9DB2",
     "temaColor": "#0e2a47"
   },
-
   "_estadisticas": "Actualiza estos números cada mes desde /admin. Se muestran en la portada como prueba social.",
   "estadisticasPublicas": {
     "visitasMes": 1200,
@@ -68,30 +61,50 @@
     "lectores": 3500,
     "descargas": 850
   },
-
   "_disqus": "Crea cuenta gratis en disqus.com → 'New Site' → copia el shortname aquí. Con eso se activan los comentarios con login de Facebook y Google en cada página de libro.",
   "disqus": {
     "shortname": "https-saberesinternacionales-org"
   },
-
   "github": {
     "_comentario": "Usado por el panel /admin para guardar los cambios. Cambia usuario y repositorio por los tuyos.",
     "usuario": "institutoeditorialdesaberes-code",
     "repositorio": "SABERES-INTERNACIONALES-WEB",
     "rama": "main"
   },
-
   "menu": [
-    { "texto": "Inicio", "url": "/" },
-    { "texto": "Catálogo", "url": "/libros/" },
-    { "texto": "Novedades", "url": "/novedades/" },
-    { "texto": "Autores", "url": "/autores/" },
-    { "texto": "Publica con nosotros", "url": "/publica-con-nosotros/" },
-    { "texto": "Blog", "url": "/blog/" },
-    { "texto": "Nosotros", "url": "/nosotros/" },
-    { "texto": "Contacto", "url": "/contacto/" }
+    {
+      "texto": "Inicio",
+      "url": "/"
+    },
+    {
+      "texto": "Catálogo",
+      "url": "/libros/"
+    },
+    {
+      "texto": "Novedades",
+      "url": "/novedades/"
+    },
+    {
+      "texto": "Autores",
+      "url": "/autores/"
+    },
+    {
+      "texto": "Publica con nosotros",
+      "url": "/publica-con-nosotros/"
+    },
+    {
+      "texto": "Blog",
+      "url": "/blog/"
+    },
+    {
+      "texto": "Nosotros",
+      "url": "/nosotros/"
+    },
+    {
+      "texto": "Contacto",
+      "url": "/contacto/"
+    }
   ],
-
   "hero": [
     {
       "titulo": "Publicamos el conocimiento que merece durar",
@@ -115,44 +128,108 @@
       "tema": "verde"
     }
   ],
-
   "ventajas": [
-    { "id": "envios", "icono": "envio", "titulo": "Envíos a todo el Ecuador", "texto": "Despacho en 24-72 horas desde Quito a todo el país.", "url": "/envios/" },
-    { "id": "isbn", "icono": "sello", "titulo": "ISBN y depósito legal", "texto": "Cada título se registra oficialmente en la Cámara Ecuatoriana del Libro.", "url": "/servicios/" },
-    { "id": "pares", "icono": "pares", "titulo": "Revisión por pares", "texto": "Comité académico externo evalúa cada manuscrito antes de publicarse.", "url": "/nosotros/" },
-    { "id": "atencion", "icono": "soporte", "titulo": "Atención directa", "texto": "Habla con el equipo editorial por WhatsApp o correo, sin intermediarios.", "url": "/contacto/" }
+    {
+      "id": "envios",
+      "icono": "envio",
+      "titulo": "Envíos a todo el Ecuador",
+      "texto": "Despacho en 24-72 horas desde Quito a todo el país.",
+      "url": "/envios/"
+    },
+    {
+      "id": "isbn",
+      "icono": "sello",
+      "titulo": "ISBN y depósito legal",
+      "texto": "Cada título se registra oficialmente en la Cámara Ecuatoriana del Libro.",
+      "url": "/servicios/"
+    },
+    {
+      "id": "pares",
+      "icono": "pares",
+      "titulo": "Revisión por pares",
+      "texto": "Comité académico externo evalúa cada manuscrito antes de publicarse.",
+      "url": "/nosotros/"
+    },
+    {
+      "id": "atencion",
+      "icono": "soporte",
+      "titulo": "Atención directa",
+      "texto": "Habla con el equipo editorial por WhatsApp o correo, sin intermediarios.",
+      "url": "/contacto/"
+    }
   ],
-
   "footer": {
     "textoLegal": "Todos los derechos reservados.",
     "columnas": [
       {
         "titulo": "Catálogo",
         "enlaces": [
-          { "texto": "Todos los libros", "url": "/libros/" },
-          { "texto": "Novedades", "url": "/novedades/" },
-          { "texto": "Más vendidos", "url": "/libros/?orden=populares" },
-          { "texto": "Autores", "url": "/autores/" },
-          { "texto": "Buscar", "url": "/buscar/" }
+          {
+            "texto": "Todos los libros",
+            "url": "/libros/"
+          },
+          {
+            "texto": "Novedades",
+            "url": "/novedades/"
+          },
+          {
+            "texto": "Más vendidos",
+            "url": "/libros/?orden=populares"
+          },
+          {
+            "texto": "Autores",
+            "url": "/autores/"
+          },
+          {
+            "texto": "Buscar",
+            "url": "/buscar/"
+          }
         ]
       },
       {
         "titulo": "Editorial",
         "enlaces": [
-          { "texto": "Quiénes somos", "url": "/nosotros/" },
-          { "texto": "Publica con nosotros", "url": "/publica-con-nosotros/" },
-          { "texto": "Servicios editoriales", "url": "/servicios/" },
-          { "texto": "Blog", "url": "/blog/" },
-          { "texto": "Contacto", "url": "/contacto/" }
+          {
+            "texto": "Quiénes somos",
+            "url": "/nosotros/"
+          },
+          {
+            "texto": "Publica con nosotros",
+            "url": "/publica-con-nosotros/"
+          },
+          {
+            "texto": "Servicios editoriales",
+            "url": "/servicios/"
+          },
+          {
+            "texto": "Blog",
+            "url": "/blog/"
+          },
+          {
+            "texto": "Contacto",
+            "url": "/contacto/"
+          }
         ]
       },
       {
         "titulo": "Ayuda",
         "enlaces": [
-          { "texto": "Preguntas frecuentes", "url": "/faq/" },
-          { "texto": "Envíos y entregas", "url": "/envios/" },
-          { "texto": "Términos y condiciones", "url": "/terminos/" },
-          { "texto": "Política de privacidad", "url": "/privacidad/" }
+          {
+            "texto": "Preguntas frecuentes",
+            "url": "/faq/"
+          },
+          {
+            "texto": "Envíos y entregas",
+            "url": "/envios/"
+          },
+          {
+            "texto": "Términos y condiciones",
+            "url": "/terminos/"
+          },
+          {
+            "texto": "Política de privacidad",
+            "url": "/privacidad/"
+          }
         ]
       }
     ]
