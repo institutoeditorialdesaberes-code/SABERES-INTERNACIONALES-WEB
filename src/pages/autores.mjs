@@ -113,6 +113,9 @@ ${libros.length ? `
     imagen: /\.(png|jpe?g|webp)$/i.test(rutaRetrato(autor)) ? rutaRetrato(autor) : undefined,
     tipo: 'profile',
     clase: 'p-autor',
+    /* Mismo criterio que los libros demo: visibles en el sitio, pero no se
+       ofrecen a Google mientras no sean autores reales. */
+    noindex: !!autor.demo,
     migas: [
       { texto: 'Inicio', url: '/' },
       { texto: 'Autores', url: '/autores/' },

@@ -512,6 +512,10 @@ ${relacionados.length ? `
     imagen: /\.(png|jpe?g|webp)$/i.test(rutaPortada(libro)) ? rutaPortada(libro) : undefined,
     tipo: 'book',
     clase: 'p-libro',
+    /* Los libros de demostración se ven en el catálogo pero no se ofrecen a
+       Google: quedan con noindex y fuera del sitemap, así no se indexan títulos
+       que no existen ni generan 404 el día que se borren. */
+    noindex: !!libro.demo,
     migas: [
       { texto: 'Inicio', url: '/' },
       { texto: 'Catálogo', url: '/libros/' },
