@@ -443,6 +443,31 @@ ${relacionados.length ? `
 
   const imagenAbsoluta = url(cfg.url, rutaPortada(libro));
 
+  /* Oferta declarable: precio de venta real, o lectura gratuita cuando el PDF
+     está publicado. Sin ninguna de las dos no se declara oferta, y sin oferta
+     ni valoraciones reales tampoco se emite el nodo Product (Google exige que
+     un Product tenga offers, review o aggregateRating). */
+  const esGratis = libro.precio <= 0 && !!libro.urlPdf;
+  const ofertaLD = (libro.precio > 0 || esGratis) ? {
+    '@type': 'Offer',
+    price: libro.precio > 0 ? libro.precio.toFixed(2) : '0',
+    priceCurrency: cfg.moneda,
+    availability: DISPONIBILIDAD_SCHEMA[libro.disponibilidad] || DISPONIBILIDAD_SCHEMA.disponible,
+    url: absoluta,
+    itemCondition: 'https://schema.org/NewCondition',
+    seller: { '@id': `${cfg.url}/#organizacion` },
+    areaServed: 'EC'
+  } : null;
+
+  /* Solo se declaran valoraciones que existen de verdad en data/books.json. */
+  const valoracionLD = libro.resenas > 0 ? {
+    '@type': 'AggregateRating',
+    ratingValue: libro.valoracion,
+    reviewCount: libro.resenas,
+    bestRating: 5,
+    worstRating: 1
+  } : null;
+
   const libroLD = {
     '@type': 'Book',
     '@id': `${absoluta}#libro`,
@@ -469,23 +494,8 @@ ${relacionados.length ? `
         url: `${cfg.url}/autor/${a.id}/`
       }))
     } : {}),
-    aggregateRating: {
-      '@type': 'AggregateRating',
-      ratingValue: libro.valoracion > 0 ? libro.valoracion : 5,
-      reviewCount: libro.resenas > 0 ? libro.resenas : 10,
-      bestRating: 5,
-      worstRating: 1
-    },
-    offers: {
-      '@type': 'Offer',
-      price: libro.precio > 0 ? libro.precio.toFixed(2) : '0.00',
-      priceCurrency: cfg.moneda,
-      availability: DISPONIBILIDAD_SCHEMA[libro.disponibilidad] || DISPONIBILIDAD_SCHEMA.disponible,
-      url: absoluta,
-      itemCondition: 'https://schema.org/NewCondition',
-      seller: { '@id': `${cfg.url}/#organizacion` },
-      areaServed: 'EC'
-    }
+    ...(valoracionLD ? { aggregateRating: valoracionLD } : {}),
+    ...(ofertaLD ? { offers: ofertaLD } : {})
   };
 
   return {
@@ -510,7 +520,7 @@ ${relacionados.length ? `
     ],
     extraHead: metasScholar(libro, autores, cfg, absoluta) + '\n' + metasDC(libro, autores, cfg, absoluta),
     cuerpo,
-    jsonld: [libroLD, {
+    jsonld: [libroLD, ...(ofertaLD || valoracionLD ? [{
       '@type': 'Product',
       '@id': `${absoluta}#producto`,
       name: libro.titulo,
@@ -519,8 +529,8 @@ ${relacionados.length ? `
       ...(libro.isbn ? { sku: libro.isbn } : {}),
       ...(libro.isbn.replace(/-/g, '').length === 13 ? { gtin13: libro.isbn.replace(/-/g, '') } : {}),
       brand: { '@id': `${cfg.url}/#organizacion` },
-      ...(libroLD.offers ? { offers: libroLD.offers } : {}),
-      ...(libroLD.aggregateRating ? { aggregateRating: libroLD.aggregateRating } : {})
-    }]
+      ...(ofertaLD ? { offers: ofertaLD } : {}),
+      ...(valoracionLD ? { aggregateRating: valoracionLD } : {})
+    }] : [])]
   };
 }

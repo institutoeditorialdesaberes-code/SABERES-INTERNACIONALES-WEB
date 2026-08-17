@@ -39,7 +39,10 @@ export function autoresDe(libro, ctx) {
 
 /** Un libro sin precio definido no muestra "$0.00", muestra una invitación. */
 export function precioTexto(libro, cfg) {
-  return libro.precio > 0 ? money(libro.precio, cfg.simboloMoneda) : 'Consultar precio';
+  if (libro.precio > 0) return money(libro.precio, cfg.simboloMoneda);
+  /* Con el PDF publicado el libro es de lectura gratuita: el texto visible debe
+     coincidir con el precio 0 que se declara en los datos estructurados. */
+  return libro.urlPdf ? 'Lectura gratuita' : 'Consultar precio';
 }
 
 export function enlaceWhatsApp(cfg, libro) {
