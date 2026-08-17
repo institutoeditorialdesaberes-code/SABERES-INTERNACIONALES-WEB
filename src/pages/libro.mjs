@@ -478,18 +478,16 @@ ${relacionados.length ? `
         worstRating: 1
       }
     } : {}),
-    ...(libro.precio > 0 ? {
-      offers: {
-        '@type': 'Offer',
-        price: libro.precio.toFixed(2),
-        priceCurrency: cfg.moneda,
-        availability: DISPONIBILIDAD_SCHEMA[libro.disponibilidad] || DISPONIBILIDAD_SCHEMA.disponible,
-        url: absoluta,
-        itemCondition: 'https://schema.org/NewCondition',
-        seller: { '@id': `${cfg.url}/#organizacion` },
-        areaServed: 'EC'
-      }
-    } : {})
+    offers: {
+      '@type': 'Offer',
+      price: libro.precio > 0 ? libro.precio.toFixed(2) : '0.00',
+      priceCurrency: cfg.moneda,
+      availability: DISPONIBILIDAD_SCHEMA[libro.disponibilidad] || DISPONIBILIDAD_SCHEMA.disponible,
+      url: absoluta,
+      itemCondition: 'https://schema.org/NewCondition',
+      seller: { '@id': `${cfg.url}/#organizacion` },
+      areaServed: 'EC'
+    }
   };
 
   return {
