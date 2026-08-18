@@ -4,8 +4,11 @@
     "titulo": "Comunicación No Violenta en Entornos Escolares",
     "subtitulo": "Del lenguaje que hiere al lenguaje que conecta",
     "autores": [
-      "jacqueline-toaquiza",
-      "sandra-casa"
+      "lucia-fernandez",
+      "jefferson-torres",
+      "luis-gaona",
+      "jaime-andrango",
+      "jacqueline-toaquiza"
     ],
     "categoria": "educacion",
     "coleccion": "Cuadernos Pedagógicos",
@@ -14,7 +17,7 @@
     "portada": "/imagenes/libros/comunicacion-no-violenta-entornos-escolares.jpg",
     "insignia": "Novedad",
     "isbn": "",
-    "paginas": 216,
+    "paginas": 219,
     "anio": 2026,
     "edicion": "Primera edición impresa",
     "formato": "Digital (PDF)",
@@ -44,9 +47,10 @@
     "titulo": "Narrativas contra la violencia basadas en la Divina Comedia",
     "subtitulo": "Cien talleres de redacción creativa que examinan el comportamiento humano mientras recorres el Infierno de Dante",
     "autores": [
-      "jaime-andrango",
+      "sandra-casa",
       "raquel-guishcaso",
-      "luis-gaona"
+      "carla-salto",
+      "david-salto"
     ],
     "categoria": "educacion",
     "coleccion": "Cuadernos Pedagógicos",
@@ -55,10 +59,10 @@
     "portada": "/imagenes/libros/narrativas-contra-la-violencia.jpg",
     "insignia": "Novedad",
     "isbn": "",
-    "paginas": 199,
+    "paginas": 202,
     "anio": 2026,
-    "edicion": "Primera edición impresa",
-    "formato": "Impreso",
+    "edicion": "Primera edición digital",
+    "formato": "Digital (PDF)",
     "urlPdf": "/pdfs/narrativas-contra-la-violencia.pdf",
     "dimensiones": "",
     "idioma": "Español",
