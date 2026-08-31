@@ -1,0 +1,1067 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Parchís del diseño de investigación | Saberes Internacionales</title>
+<meta name="description" content="Juego de parchís para repasar niveles, tipos y enfoques del diseño de investigación. Un recurso educativo de Editorial Saberes Internacionales.">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://saberesinternacionales.org/juegos/parchis-diseno-investigacion/">
+<style>
+@font-face {
+  font-family: 'Fraunces';
+  font-style: normal;
+  font-weight: 400 900;
+  font-display: swap;
+  src: url('/assets/fuentes/fraunces-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+    U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url('/assets/fuentes/inter-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+    U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+:root{
+  --azul:#0e2a47;
+  --dorado:#c9a227;
+  --hueso:#f4f1ea;
+  --vino:#6b2233;
+  --verde:#2f5d3a;
+  --tinta:#1c1a17;
+  --tinta-media:#57544d;
+  --linea:#ddd6c8;
+  --papel:#ffffff;
+  --r-s:6px;
+  --r-m:10px;
+  --r-l:16px;
+  --transicion: 220ms cubic-bezier(.2,.7,.3,1);
+  --salida: 160ms cubic-bezier(.4,0,1,1);
+  --sombra-s: 0 1px 2px rgba(14,42,71,.10);
+  --sombra-m: 0 2px 8px rgba(14,42,71,.12), 0 0 0 1px rgba(14,42,71,.05);
+  --sombra-l: 0 8px 28px rgba(14,42,71,.18);
+  --serif:'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+  --display:'Fraunces', Georgia, serif;
+  color-scheme: light;
+}
+
+*{box-sizing:border-box;}
+body{
+  margin:0;
+  background:var(--hueso);
+  color:var(--tinta);
+  font-family:var(--serif);
+  line-height:1.5;
+}
+img{max-width:100%;}
+
+a{color:var(--azul);}
+
+.envoltura{
+  max-width:1180px;
+  margin:0 auto;
+  padding:1.5rem 1rem 4rem;
+}
+
+header.cabecera{
+  text-align:center;
+  padding:2rem 1rem 1rem;
+}
+.antetitulo{
+  display:inline-block;
+  font-size:.75rem;
+  font-weight:700;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  color:var(--vino);
+  margin:0 0 .5rem;
+}
+h1{
+  font-family:var(--display);
+  font-weight:700;
+  letter-spacing:-.02em;
+  font-size:clamp(1.6rem, 4vw, 2.4rem);
+  margin:0 0 .5rem;
+  color:var(--azul);
+}
+.bajada{
+  max-width:62ch;
+  margin:0 auto;
+  color:var(--tinta-media);
+  font-size:1rem;
+}
+
+main{
+  display:grid;
+  grid-template-columns: minmax(0,1fr);
+  gap:1.5rem;
+  margin-top:1.5rem;
+}
+@media (min-width: 900px){
+  main{
+    grid-template-columns: minmax(0,620px) minmax(280px,360px);
+    align-items:start;
+  }
+}
+
+.panel-tablero{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:1rem;
+}
+
+.tablero{
+  width:min(600px, 100%);
+  aspect-ratio:1;
+  display:grid;
+  grid-template-columns: repeat(15, 1fr);
+  grid-template-rows: repeat(15, 1fr);
+  background:var(--papel);
+  border-radius:var(--r-l);
+  box-shadow:var(--sombra-l);
+  padding:.5rem;
+  gap:1px;
+  position:relative;
+}
+
+.celda{
+  background:#efe9d8;
+  border-radius:3px;
+  position:relative;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.celda.entrada{ background:var(--c-color-suave); }
+.celda.segura::after{
+  content:"★";
+  position:absolute;
+  font-size:.55rem;
+  color:var(--tinta-media);
+  opacity:.5;
+  top:1px;
+  left:2px;
+  line-height:1;
+}
+.celda.pregunta{
+  background:#fbf3d9;
+}
+.celda.pregunta::after{
+  content:"?";
+  position:absolute;
+  font-size:.7rem;
+  font-weight:700;
+  color:var(--dorado);
+  opacity:.85;
+}
+.celda.carril{ background:var(--c-color-suave); }
+
+.base-panel{
+  border-radius:var(--r-m);
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  grid-template-rows:1fr 1fr;
+  gap:6%;
+  padding:12%;
+  position:relative;
+}
+.base-panel::before{
+  content:attr(data-nombre);
+  position:absolute;
+  top:6px;
+  left:8px;
+  font-size:.6rem;
+  font-weight:700;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  color:rgba(255,255,255,.85);
+}
+.base-hueco{
+  background:rgba(255,255,255,.35);
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.centro{
+  border-radius:var(--r-s);
+  position:relative;
+  overflow:hidden;
+}
+.centro .triangulo{
+  position:absolute;
+  width:0;height:0;
+  border-style:solid;
+}
+.centro .cuadrante-fin{
+  position:absolute;
+  width:24%;
+  height:24%;
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  justify-content:center;
+  gap:1px;
+}
+
+.ficha{
+  width:62%;
+  height:62%;
+  border-radius:50%;
+  border:2px solid rgba(255,255,255,.9);
+  box-shadow: 0 1px 3px rgba(0,0,0,.35), inset 0 1px 2px rgba(255,255,255,.4);
+  position:relative;
+  z-index:5;
+  cursor:default;
+}
+.ficha.jugable{
+  cursor:pointer;
+  animation: pulso 1.1s var(--transicion) infinite;
+}
+.ficha.jugable:focus-visible{
+  outline:3px solid var(--dorado);
+  outline-offset:2px;
+}
+@keyframes pulso{
+  0%,100%{ transform:scale(1); }
+  50%{ transform:scale(1.16); }
+}
+
+@media (prefers-reduced-motion: reduce){
+  .ficha.jugable{ animation:none; box-shadow:0 0 0 3px var(--dorado), 0 1px 3px rgba(0,0,0,.35); }
+  *{ transition-duration:.001ms !important; animation-duration:.001ms !important; }
+}
+
+.panel-juego{
+  display:flex;
+  flex-direction:column;
+  gap:1rem;
+}
+.tarjeta{
+  background:var(--papel);
+  border-radius:var(--r-m);
+  box-shadow:var(--sombra-m);
+  padding:1.1rem 1.2rem;
+}
+.tarjeta h2{
+  font-family:var(--display);
+  font-size:1.1rem;
+  margin:0 0 .75rem;
+  color:var(--azul);
+}
+
+.selector-jugadores{
+  display:flex;
+  gap:.5rem;
+  flex-wrap:wrap;
+  margin-bottom:1rem;
+}
+.chip-num{
+  flex:1 1 auto;
+  min-width:44px;
+  min-height:44px;
+  border:1px solid var(--linea);
+  background:var(--hueso);
+  border-radius:var(--r-s);
+  font-weight:700;
+  cursor:pointer;
+  transition: background var(--transicion), color var(--transicion), border-color var(--transicion);
+}
+.chip-num[aria-pressed="true"]{
+  background:var(--azul);
+  border-color:var(--azul);
+  color:#fff;
+}
+.chip-num:focus-visible{ outline:3px solid var(--dorado); outline-offset:2px; }
+.chip-num:hover{ border-color:var(--azul); }
+
+.boton{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:.4rem;
+  min-height:44px;
+  padding:.65rem 1.3rem;
+  border-radius:var(--r-s);
+  border:none;
+  background:var(--azul);
+  color:#fff;
+  font-weight:700;
+  font-size:.95rem;
+  cursor:pointer;
+  transition: transform var(--transicion), box-shadow var(--transicion), background var(--transicion), opacity var(--transicion);
+  box-shadow:var(--sombra-s);
+}
+.boton:hover{ transform:translateY(-1px); box-shadow:var(--sombra-m); }
+.boton:active{ transform:translateY(0); }
+.boton:focus-visible{ outline:3px solid var(--dorado); outline-offset:2px; }
+.boton:disabled{ opacity:.45; cursor:not-allowed; transform:none; box-shadow:none; }
+.boton.secundario{ background:var(--hueso); color:var(--azul); border:1px solid var(--linea); }
+.boton.dorado{ background:var(--dorado); color:var(--azul); }
+
+.turno-actual{
+  display:flex;
+  align-items:center;
+  gap:.6rem;
+  font-weight:700;
+  margin-bottom:.9rem;
+}
+.pastilla-color{
+  width:16px;height:16px;border-radius:50%;
+  border:2px solid rgba(0,0,0,.15);
+  flex:none;
+}
+
+.dado{
+  width:56px;height:56px;
+  border-radius:var(--r-s);
+  background:#fff;
+  border:1px solid var(--linea);
+  display:grid;
+  place-items:center;
+  font-size:1.6rem;
+  font-weight:700;
+  color:var(--azul);
+  box-shadow:var(--sombra-s);
+  margin:0 auto .9rem;
+  transition: transform var(--transicion);
+}
+.dado.rodando{ animation: giro .5s cubic-bezier(.2,.7,.3,1); }
+@keyframes giro{
+  0%{ transform:rotate(0deg) scale(1); }
+  50%{ transform:rotate(180deg) scale(1.15); }
+  100%{ transform:rotate(360deg) scale(1); }
+}
+
+.registro{
+  list-style:none;
+  margin:0;
+  padding:0;
+  max-height:180px;
+  overflow-y:auto;
+  font-size:.85rem;
+  color:var(--tinta-media);
+  border-top:1px solid var(--linea);
+  padding-top:.6rem;
+}
+.registro li{ padding:.2rem 0; }
+.registro li:first-child{ color:var(--tinta); font-weight:600; }
+
+.glosario{
+  margin-top:2.5rem;
+  display:grid;
+  gap:1rem;
+  grid-template-columns:repeat(auto-fit, minmax(230px,1fr));
+}
+.glosario .tarjeta{ border-top:4px solid var(--c-borde); }
+.glosario h3{
+  font-family:var(--display);
+  margin:0 0 .4rem;
+  font-size:1.05rem;
+}
+.glosario p{ margin:0; color:var(--tinta-media); font-size:.92rem; }
+
+.banco{
+  margin-top:2rem;
+}
+.banco summary{
+  cursor:pointer;
+  font-weight:700;
+  color:var(--azul);
+  padding:.5rem 0;
+}
+.banco summary:focus-visible{ outline:3px solid var(--dorado); outline-offset:2px; }
+.pregunta-archivo{
+  padding:1rem;
+  border:1px solid var(--linea);
+  border-radius:var(--r-s);
+  margin-bottom:.75rem;
+  background:var(--papel);
+}
+.etiqueta-cat{
+  display:inline-block;
+  font-size:.68rem;
+  font-weight:700;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  padding:.15rem .5rem;
+  border-radius:999px;
+  margin-bottom:.4rem;
+}
+
+dialog{
+  border:none;
+  border-radius:var(--r-l);
+  box-shadow:var(--sombra-l);
+  padding:0;
+  max-width:min(480px,92vw);
+  width:100%;
+}
+dialog::backdrop{ background:rgba(14,42,71,.55); }
+.modal-cuerpo{ padding:1.5rem; }
+.modal-cuerpo h2{
+  font-family:var(--display);
+  color:var(--azul);
+  margin:.4rem 0 .8rem;
+  font-size:1.2rem;
+}
+.opciones{
+  display:grid;
+  gap:.5rem;
+  margin:1rem 0;
+}
+.opcion{
+  text-align:left;
+  padding:.7rem .9rem;
+  border-radius:var(--r-s);
+  border:1px solid var(--linea);
+  background:var(--hueso);
+  cursor:pointer;
+  font:inherit;
+  min-height:44px;
+  transition: background var(--transicion), border-color var(--transicion);
+}
+.opcion:hover{ border-color:var(--azul); }
+.opcion:focus-visible{ outline:3px solid var(--dorado); outline-offset:2px; }
+.opcion.correcta{ background:#e5f0e6; border-color:var(--verde); }
+.opcion.incorrecta{ background:#f3e3e6; border-color:var(--vino); }
+.opcion[disabled]{ cursor:default; }
+.explicacion{
+  font-size:.9rem;
+  color:var(--tinta-media);
+  background:#f6f2e4;
+  padding:.75rem .9rem;
+  border-radius:var(--r-s);
+  display:none;
+}
+.explicacion.visible{ display:block; }
+
+.visualmente-oculto{
+  position:absolute; width:1px; height:1px; padding:0; margin:-1px;
+  overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0;
+}
+
+footer.pie{
+  text-align:center;
+  color:var(--tinta-media);
+  font-size:.85rem;
+  margin-top:3rem;
+}
+footer.pie a{ color:var(--azul); font-weight:600; }
+</style>
+</head>
+<body>
+<div class="envoltura">
+  <header class="cabecera">
+    <p class="antetitulo">Recurso educativo · Saberes Internacionales</p>
+    <h1>Parchís del diseño de investigación</h1>
+    <p class="bajada">
+      El mismo parchís de siempre, con una vuelta: cada tanto caes en una casilla
+      con "?" y respondes una pregunta sobre <strong>niveles</strong>,
+      <strong>tipos</strong> y <strong>enfoques</strong> de la investigación.
+      Acertar te adelanta dos casillas de regalo.
+    </p>
+  </header>
+
+  <main>
+    <section class="panel-tablero">
+      <div class="tablero" id="tablero" aria-label="Tablero de parchís"></div>
+      <p class="visualmente-oculto" id="anuncioEstado" role="status" aria-live="polite"></p>
+    </section>
+
+    <aside class="panel-juego">
+      <div class="tarjeta" id="tarjetaConfig">
+        <h2>Empezar partida</h2>
+        <p style="margin:0 0 .75rem;color:var(--tinta-media);font-size:.9rem;">
+          Elige cuántas personas juegan (en el mismo dispositivo, por turnos).
+        </p>
+        <div class="selector-jugadores" role="group" aria-label="Número de jugadores">
+          <button type="button" class="chip-num" data-num="2" aria-pressed="true">2 jugadores</button>
+          <button type="button" class="chip-num" data-num="3" aria-pressed="false">3 jugadores</button>
+          <button type="button" class="chip-num" data-num="4" aria-pressed="false">4 jugadores</button>
+        </div>
+        <button type="button" class="boton" id="btnEmpezar">Comenzar partida</button>
+        <details style="margin-top:1rem;">
+          <summary style="cursor:pointer;font-weight:600;color:var(--azul);">¿Cómo se juega?</summary>
+          <ul style="font-size:.88rem;color:var(--tinta-media);padding-left:1.1rem;">
+            <li>Necesitas sacar un <strong>5</strong> para mover una ficha desde tu casa al tablero.</li>
+            <li>Sacar un <strong>6</strong> da un turno extra.</li>
+            <li>Si caes justo sobre una ficha rival, la mandas de vuelta a casa (las casillas con ★ son seguras).</li>
+            <li>Al caer en una casilla con <strong>?</strong>, respondes una pregunta de metodología. Si aciertas, avanzas 2 casillas de regalo.</li>
+            <li>Gana quien lleve sus 4 fichas al centro.</li>
+          </ul>
+        </details>
+      </div>
+
+      <div class="tarjeta" id="tarjetaJuego" hidden>
+        <h2>Turno</h2>
+        <div class="turno-actual">
+          <span class="pastilla-color" id="pastillaTurno"></span>
+          <span id="nombreTurno">—</span>
+        </div>
+        <div class="dado" id="dado" aria-live="polite">–</div>
+        <button type="button" class="boton" id="btnDado" style="width:100%;">Lanzar dado</button>
+        <p style="font-size:.85rem;color:var(--tinta-media);margin:.75rem 0 .3rem;">
+          Fichas resaltadas: haz clic sobre la que quieras mover.
+        </p>
+        <ul class="registro" id="registro"></ul>
+        <button type="button" class="boton secundario" id="btnReiniciar" style="width:100%;margin-top:.9rem;">Reiniciar partida</button>
+      </div>
+    </aside>
+  </main>
+
+  <section class="glosario" aria-label="Glosario rápido de diseño de investigación">
+    <div class="tarjeta" style="--c-borde:var(--dorado);">
+      <h3>Enfoques</h3>
+      <p>La naturaleza de los datos y el razonamiento del estudio: <strong>cuantitativo</strong> (mide y prueba hipótesis con números), <strong>cualitativo</strong> (explora significados y experiencias) o <strong>mixto</strong> (combina ambos).</p>
+    </div>
+    <div class="tarjeta" style="--c-borde:var(--vino);">
+      <h3>Niveles (alcance)</h3>
+      <p>Qué tan profundo llega el estudio: <strong>exploratorio</strong>, <strong>descriptivo</strong>, <strong>correlacional</strong> o <strong>explicativo</strong> (causal). Cada uno responde una pregunta distinta sobre el fenómeno.</p>
+    </div>
+    <div class="tarjeta" style="--c-borde:var(--verde);">
+      <h3>Tipos</h3>
+      <p>Cómo se clasifica el diseño según su finalidad (básica o aplicada), su control de variables (experimental o no experimental) y su fuente de datos (documental o de campo).</p>
+    </div>
+  </section>
+
+  <details class="banco">
+    <summary>Ver el banco completo de 30 preguntas (para repasar o usar en clase)</summary>
+    <div id="bancoCompleto"></div>
+  </details>
+
+  <footer class="pie">
+    Un recurso de <a href="/">Editorial Saberes Internacionales</a> para acompañar el estudio del diseño de investigación.
+  </footer>
+</div>
+
+<dialog id="modalPregunta" aria-labelledby="tituloPregunta">
+  <div class="modal-cuerpo">
+    <span class="etiqueta-cat" id="catPregunta"></span>
+    <h2 id="tituloPregunta"></h2>
+    <div class="opciones" id="opcionesPregunta"></div>
+    <p class="explicacion" id="explicacionPregunta"></p>
+    <button type="button" class="boton" id="btnCerrarPregunta" style="display:none;width:100%;">Continuar</button>
+  </div>
+</dialog>
+
+<dialog id="modalFin" aria-labelledby="tituloFin">
+  <div class="modal-cuerpo" style="text-align:center;">
+    <h2 id="tituloFin">¡Partida terminada!</h2>
+    <p id="mensajeFin"></p>
+    <button type="button" class="boton dorado" id="btnJugarOtraVez">Jugar otra vez</button>
+  </div>
+</dialog>
+
+<script>
+(function(){
+"use strict";
+
+/* ---------- Datos del tablero (parchís clásico 15×15, camino de 52 casillas) ---------- */
+
+const PATH = [
+  [6,1],[6,2],[6,3],[6,4],[6,5],
+  [5,6],[4,6],[3,6],[2,6],[1,6],[0,6],
+  [0,7],
+  [0,8],
+  [1,8],[2,8],[3,8],[4,8],[5,8],
+  [6,9],[6,10],[6,11],[6,12],[6,13],[6,14],
+  [7,14],
+  [8,14],
+  [8,13],[8,12],[8,11],[8,10],[8,9],
+  [9,8],[10,8],[11,8],[12,8],[13,8],[14,8],
+  [14,7],
+  [14,6],
+  [13,6],[12,6],[11,6],[10,6],[9,6],
+  [8,5],[8,4],[8,3],[8,2],[8,1],[8,0],
+  [7,0],
+  [6,0]
+];
+
+const JUGADORES_DEF = [
+  { id:'azul',   nombre:'Azul',   color:'#0e2a47', suave:'#dde6ef', entrada:0,  base:[0,5,0,5],  home:[[7,1],[7,2],[7,3],[7,4],[7,5],[7,6]], cuad:[0,0] },
+  { id:'dorado', nombre:'Dorado', color:'#c9a227', suave:'#f6ecc9', entrada:13, base:[0,5,9,14], home:[[1,7],[2,7],[3,7],[4,7],[5,7],[6,7]], cuad:[0,1] },
+  { id:'vino',   nombre:'Vino',   color:'#6b2233', suave:'#ecd7db', entrada:26, base:[9,14,9,14], home:[[7,13],[7,12],[7,11],[7,10],[7,9],[7,8]], cuad:[1,1] },
+  { id:'verde',  nombre:'Verde',  color:'#2f5d3a', suave:'#d9e5da', entrada:39, base:[9,14,0,5],  home:[[13,7],[12,7],[11,7],[10,7],[9,7],[8,7]], cuad:[1,0] }
+];
+
+const SEGURAS = new Set([0,8,13,21,26,34,39,47]);
+const PREGUNTA_INDICES = [4,10,17,23,31,37,44,50];
+
+/* ---------- Banco de preguntas: niveles, tipos y enfoques ---------- */
+
+const CATS = {
+  niveles:  { etiqueta:'Nivel de investigación', color:'#6b2233', fondo:'#ecd7db' },
+  tipos:    { etiqueta:'Tipo de investigación',  color:'#2f5d3a', fondo:'#d9e5da' },
+  enfoques: { etiqueta:'Enfoque de investigación', color:'#c9a227', fondo:'#f6ecc9' }
+};
+
+const PREGUNTAS = [
+  // Enfoques
+  {cat:'enfoques', q:'¿Qué enfoque se basa en recolectar y analizar datos numéricos para probar hipótesis?', o:['Cuantitativo','Cualitativo','Mixto','Documental'], r:0, e:'El enfoque cuantitativo mide variables y usa estadística para contrastar hipótesis.'},
+  {cat:'enfoques', q:'¿Qué enfoque busca comprender un fenómeno desde la perspectiva de los participantes, sin medirlo numéricamente?', o:['Cuantitativo','Cualitativo','Experimental','Correlacional'], r:1, e:'El enfoque cualitativo explora significados, experiencias y contextos.'},
+  {cat:'enfoques', q:'¿Qué enfoque combina la recolección y el análisis de datos cuantitativos y cualitativos en un mismo estudio?', o:['Exploratorio','Mixto','Descriptivo','Aplicado'], r:1, e:'El enfoque mixto integra ambas lógicas para una comprensión más completa.'},
+  {cat:'enfoques', q:'¿Qué enfoque suele usar instrumentos estandarizados, como encuestas con escalas?', o:['Cualitativo','Documental','Cuantitativo','Exploratorio'], r:2, e:'Las escalas y cuestionarios estandarizados son típicos del enfoque cuantitativo.'},
+  {cat:'enfoques', q:'¿Qué enfoque emplea técnicas como la entrevista a profundidad o la observación participante?', o:['Cuantitativo','Cualitativo','Experimental','Correlacional'], r:1, e:'Estas técnicas buscan datos ricos en significado, propias del enfoque cualitativo.'},
+  {cat:'enfoques', q:'En un diseño mixto donde los datos cuantitativos y cualitativos se recogen al mismo tiempo, ¿cómo se llama ese diseño?', o:['Secuencial','Concurrente','Exploratorio','Longitudinal'], r:1, e:'El diseño concurrente (o paralelo) recoge ambos tipos de datos de forma simultánea.'},
+  {cat:'enfoques', q:'¿Qué enfoque parte de una hipótesis previamente formulada que se somete a prueba estadística?', o:['Cualitativo','Cuantitativo','Documental','Exploratorio'], r:1, e:'Formular y probar hipótesis con datos numéricos es característico del enfoque cuantitativo.'},
+  {cat:'enfoques', q:'¿Qué enfoque es más flexible y puede ajustar sus preguntas de investigación conforme avanza el estudio?', o:['Cuantitativo','Experimental','Cualitativo','Correlacional'], r:2, e:'El enfoque cualitativo permite reformular preguntas a medida que emergen los datos.'},
+  {cat:'enfoques', q:'¿Qué enfoque prioriza la generalización de resultados a partir de una muestra representativa?', o:['Cualitativo','Cuantitativo','Documental','Exploratorio'], r:1, e:'La generalización estadística a una población es objetivo del enfoque cuantitativo.'},
+  {cat:'enfoques', q:'¿Qué enfoque suele analizar los datos mediante categorías, códigos y temas emergentes en vez de números?', o:['Cuantitativo','Cualitativo','Experimental','Aplicado'], r:1, e:'La codificación temática es un procedimiento propio del análisis cualitativo.'},
+
+  // Niveles (alcance)
+  {cat:'niveles', q:'¿Qué nivel de investigación se usa cuando el tema ha sido poco estudiado?', o:['Descriptivo','Correlacional','Exploratorio','Explicativo'], r:2, e:'El nivel exploratorio se usa para aproximarse a fenómenos novedosos o poco investigados.'},
+  {cat:'niveles', q:'¿Qué nivel busca especificar propiedades y características de un fenómeno o población?', o:['Exploratorio','Descriptivo','Explicativo','Correlacional'], r:1, e:'El nivel descriptivo detalla cómo es y cómo se manifiesta un fenómeno.'},
+  {cat:'niveles', q:'¿Qué nivel mide el grado de asociación entre dos o más variables?', o:['Correlacional','Exploratorio','Descriptivo','Explicativo'], r:0, e:'El nivel correlacional evalúa si las variables se relacionan entre sí, sin implicar causalidad.'},
+  {cat:'niveles', q:'¿Qué nivel busca establecer relaciones de causa y efecto entre variables?', o:['Descriptivo','Exploratorio','Correlacional','Explicativo'], r:3, e:'El nivel explicativo (o causal) busca el porqué de los fenómenos.'},
+  {cat:'niveles', q:'¿Cuál es el nivel de investigación con menor profundidad y control metodológico?', o:['Exploratorio','Explicativo','Correlacional','Descriptivo'], r:0, e:'El exploratorio es preliminar: sienta bases para estudios más profundos.'},
+  {cat:'niveles', q:'Un estudio que responde "¿cuántos estudiantes usan redes sociales a diario?" ¿en qué nivel se ubica?', o:['Explicativo','Descriptivo','Correlacional','Exploratorio'], r:1, e:'Contar y caracterizar una situación es propio del nivel descriptivo.'},
+  {cat:'niveles', q:'Un estudio que mide si "a mayor uso de redes sociales, menor rendimiento académico" ¿en qué nivel se ubica?', o:['Correlacional','Descriptivo','Exploratorio','Explicativo'], r:0, e:'Asociar dos variables sin probar causalidad corresponde al nivel correlacional.'},
+  {cat:'niveles', q:'Un estudio que determina "por qué" el uso excesivo de redes sociales reduce el rendimiento ¿en qué nivel se ubica?', o:['Descriptivo','Correlacional','Explicativo','Exploratorio'], r:2, e:'Buscar la causa detrás de un efecto corresponde al nivel explicativo.'},
+  {cat:'niveles', q:'¿Qué nivel de investigación suele anteceder a los demás y sirve de base para estudios posteriores?', o:['Explicativo','Correlacional','Descriptivo','Exploratorio'], r:3, e:'El nivel exploratorio abre camino a estudios descriptivos, correlacionales o explicativos.'},
+  {cat:'niveles', q:'¿El nivel explicativo exige, en general, mayor o menor control metodológico que el descriptivo?', o:['Mayor','Menor','El mismo','Ninguno'], r:0, e:'Establecer causalidad exige controlar más variables que solo describir un fenómeno.'},
+
+  // Tipos
+  {cat:'tipos', q:'Según su finalidad, ¿qué tipo de investigación busca generar conocimiento teórico sin una aplicación inmediata?', o:['Aplicada','Básica','De campo','Cuasiexperimental'], r:1, e:'La investigación básica (o pura) amplía el conocimiento teórico por sí mismo.'},
+  {cat:'tipos', q:'Según su finalidad, ¿qué tipo de investigación busca resolver un problema práctico concreto?', o:['Básica','Documental','Aplicada','Exploratoria'], r:2, e:'La investigación aplicada usa el conocimiento para intervenir en una situación real.'},
+  {cat:'tipos', q:'Según el diseño, ¿qué tipo de investigación manipula deliberadamente una variable independiente?', o:['No experimental','Experimental','Documental','Descriptiva'], r:1, e:'La investigación experimental interviene y controla las variables del estudio.'},
+  {cat:'tipos', q:'Según el diseño, ¿qué tipo observa los fenómenos en su ambiente natural, sin manipular variables?', o:['Experimental','Cuasiexperimental','No experimental','Aplicada'], r:2, e:'La investigación no experimental describe u observa sin intervenir.'},
+  {cat:'tipos', q:'Según la fuente de los datos, ¿qué tipo se basa en el análisis de libros, registros y documentos?', o:['De campo','Documental','Experimental','Correlacional'], r:1, e:'La investigación documental (o bibliográfica) trabaja sobre fuentes ya existentes.'},
+  {cat:'tipos', q:'Según la fuente de los datos, ¿qué tipo recoge la información directamente del lugar donde ocurren los hechos?', o:['Documental','De campo','Básica','Explicativa'], r:1, e:'La investigación de campo obtiene datos en el contexto real donde sucede el fenómeno.'},
+  {cat:'tipos', q:'¿Qué tipo de diseño no experimental estudia un fenómeno en un único momento del tiempo?', o:['Longitudinal','Transversal','Cuasiexperimental','Documental'], r:1, e:'El diseño transversal (o transeccional) recoge los datos en un solo corte temporal.'},
+  {cat:'tipos', q:'¿Qué tipo de diseño no experimental estudia cambios de una o más variables a lo largo del tiempo?', o:['Transversal','Documental','Longitudinal','Aplicado'], r:2, e:'El diseño longitudinal sigue el fenómeno en varios momentos temporales.'},
+  {cat:'tipos', q:'¿Qué tipo de diseño experimental no logra asignación aleatoria completa ni grupo de control estricto?', o:['Cuasiexperimental','Correlacional','Documental','Exploratorio'], r:0, e:'El diseño cuasiexperimental se aproxima al experimento puro, con menos control.'},
+  {cat:'tipos', q:'¿Qué tipo de investigación combina fuentes documentales con trabajo directo en el campo?', o:['Básica','Mixta (documental y de campo)','Transversal','Cuasiexperimental'], r:1, e:'Muchos estudios combinan revisión documental con recolección de datos en campo.'}
+];
+
+/* ---------- Estado del juego ---------- */
+
+let jugadores = [];
+let turnoIdx = 0;
+let dadoActual = null;
+let puedeLanzar = true;
+let fichaEnEspera = false;
+let preguntaPendiente = null;
+
+const $ = (sel) => document.querySelector(sel);
+const tablero = $('#tablero');
+const anuncio = $('#anuncioEstado');
+const reducirMovimiento = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+function crearFicha(color, idx){
+  return { color, idx, d:0, el:null };
+}
+
+function inicializarJugadores(n){
+  jugadores = JUGADORES_DEF.slice(0,n).map(def => ({
+    ...def,
+    fichas:[0,1,2,3].map(i => crearFicha(def.id, i))
+  }));
+}
+
+/* ---------- Construcción del tablero ---------- */
+
+const celdaPorPath = new Map();
+const celdaPorHome = new Map();
+const baseHuecos = new Map();
+const cuadrantesFin = new Map();
+
+function construirTablero(){
+  tablero.innerHTML = '';
+  celdaPorPath.clear();
+  celdaPorHome.clear();
+  baseHuecos.clear();
+  cuadrantesFin.clear();
+
+  // celdas del camino principal
+  PATH.forEach(([r,c], idx) => {
+    const div = document.createElement('div');
+    div.className = 'celda';
+    div.style.gridColumn = (c+1) + ' / span 1';
+    div.style.gridRow = (r+1) + ' / span 1';
+    if (SEGURAS.has(idx)) div.classList.add('segura');
+    if (PREGUNTA_INDICES.includes(idx)) div.classList.add('pregunta');
+    const entradaDef = JUGADORES_DEF.find(j => j.entrada === idx);
+    if (entradaDef){
+      div.classList.add('entrada');
+      div.style.setProperty('--c-color-suave', entradaDef.suave);
+    }
+    tablero.appendChild(div);
+    celdaPorPath.set(idx, div);
+  });
+
+  // carriles de casa (home lanes)
+  JUGADORES_DEF.forEach(def => {
+    def.home.forEach(([r,c], i) => {
+      const div = document.createElement('div');
+      div.className = 'celda carril';
+      div.style.gridColumn = (c+1) + ' / span 1';
+      div.style.gridRow = (r+1) + ' / span 1';
+      div.style.setProperty('--c-color-suave', def.suave);
+      tablero.appendChild(div);
+      celdaPorHome.set(def.id + ':' + i, div);
+    });
+  });
+
+  // paneles de base
+  JUGADORES_DEF.forEach(def => {
+    const [r1,r2,c1,c2] = def.base;
+    const panel = document.createElement('div');
+    panel.className = 'base-panel';
+    panel.dataset.nombre = def.nombre;
+    panel.style.gridColumn = (c1+1) + ' / ' + (c2+2);
+    panel.style.gridRow = (r1+1) + ' / ' + (r2+2);
+    panel.style.background = def.color;
+    for (let i=0;i<4;i++){
+      const hueco = document.createElement('div');
+      hueco.className = 'base-hueco';
+      panel.appendChild(hueco);
+      baseHuecos.set(def.id + ':' + i, hueco);
+    }
+    tablero.appendChild(panel);
+  });
+
+  // centro decorativo
+  const centro = document.createElement('div');
+  centro.className = 'centro';
+  centro.style.gridColumn = '7 / 10';
+  centro.style.gridRow = '7 / 10';
+  centro.style.background = 'conic-gradient(from 0deg, ' +
+    JUGADORES_DEF[0].color + ' 0deg 90deg, ' +
+    JUGADORES_DEF[1].color + ' 90deg 180deg, ' +
+    JUGADORES_DEF[2].color + ' 180deg 270deg, ' +
+    JUGADORES_DEF[3].color + ' 270deg 360deg)';
+  const posiciones = {
+    azul:  {top:'4%', left:'4%'},
+    dorado:{top:'4%', right:'4%'},
+    vino:  {bottom:'4%', right:'4%'},
+    verde: {bottom:'4%', left:'4%'}
+  };
+  JUGADORES_DEF.forEach(def => {
+    const cuad = document.createElement('div');
+    cuad.className = 'cuadrante-fin';
+    Object.assign(cuad.style, posiciones[def.id]);
+    centro.appendChild(cuad);
+    cuadrantesFin.set(def.id, cuad);
+  });
+  tablero.appendChild(centro);
+}
+
+/* ---------- Fichas: render y movimiento ---------- */
+
+function slotDeFicha(ficha){
+  if (ficha.d === 0) return baseHuecos.get(ficha.color + ':' + ficha.idx);
+  if (ficha.d === 58) return cuadrantesFin.get(ficha.color);
+  if (ficha.d <= 51){
+    const def = jugadores.find(j => j.id === ficha.color);
+    const pathIdx = (def.entrada + ficha.d - 1) % 52;
+    return celdaPorPath.get(pathIdx);
+  }
+  return celdaPorHome.get(ficha.color + ':' + (ficha.d - 52));
+}
+
+function renderFichas(){
+  jugadores.forEach(j => {
+    j.fichas.forEach(ficha => {
+      if (!ficha.el){
+        const el = document.createElement('button');
+        el.type = 'button';
+        el.className = 'ficha';
+        el.style.background = j.color;
+        el.setAttribute('aria-label', j.nombre + ', ficha ' + (ficha.idx+1));
+        el.addEventListener('click', () => intentarMover(ficha));
+        ficha.el = el;
+      }
+      const destino = slotDeFicha(ficha);
+      if (destino && ficha.el.parentElement !== destino){
+        moverFichaConAnimacion(ficha.el, destino);
+      }
+    });
+  });
+}
+
+function moverFichaConAnimacion(el, destino){
+  const previo = el.getBoundingClientRect();
+  destino.appendChild(el);
+  if (reducirMovimiento.matches) return;
+  const nuevo = el.getBoundingClientRect();
+  const dx = previo.left - nuevo.left;
+  const dy = previo.top - nuevo.top;
+  if (dx === 0 && dy === 0) return;
+  el.style.transition = 'none';
+  el.style.transform = 'translate(' + dx + 'px,' + dy + 'px)';
+  requestAnimationFrame(() => {
+    el.style.transition = 'transform var(--transicion)';
+    el.style.transform = '';
+  });
+}
+
+/* ---------- Reglas del juego ---------- */
+
+function jugadorActual(){ return jugadores[turnoIdx]; }
+
+function log(msg){
+  const ul = $('#registro');
+  const li = document.createElement('li');
+  li.textContent = msg;
+  ul.insertBefore(li, ul.firstChild);
+  anuncio.textContent = msg;
+}
+
+function fichasJugables(jug, dado){
+  return jug.fichas.filter(f => {
+    if (f.d === 0) return dado === 5;
+    if (f.d === 58) return false;
+    return f.d + dado <= 58;
+  });
+}
+
+function marcarJugables(lista){
+  jugadores.forEach(j => j.fichas.forEach(f => f.el && f.el.classList.remove('jugable')));
+  lista.forEach(f => f.el && f.el.classList.add('jugable'));
+}
+
+$('#btnDado').addEventListener('click', () => {
+  if (!puedeLanzar) return;
+  puedeLanzar = false;
+  const dadoEl = $('#dado');
+  dadoEl.classList.add('rodando');
+  $('#btnDado').disabled = true;
+  setTimeout(() => {
+    dadoEl.classList.remove('rodando');
+    dadoActual = 1 + Math.floor(Math.random()*6);
+    dadoEl.textContent = dadoActual;
+    const jug = jugadorActual();
+    const jugables = fichasJugables(jug, dadoActual);
+    if (jugables.length === 0){
+      log(jug.nombre + ' sacó ' + dadoActual + ' y no tiene movimientos posibles.');
+      siguienteTurno(dadoActual === 6);
+      return;
+    }
+    fichaEnEspera = true;
+    marcarJugables(jugables);
+    log(jug.nombre + ' sacó ' + dadoActual + '. Elige una ficha para mover.');
+  }, 480);
+});
+
+function intentarMover(ficha){
+  if (!fichaEnEspera) return;
+  const jug = jugadorActual();
+  if (ficha.color !== jug.id) return;
+  if (!ficha.el.classList.contains('jugable')) return;
+
+  fichaEnEspera = false;
+  marcarJugables([]);
+
+  if (ficha.d === 0){
+    ficha.d = 1;
+  } else {
+    ficha.d += dadoActual;
+  }
+
+  resolverCasilla(ficha, () => {
+    renderFichas();
+    if (ficha.d === 58){
+      log((jug.fichas.every(f => f.d === 58)) ? jug.nombre + ' ¡llevó sus 4 fichas a casa!' : jug.nombre + ' llevó una ficha a casa.');
+      if (jug.fichas.every(f => f.d === 58)){
+        terminarPartida(jug);
+        return;
+      }
+    }
+    siguienteTurno(dadoActual === 6);
+  });
+}
+
+function resolverCasilla(ficha, cont){
+  renderFichas();
+  if (ficha.d >= 1 && ficha.d <= 51){
+    const def = jugadores.find(j => j.id === ficha.color);
+    const pathIdx = (def.entrada + ficha.d - 1) % 52;
+    if (!SEGURAS.has(pathIdx)){
+      jugadores.forEach(otro => {
+        if (otro.id === ficha.color) return;
+        otro.fichas.forEach(rival => {
+          if (rival.d >= 1 && rival.d <= 51){
+            const otroDef = otro;
+            const rivalPathIdx = (otroDef.entrada + rival.d - 1) % 52;
+            if (rivalPathIdx === pathIdx){
+              rival.d = 0;
+              log(jugadorActual().nombre + ' capturó una ficha ' + otro.nombre + '.');
+            }
+          }
+        });
+      });
+    }
+    if (PREGUNTA_INDICES.includes(pathIdx)){
+      renderFichas();
+      lanzarPregunta(ficha, cont);
+      return;
+    }
+  }
+  cont();
+}
+
+function lanzarPregunta(ficha, cont){
+  const banco = PREGUNTAS;
+  const p = banco[Math.floor(Math.random()*banco.length)];
+  preguntaPendiente = { ficha, cont };
+
+  const modal = $('#modalPregunta');
+  const cat = CATS[p.cat];
+  const catEl = $('#catPregunta');
+  catEl.textContent = cat.etiqueta;
+  catEl.style.background = cat.fondo;
+  catEl.style.color = cat.color;
+  $('#tituloPregunta').textContent = p.q;
+
+  const cont2 = $('#opcionesPregunta');
+  cont2.innerHTML = '';
+  const explicacion = $('#explicacionPregunta');
+  explicacion.textContent = p.e;
+  explicacion.classList.remove('visible');
+  const btnCerrar = $('#btnCerrarPregunta');
+  btnCerrar.style.display = 'none';
+
+  p.o.forEach((texto, i) => {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'opcion';
+    b.textContent = texto;
+    b.addEventListener('click', () => {
+      [...cont2.children].forEach(c => c.disabled = true);
+      const acierto = i === p.r;
+      b.classList.add(acierto ? 'correcta' : 'incorrecta');
+      if (!acierto) cont2.children[p.r].classList.add('correcta');
+      explicacion.classList.add('visible');
+      btnCerrar.style.display = 'block';
+      btnCerrar.onclick = () => {
+        modal.close();
+        if (acierto){
+          const { ficha, cont } = preguntaPendiente;
+          ficha.d = Math.min(58, ficha.d + 2);
+          log('¡Respuesta correcta! Ficha adelantada 2 casillas de regalo.');
+        } else {
+          log('Respuesta incorrecta. La correcta era: ' + p.o[p.r]);
+        }
+        preguntaPendiente = null;
+        cont();
+      };
+    });
+    cont2.appendChild(b);
+  });
+
+  modal.showModal();
+}
+
+function siguienteTurno(turnoExtra){
+  if (!turnoExtra){
+    turnoIdx = (turnoIdx + 1) % jugadores.length;
+  }
+  actualizarPanelTurno();
+  puedeLanzar = true;
+  $('#btnDado').disabled = false;
+  $('#dado').textContent = '–';
+}
+
+function actualizarPanelTurno(){
+  const jug = jugadorActual();
+  $('#pastillaTurno').style.background = jug.color;
+  $('#nombreTurno').textContent = 'Turno de ' + jug.nombre;
+}
+
+function terminarPartida(jug){
+  $('#tituloFin').textContent = '¡' + jug.nombre + ' ganó la partida!';
+  $('#mensajeFin').textContent = 'Todas sus fichas llegaron a casa. ¿Otra ronda para seguir repasando?';
+  $('#modalFin').showModal();
+}
+
+/* ---------- Configuración inicial ---------- */
+
+let numJugadores = 2;
+document.querySelectorAll('.chip-num').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.chip-num').forEach(b => b.setAttribute('aria-pressed','false'));
+    btn.setAttribute('aria-pressed','true');
+    numJugadores = Number(btn.dataset.num);
+  });
+});
+
+function iniciarPartida(){
+  construirTablero();
+  inicializarJugadores(numJugadores);
+  turnoIdx = 0;
+  dadoActual = null;
+  puedeLanzar = true;
+  fichaEnEspera = false;
+  $('#registro').innerHTML = '';
+  renderFichas();
+  actualizarPanelTurno();
+  $('#tarjetaConfig').hidden = true;
+  $('#tarjetaJuego').hidden = false;
+  $('#btnDado').disabled = false;
+  $('#dado').textContent = '–';
+  log('Partida iniciada con ' + numJugadores + ' jugadores.');
+}
+
+$('#btnEmpezar').addEventListener('click', iniciarPartida);
+$('#btnReiniciar').addEventListener('click', () => {
+  $('#tarjetaJuego').hidden = true;
+  $('#tarjetaConfig').hidden = false;
+});
+$('#btnJugarOtraVez').addEventListener('click', () => {
+  $('#modalFin').close();
+  iniciarPartida();
+});
+
+/* ---------- Banco completo de preguntas (repaso) ---------- */
+
+function construirBanco(){
+  const cont = $('#bancoCompleto');
+  const orden = ['enfoques','niveles','tipos'];
+  orden.forEach(catId => {
+    const titulo = document.createElement('h3');
+    titulo.style.fontFamily = 'var(--display)';
+    titulo.style.color = CATS[catId].color;
+    titulo.textContent = CATS[catId].etiqueta + 's';
+    cont.appendChild(titulo);
+    PREGUNTAS.filter(p => p.cat === catId).forEach(p => {
+      const div = document.createElement('div');
+      div.className = 'pregunta-archivo';
+      const etiqueta = document.createElement('span');
+      etiqueta.className = 'etiqueta-cat';
+      etiqueta.style.background = CATS[p.cat].fondo;
+      etiqueta.style.color = CATS[p.cat].color;
+      etiqueta.textContent = CATS[p.cat].etiqueta;
+      const preg = document.createElement('p');
+      preg.style.fontWeight = '600';
+      preg.style.margin = '.4rem 0';
+      preg.textContent = p.q;
+      const resp = document.createElement('p');
+      resp.style.margin = '0 0 .3rem';
+      resp.textContent = 'Respuesta: ' + p.o[p.r];
+      const exp = document.createElement('p');
+      exp.style.color = 'var(--tinta-media)';
+      exp.style.fontSize = '.88rem';
+      exp.style.margin = '0';
+      exp.textContent = p.e;
+      div.append(etiqueta, preg, resp, exp);
+      cont.appendChild(div);
+    });
+  });
+}
+
+construirTablero();
+construirBanco();
+})();
+</script>
+</body>
+</html>
