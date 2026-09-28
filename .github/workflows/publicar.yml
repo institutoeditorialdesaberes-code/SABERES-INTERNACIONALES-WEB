@@ -1,0 +1,35 @@
+name: Publicar en Cloudflare
+
+# Construye el sitio y lo publica automáticamente cada vez que main/master
+# recibe un cambio (incluidos los commits que hace el panel /admin).
+#
+# Requiere un secreto del repositorio llamado CLOUDFLARE_API_TOKEN
+# (Settings → Secrets and variables → Actions → New repository secret),
+# con un token de Cloudflare con permiso "Edit Cloudflare Workers".
+
+on:
+  push:
+    branches: [main, master]
+  workflow_dispatch:
+
+jobs:
+  publicar:
+    name: Construir y publicar
+    runs-on: ubuntu-latest
+    steps:
+      - name: Descargar el repositorio
+        uses: actions/checkout@v4
+
+      - name: Preparar Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Generar el sitio
+        run: node src/build.mjs
+
+      - name: Publicar con Wrangler
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          command: deploy
